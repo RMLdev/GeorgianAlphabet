@@ -4,4 +4,5 @@
     <string name="feature_onboarding_ui_welcome_body">На вывесках, в меню и в книгах. Каждая буква в десятке разных начертаний, по пять минут в день.</string>
     <string name="feature_onboarding_ui_welcome_start">Начать</string>
     <string name="feature_onboarding_ui_welcome_skip">Пропустить</string>
+    <string name="feature_onboarding_ui_welcome_mosaic_description">Буква ани в разных шрифтах</string>
 </resources>
