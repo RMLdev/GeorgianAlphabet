@@ -10,7 +10,6 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.messag
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsState
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsStateToUiMapper
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsUiState
-import com.rmldev.georgianalphabet.feature.alphabet.ui.letters.mkhedruliLetter
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -22,10 +21,18 @@ internal class GlyphDetailsViewModel @AssistedInject constructor(
     actor: GlyphDetailsActor,
     reducer: GlyphDetailsReducer,
     uiStateMapper: GlyphDetailsStateToUiMapper,
-) : StoreViewModel<GlyphDetailsIntent, GlyphDetailsAction, GlyphDetailsState, GlyphDetailsUiState, GlyphDetailsSideEffect, GlyphDetailsEvent>(
+) : StoreViewModel<
+    GlyphDetailsIntent,
+    GlyphDetailsAction,
+    GlyphDetailsState,
+    GlyphDetailsUiState,
+    GlyphDetailsSideEffect,
+    GlyphDetailsEvent,
+    >(
     actor = actor,
     reducer = reducer,
-    initialState = GlyphDetailsState(letter = mkhedruliLetter(glyphId)),
+    initialState = GlyphDetailsState(glyphId),
+    initialActions = listOf(GlyphDetailsAction.LoadLetter),
     uiStateMapper = uiStateMapper,
     intentToAction = { intent ->
         when (intent) {

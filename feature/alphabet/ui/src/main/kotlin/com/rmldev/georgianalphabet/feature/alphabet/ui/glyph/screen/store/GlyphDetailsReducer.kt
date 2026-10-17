@@ -5,13 +5,9 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.messag
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsState
 import javax.inject.Inject
 
-internal class GlyphDetailsReducer @Inject constructor() :
-    MviReducer<GlyphDetailsState, GlyphDetailsEvent> {
+internal class GlyphDetailsReducer @Inject constructor() : MviReducer<GlyphDetailsState, GlyphDetailsEvent> {
 
-    override fun reduce(
-        oldState: GlyphDetailsState,
-        event: GlyphDetailsEvent
-    ): GlyphDetailsState {
-        return oldState
+    override fun reduce(oldState: GlyphDetailsState, event: GlyphDetailsEvent): GlyphDetailsState = when (event) {
+        is GlyphDetailsEvent.LetterLoaded -> oldState.copy(letter = event.letter)
     }
 }
