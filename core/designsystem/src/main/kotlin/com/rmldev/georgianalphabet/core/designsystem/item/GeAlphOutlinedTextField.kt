@@ -1,5 +1,8 @@
 package com.rmldev.georgianalphabet.core.designsystem.item
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.KeyboardActionHandler
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +27,9 @@ fun GeAlphOutlinedTextField(
     placeholderText: String,
     modifier: Modifier = Modifier,
     isSecure: Boolean = false,
+    /** Только для обычного поля: у secure-поля своя парольная клавиатура. */
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    onKeyboardAction: KeyboardActionHandler? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -35,25 +41,29 @@ fun GeAlphOutlinedTextField(
                 Text(
                     text = labelText,
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = if (isFocused) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.onBackground
-                    )
+                        color = if (isFocused) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onBackground
+                        },
+                    ),
                 )
             },
             placeholder = {
                 Text(
                     text = placeholderText,
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.outline
-                    )
+                        color = MaterialTheme.colorScheme.outline,
+                    ),
                 )
             },
             shape = MaterialTheme.shapes.medium,
             colors = GeAlphOutlinedTextFieldDefaults.colors(),
             textStyle = MaterialTheme.typography.bodyLarge,
             textObfuscationMode = TextObfuscationMode.RevealLastTyped,
+            onKeyboardAction = onKeyboardAction,
             modifier = modifier
-                .onFocusEvent({ isFocused = it.isFocused })
+                .onFocusEvent({ isFocused = it.isFocused }),
         )
     } else {
         OutlinedTextField(
@@ -63,41 +73,45 @@ fun GeAlphOutlinedTextField(
                 Text(
                     text = labelText,
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = if (isFocused) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.onBackground
-                    )
+                        color = if (isFocused) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onBackground
+                        },
+                    ),
                 )
             },
             placeholder = {
                 Text(
                     text = placeholderText,
                     style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.outline
-                    )
+                        color = MaterialTheme.colorScheme.outline,
+                    ),
                 )
             },
             shape = MaterialTheme.shapes.medium,
             colors = GeAlphOutlinedTextFieldDefaults.colors(),
             textStyle = MaterialTheme.typography.bodyLarge,
+            keyboardOptions = keyboardOptions,
+            onKeyboardAction = onKeyboardAction,
+            lineLimits = TextFieldLineLimits.SingleLine,
             modifier = modifier
-                .onFocusEvent({ isFocused = it.isFocused })
+                .onFocusEvent({ isFocused = it.isFocused }),
         )
     }
 }
 
 object GeAlphOutlinedTextFieldDefaults {
     @Composable
-    fun colors(): TextFieldColors {
-        return OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            errorContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
-            disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
-            errorBorderColor = MaterialTheme.colorScheme.error,
-            errorSupportingTextColor = MaterialTheme.colorScheme.error,
-            cursorColor = MaterialTheme.colorScheme.primary
-        )
-    }
+    fun colors(): TextFieldColors = OutlinedTextFieldDefaults.colors(
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        errorContainerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+        disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        errorBorderColor = MaterialTheme.colorScheme.error,
+        errorSupportingTextColor = MaterialTheme.colorScheme.error,
+        cursorColor = MaterialTheme.colorScheme.primary,
+    )
 }

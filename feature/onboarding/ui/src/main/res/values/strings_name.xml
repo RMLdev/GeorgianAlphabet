@@ -5,4 +5,14 @@
     <string name="feature_onboarding_ui_name_label">Имя или никнейм</string>
     <string name="feature_onboarding_ui_name_placeholder_cyrillic">Например, Анна</string>
     <string name="feature_onboarding_ui_name_placeholder_latin">Например, Anna</string>
+    <string name="feature_onboarding_ui_name_placeholder_result">Здесь появится твоё имя грузинскими буквами</string>
+    <string name="feature_onboarding_ui_name_result_title">Твоё имя по-грузински</string>
+    <!-- Озвучка чипа разбора: «Р — რ» -->
+    <string name="feature_onboarding_ui_name_fragment_description" translatable="false">%1$s — %2$s</string>
+    <plurals name="feature_onboarding_ui_name_letters_count">
+        <item quantity="one">В твоём имени %d буква алфавита: с неё и начнём.</item>
+        <item quantity="few">В твоём имени %d буквы алфавита: с них и начнём.</item>
+        <item quantity="many">В твоём имени %d букв алфавита: с них и начнём.</item>
+        <item quantity="other">В твоём имени %d буквы алфавита: с них и начнём.</item>
+    </plurals>
 </resources>

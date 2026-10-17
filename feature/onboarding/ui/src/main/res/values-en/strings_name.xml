@@ -5,4 +5,10 @@
     <string name="feature_onboarding_ui_name_label">Name or nickname</string>
     <string name="feature_onboarding_ui_name_placeholder_cyrillic">For example, Анна</string>
     <string name="feature_onboarding_ui_name_placeholder_latin">For example, Anna</string>
+    <string name="feature_onboarding_ui_name_placeholder_result">Your name in Georgian letters will appear here</string>
+    <string name="feature_onboarding_ui_name_result_title">Your name in Georgian</string>
+    <plurals name="feature_onboarding_ui_name_letters_count">
+        <item quantity="one">Your name has %d letter of the alphabet: we\'ll start with it.</item>
+        <item quantity="other">Your name has %d letters of the alphabet: we\'ll start with them.</item>
+    </plurals>
 </resources>
