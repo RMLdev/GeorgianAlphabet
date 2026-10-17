@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExportableFileTemplateSettings">
+    <default_templates>
+      <template name="MviStore.kt" file-name="${NAME}Route" reformat="true" live-template-enabled="false">
+        <template name="MviStore.kt.child.0.kt" file-name="screen/${NAME}ViewModel" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.1.kt" file-name="screen/ui/${NAME}Screen" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.2.kt" file-name="screen/store/${NAME}Actor" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.3.kt" file-name="screen/store/${NAME}Reducer" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.4.kt" file-name="screen/store/message/${NAME}Action" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.5.kt" file-name="screen/store/message/${NAME}Event" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.6.kt" file-name="screen/store/message/${NAME}Intent" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.7.kt" file-name="screen/store/message/${NAME}SideEffect" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.8.kt" file-name="screen/store/state/${NAME}State" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.9.kt" file-name="screen/store/state/${NAME}StateToUiMapper" reformat="true" live-template-enabled="false" />
+        <template name="MviStore.kt.child.10.kt" file-name="screen/store/state/${NAME}UiState" reformat="true" live-template-enabled="false" />
+      </template>
+    </default_templates>
+  </component>
+</project>

@@ -1,0 +1,9 @@
+com.rmldev.georgianalphabet.core.datastore.impl-pngs-0 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/generated/res/pngs/debug
+com.rmldev.georgianalphabet.core.datastore.impl-updated_navigation_xml-1 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/generated/updated_navigation_xml/debug
+com.rmldev.georgianalphabet.core.datastore.impl-mergeDebugResources-2 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.rmldev.georgianalphabet.core.datastore.impl-mergeDebugResources-3 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.rmldev.georgianalphabet.core.datastore.impl-debug-4 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/merged_res/debug/mergeDebugResources
+com.rmldev.georgianalphabet.core.datastore.impl-debug-5 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/packaged_res/debug/packageDebugResources
+com.rmldev.georgianalphabet.core.datastore.impl-debug-6 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/src/debug/res
+com.rmldev.georgianalphabet.core.datastore.impl-main-7 /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/src/main/res
+gradleHome-0 /Users/romanmalaev/.gradle

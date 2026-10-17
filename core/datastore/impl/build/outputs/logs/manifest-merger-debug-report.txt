@@ -1,0 +1,16 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml:2:13-83
+INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml:2:13-83
+	package
+		INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml
+	xmlns:android
+		ADDED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml:2:23-81
+uses-sdk
+INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml reason: use-sdk injection requested
+INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml
+INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml
+	android:targetSdkVersion
+		INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml
+	android:minSdkVersion
+		INJECTED from /Users/romanmalaev/Developer/android/ge_alph/app/core/datastore/impl/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest5824594155645696382.xml

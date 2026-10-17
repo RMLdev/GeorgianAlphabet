@@ -1,0 +1,2 @@
+com.rmldev.georgianalphabet.feature.alphabet.ui
+string feature_alphabet_ui_screen_name

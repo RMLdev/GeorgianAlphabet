@@ -1,0 +1,1 @@
+-keep,allowobfuscation,allowshrinking class com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.AlphabetViewModel

@@ -1,0 +1,1 @@
+int string feature_alphabet_ui_screen_name 0x0

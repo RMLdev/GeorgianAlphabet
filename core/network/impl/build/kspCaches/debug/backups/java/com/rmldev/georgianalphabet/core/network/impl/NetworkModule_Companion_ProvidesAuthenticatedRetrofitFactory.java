@@ -1,0 +1,56 @@
+package com.rmldev.georgianalphabet.core.network.impl;
+
+import dagger.Lazy;
+import dagger.internal.DaggerGenerated;
+import dagger.internal.DoubleCheck;
+import dagger.internal.Factory;
+import dagger.internal.Preconditions;
+import dagger.internal.Provider;
+import dagger.internal.QualifierMetadata;
+import dagger.internal.ScopeMetadata;
+import javax.annotation.processing.Generated;
+import kotlinx.serialization.json.Json;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+
+@ScopeMetadata("javax.inject.Singleton")
+@QualifierMetadata("com.rmldev.georgianalphabet.core.network.api.Authenticated")
+@DaggerGenerated
+@Generated(
+    value = "dagger.internal.codegen.ComponentProcessor",
+    comments = "https://dagger.dev"
+)
+@SuppressWarnings({
+    "unchecked",
+    "rawtypes",
+    "KotlinInternal",
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation",
+    "nullness:initialization.field.uninitialized"
+})
+public final class NetworkModule_Companion_ProvidesAuthenticatedRetrofitFactory implements Factory<Retrofit> {
+  private final Provider<OkHttpClient> okHttpClientProvider;
+
+  private final Provider<Json> jsonProvider;
+
+  private NetworkModule_Companion_ProvidesAuthenticatedRetrofitFactory(
+      Provider<OkHttpClient> okHttpClientProvider, Provider<Json> jsonProvider) {
+    this.okHttpClientProvider = okHttpClientProvider;
+    this.jsonProvider = jsonProvider;
+  }
+
+  @Override
+  public Retrofit get() {
+    return providesAuthenticatedRetrofit(DoubleCheck.lazy(okHttpClientProvider), jsonProvider.get());
+  }
+
+  public static NetworkModule_Companion_ProvidesAuthenticatedRetrofitFactory create(
+      Provider<OkHttpClient> okHttpClientProvider, Provider<Json> jsonProvider) {
+    return new NetworkModule_Companion_ProvidesAuthenticatedRetrofitFactory(okHttpClientProvider, jsonProvider);
+  }
+
+  public static Retrofit providesAuthenticatedRetrofit(Lazy<OkHttpClient> okHttpClient, Json json) {
+    return Preconditions.checkNotNullFromProvides(NetworkModule.Companion.providesAuthenticatedRetrofit(okHttpClient, json));
+  }
+}
