@@ -12,10 +12,10 @@ import androidx.navigation3.runtime.result.rememberResultEventBusNavEntryDecorat
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
 import com.rmldev.georgianalphabet.core.navigation.api.BackStackEntry
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
-import com.rmldev.georgianalphabet.core.navigation.backstack.DjcBackStack
+import com.rmldev.georgianalphabet.core.navigation.backstack.GeAlphBackStack
 
 @Composable
-fun NavigationState2.toEntries(
+fun NavigationState.toEntries(
     entryProvider: (NavigationKey) -> NavEntry<NavigationKey>,
     resultEventBus: ResultEventBus,
 ): List<NavEntry<BackStackEntry<NavigationKey>>> {
@@ -33,7 +33,7 @@ fun NavigationState2.toEntries(
 
 @Composable
 private fun rememberEntries(
-    stack: DjcBackStack<NavigationKey>,
+    stack: GeAlphBackStack<NavigationKey>,
     entryProvider: (NavigationKey) -> NavEntry<NavigationKey>,
     resultEventBus: ResultEventBus,
 ): List<NavEntry<BackStackEntry<NavigationKey>>> {

@@ -10,7 +10,7 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.ui.AlphabetScreen
 
 @Composable
-internal fun AlphabetGreedRoute(
+internal fun AlphabetGridRoute(
     viewModel: AlphabetViewModel = hiltViewModel(),
     onGlyphClick: (Int) -> Unit,
 ) {

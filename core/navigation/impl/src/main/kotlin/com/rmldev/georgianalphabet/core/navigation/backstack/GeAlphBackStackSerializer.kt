@@ -8,22 +8,22 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-class DjsBackStackSerializer<T : NavigationKey>(elementSerializer: KSerializer<T>) :
-    KSerializer<DjcBackStack<T>> {
+class GeAlphBackStackSerializer<T : NavigationKey>(elementSerializer: KSerializer<T>) :
+    KSerializer<GeAlphBackStack<T>> {
 
     private val delegate = SnapshotStateListSerializer(BackStackEntry.serializer(elementSerializer))
 
     override val descriptor: SerialDescriptor =
         SerialDescriptor(
-            "com.rmldev.georgianalphabet.core.navigation.DjcBackStack",
+            "GeAlphBackStack",
             delegate.descriptor
         )
 
-    override fun serialize(encoder: Encoder, value: DjcBackStack<T>) {
+    override fun serialize(encoder: Encoder, value: GeAlphBackStack<T>) {
         encoder.encodeSerializableValue(serializer = delegate, value = value.base)
     }
 
-    override fun deserialize(decoder: Decoder): DjcBackStack<T> {
-        return DjcBackStack(base = decoder.decodeSerializableValue(deserializer = delegate))
+    override fun deserialize(decoder: Decoder): GeAlphBackStack<T> {
+        return GeAlphBackStack(base = decoder.decodeSerializableValue(deserializer = delegate))
     }
 }

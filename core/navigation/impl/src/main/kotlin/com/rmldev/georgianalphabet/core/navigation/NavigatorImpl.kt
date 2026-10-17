@@ -7,10 +7,10 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationInterceptor
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.Navigator
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
-import com.rmldev.georgianalphabet.core.navigation.state.NavigationState2
+import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
 
 internal class NavigatorImpl(
-    private val navigationState: NavigationState2,
+    private val navigationState: NavigationState,
     private val interceptors: List<NavigationInterceptor>,
     private val onExit: () -> Unit
 ) : Navigator {
@@ -38,7 +38,7 @@ internal class NavigatorImpl(
         NavigationCommand.Back -> executeBack()
         is NavigationCommand.PopWhere -> navigationState.popWhere(command.predicate)
         is NavigationCommand.TruncateEverywhere -> navigationState.truncateEverywhere(command.predicate)
-        is NavigationCommand.Batch -> command.commands.forEach(::execute)   // без повторного перехвата
+        is NavigationCommand.Batch -> command.commands.forEach(::execute)   // without running interceptors again
         NavigationCommand.None -> Unit
     }
 
@@ -56,7 +56,7 @@ internal class NavigatorImpl(
 
 @Composable
 fun rememberNavigator(
-    state: NavigationState2,
+    state: NavigationState,
     interceptors: List<NavigationInterceptor>,
     onExit: () -> Unit
 ): Navigator {

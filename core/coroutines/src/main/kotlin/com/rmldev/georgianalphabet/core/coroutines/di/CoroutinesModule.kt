@@ -15,17 +15,17 @@ import javax.inject.Singleton
 internal object CoroutinesModule {
 
     @Provides
-    @Dispatcher(DjcDispatchers.IO)
+    @Dispatcher(GeAlphDispatchers.IO)
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @Provides
-    @Dispatcher(DjcDispatchers.Default)
+    @Dispatcher(GeAlphDispatchers.Default)
     fun providesDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @Provides
     @Singleton
     @ApplicationScope
     fun providesCoroutineScope(
-        @Dispatcher(DjcDispatchers.Default) dispatcher: CoroutineDispatcher,
+        @Dispatcher(GeAlphDispatchers.Default) dispatcher: CoroutineDispatcher,
     ): CoroutineScope = CoroutineScope(SupervisorJob() + dispatcher)
 }

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.dataStoreFile
 import com.rmldev.georgianalphabet.core.coroutines.di.ApplicationScope
 import com.rmldev.georgianalphabet.core.coroutines.di.Dispatcher
-import com.rmldev.georgianalphabet.core.coroutines.di.DjcDispatchers
+import com.rmldev.georgianalphabet.core.coroutines.di.GeAlphDispatchers
 import com.rmldev.georgianalphabet.core.datastore.AeadSerializerCreator
 import com.rmldev.georgianalphabet.core.datastore.AeadSerializerCreatorImpl
 import com.rmldev.georgianalphabet.core.datastore.DataStoreProviderImpl
@@ -28,7 +28,7 @@ internal object DataStoreModule {
         @ApplicationContext applicationContext: Context,
         aeadSerializerCreator: AeadSerializerCreator,
         @ApplicationScope scope: CoroutineScope,
-        @Dispatcher(DjcDispatchers.IO) ioDispatcher: CoroutineDispatcher
+        @Dispatcher(GeAlphDispatchers.IO) ioDispatcher: CoroutineDispatcher
     ): DataStoreProvider = DataStoreProviderImpl(
         dataStoreFileProducer = { applicationContext.dataStoreFile(it) },
         aeadSerializerCreator = aeadSerializerCreator,

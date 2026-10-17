@@ -15,8 +15,8 @@ import kotlinx.serialization.modules.SerializersModuleBuilder
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.serializer
 
-@Serializable(with = DjsBackStackSerializer::class)
-class DjcBackStack<T : NavigationKey>(val base: SnapshotStateList<BackStackEntry<T>>) :
+@Serializable(with = GeAlphBackStackSerializer::class)
+class GeAlphBackStack<T : NavigationKey>(val base: SnapshotStateList<BackStackEntry<T>>) :
     MutableList<BackStackEntry<T>> by base, StateObject by base, RandomAccess by base {
 
     fun resetToRoot() {
@@ -29,14 +29,14 @@ class DjcBackStack<T : NavigationKey>(val base: SnapshotStateList<BackStackEntry
 }
 
 @Composable
-fun rememberDjcNavBackStack(
+fun rememberGeAlphBackStack(
     configuration: SavedStateConfiguration,
     vararg elements: NavigationKey,
-): DjcBackStack<NavigationKey> {
+): GeAlphBackStack<NavigationKey> {
     return rememberSerializable(
         serializer = serializer(),
         configuration = configuration,
     ) {
-        DjcBackStack(*elements)
+        GeAlphBackStack(*elements)
     }
 }

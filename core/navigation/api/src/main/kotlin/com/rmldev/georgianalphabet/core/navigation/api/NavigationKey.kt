@@ -4,8 +4,6 @@ interface NavigationKey {
     val tag: String
 }
 
-interface ProtectedNavigationKey : NavigationKey
-
 interface TabKey : NavigationKey
 
 interface OverlayScreenKey : NavigationKey {
