@@ -11,6 +11,7 @@ class AndroidLibPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("com.android.library")
+            pluginManager.apply("com.rmldev.testing")
 
             configure<LibraryExtension> {
                 resourcePrefix = path.split("""\W""".toRegex())
