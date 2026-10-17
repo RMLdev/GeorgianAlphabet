@@ -29,6 +29,7 @@ dependencies {
     compileOnly(libs.android.tools.common)
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
+    compileOnly(libs.kover.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
 }
@@ -94,6 +95,12 @@ gradlePlugin {
             id = libs.plugins.rmldev.feature.ui.get().pluginId
             implementationClass =
                 "com.rmldev.georgianalphabet.plugin.convention.FeatureUiPlugin"
+        }
+
+        register("testingPlugin") {
+            id = libs.plugins.rmldev.testing.get().pluginId
+            implementationClass =
+                "com.rmldev.georgianalphabet.plugin.convention.TestingPlugin"
         }
 
         register("applicationPlugin") {
