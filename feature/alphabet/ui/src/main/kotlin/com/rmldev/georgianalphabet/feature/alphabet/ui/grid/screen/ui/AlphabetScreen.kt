@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,14 +18,20 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
+import com.rmldev.georgianalphabet.core.designsystem.font.GeorgianFont
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
+import com.rmldev.georgianalphabet.core.designsystem.theme.GlyphTextStyle
 import com.rmldev.georgianalphabet.feature.alphabet.ui.R
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetIntent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetGridItem
@@ -32,6 +39,7 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.A
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphLearningProgress
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphUi
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableMap
 
 private const val GRID_COLUMNS = 4
 
@@ -48,7 +56,12 @@ internal fun AlphabetScreen(state: AlphabetUiState, onIntent: (AlphabetIntent) -
             .windowInsetsPadding(WindowInsets.statusBars),
     ) {
         fullWidthItem(key = "header") {
-            AlphabetHeader(lettersCount = state.lettersCount, masteredCount = state.masteredCount)
+            AlphabetHeader(
+                lettersCount = state.lettersCount,
+                masteredCount = state.masteredCount,
+                fontsShuffled = state.fontsShuffled,
+                onShuffleFontsClick = { onIntent(AlphabetIntent.ShuffleFontsClicked) },
+            )
         }
         alphabetGridItems(state, onIntent)
     }
@@ -77,6 +90,7 @@ private fun LazyGridScope.alphabetGridItems(state: AlphabetUiState, onIntent: (A
                 sound = item.glyph.sound,
                 progress = item.glyph.progress,
                 onClick = { onIntent(AlphabetIntent.GlyphClicked(item.glyph.id)) },
+                glyphStyle = tileGlyphStyle(state.tileFonts[item.glyph.id]),
             )
 
             is AlphabetGridItem.LessonHeader -> LessonHeader(item)
@@ -85,8 +99,25 @@ private fun LazyGridScope.alphabetGridItems(state: AlphabetUiState, onIntent: (A
 }
 
 @Composable
-private fun AlphabetHeader(lettersCount: Int, masteredCount: Int) {
-    Column(Modifier.padding(start = 4.dp, end = 4.dp, bottom = 8.dp)) {
+private fun AlphabetHeader(
+    lettersCount: Int,
+    masteredCount: Int,
+    fontsShuffled: Boolean,
+    onShuffleFontsClick: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.padding(start = 4.dp, bottom = 8.dp),
+    ) {
+        AlphabetTitle(lettersCount, masteredCount, Modifier.weight(1f))
+        ShuffleFontsButton(checked = fontsShuffled, onClick = onShuffleFontsClick)
+    }
+}
+
+@Composable
+private fun AlphabetTitle(lettersCount: Int, masteredCount: Int, modifier: Modifier = Modifier) {
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
             text = stringResource(R.string.feature_alphabet_ui_screen_name),
             style = MaterialTheme.typography.headlineLarge,
@@ -104,6 +135,12 @@ private fun AlphabetHeader(lettersCount: Int, masteredCount: Int) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
+}
+
+// Without a font the tile keeps Noto Serif Georgian from GlyphTextStyle.Tile
+@Composable
+private fun tileGlyphStyle(font: GeorgianFont?): TextStyle = remember(font) {
+    if (font == null) GlyphTextStyle.Tile else GlyphTextStyle.Tile.copy(fontFamily = font.fontFamily)
 }
 
 @Composable
@@ -154,5 +191,29 @@ private fun AlphabetScreenLightPreview() {
 private fun AlphabetScreenDarkPreview() {
     GeAlphTheme(darkTheme = true) {
         AlphabetScreen(PreviewState, onIntent = {})
+    }
+}
+
+private val ShuffledPreviewState = PreviewState.copy(
+    fontsShuffled = true,
+    tileFonts = PreviewState.gridItems.filterIsInstance<AlphabetGridItem.Glyph>()
+        .mapIndexed { index, item -> item.glyph.id to FontCatalog.all[index % FontCatalog.all.size] }
+        .toMap()
+        .toImmutableMap(),
+)
+
+@Preview(name = "shuffled · light", widthDp = 360, heightDp = 480)
+@Composable
+private fun AlphabetScreenShuffledLightPreview() {
+    GeAlphTheme(darkTheme = false) {
+        AlphabetScreen(ShuffledPreviewState, onIntent = {})
+    }
+}
+
+@Preview(name = "shuffled · dark", widthDp = 360, heightDp = 480)
+@Composable
+private fun AlphabetScreenShuffledDarkPreview() {
+    GeAlphTheme(darkTheme = true) {
+        AlphabetScreen(ShuffledPreviewState, onIntent = {})
     }
 }

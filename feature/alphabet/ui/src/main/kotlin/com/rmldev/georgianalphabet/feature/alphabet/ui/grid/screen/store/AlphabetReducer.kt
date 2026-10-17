@@ -13,5 +13,7 @@ internal class AlphabetReducer @Inject constructor() : MviReducer<AlphabetState,
             progress = event.progress,
             knownScript = event.knownScript,
         )
+
+        is AlphabetEvent.FontShuffleChanged -> oldState.copy(fontShuffleSeed = event.seed)
     }
 }

@@ -10,4 +10,7 @@ internal sealed interface AlphabetEvent {
         val progress: Map<Int, LetterProgress>,
         val knownScript: KnownScript,
     ) : AlphabetEvent
+
+    /** [seed] — новое перемешивание шрифтов плиток; null — все плитки в шрифте по умолчанию. */
+    data class FontShuffleChanged(val seed: Long?) : AlphabetEvent
 }

@@ -10,4 +10,6 @@ internal data class AlphabetState(
     /** Прогресс по id буквы; буквы без записи — новые. */
     val progress: Map<Int, LetterProgress> = emptyMap(),
     val knownScript: KnownScript = KnownScript.CYRILLIC,
+    /** Сид перемешивания шрифтов плиток; null — перемешивание выключено. */
+    val fontShuffleSeed: Long? = null,
 )
