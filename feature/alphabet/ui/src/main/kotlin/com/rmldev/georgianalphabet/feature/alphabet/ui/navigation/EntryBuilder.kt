@@ -14,7 +14,7 @@ fun EntryProviderScope<NavigationKey>.provideEntries(navigator: Navigator) {
         )
     }
 
-    entry<GlyphDetailsNavKey> {
-        GlyphDetailsRoute()
+    entry<GlyphDetailsNavKey> { key ->
+        GlyphDetailsRoute(glyphId = key.id)
     }
 }

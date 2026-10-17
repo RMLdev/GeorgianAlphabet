@@ -9,7 +9,10 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.ui.GlyphDeta
 
 @Composable
 internal fun GlyphDetailsRoute(
-    viewModel: GlyphDetailsViewModel = hiltViewModel()
+    glyphId: Int,
+    viewModel: GlyphDetailsViewModel = hiltViewModel<GlyphDetailsViewModel, GlyphDetailsViewModel.Factory>(
+        creationCallback = { factory -> factory.create(glyphId) },
+    ),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

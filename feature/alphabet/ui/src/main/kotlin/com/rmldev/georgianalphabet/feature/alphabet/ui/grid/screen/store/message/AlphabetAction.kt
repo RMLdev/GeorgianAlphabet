@@ -2,4 +2,6 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.messag
 
 internal sealed interface AlphabetAction {
     object Stub : AlphabetAction
+
+    data class OpenGlyph(val id: Int) : AlphabetAction
 }

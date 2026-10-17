@@ -16,6 +16,9 @@ internal class AlphabetActor @Inject constructor() :
     override suspend fun AlphabetActorScope.executeAction(
         action: AlphabetAction
     ) {
-
+        when (action) {
+            AlphabetAction.Stub -> Unit
+            is AlphabetAction.OpenGlyph -> sideEffect(AlphabetSideEffect.OpenGlyph(action.id))
+        }
     }
 }

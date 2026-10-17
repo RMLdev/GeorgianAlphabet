@@ -19,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rmldev.georgianalphabet.core.designsystem.item.VerticalSpace
 import com.rmldev.georgianalphabet.core.designsystem.theme.GlyphTextStyle
+import com.rmldev.georgianalphabet.feature.alphabet.ui.R
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetIntent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetUiState
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphLearningProgress
@@ -32,7 +34,6 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.G
 internal fun AlphabetScreen(
     state: AlphabetUiState,
     onIntent: (AlphabetIntent) -> Unit,
-    onGlyphClick: (Int) -> Unit,
 ) {
     Column(
         Modifier
@@ -48,7 +49,7 @@ internal fun AlphabetScreen(
         ) {
             VerticalSpace(32.dp)
             Text(
-                text = state.screenTitle,
+                text = stringResource(R.string.feature_alphabet_ui_screen_name),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
@@ -60,7 +61,7 @@ internal fun AlphabetScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 config = {
                     repeat(state.gridColumnsCount) {
-                        column(0.25f)
+                        column(1f / state.gridColumnsCount)
                     }
                     repeat(state.gridRowsCount) {
                         row(1.fr)
@@ -69,13 +70,10 @@ internal fun AlphabetScreen(
                     columnGap(8.dp)
                 },
             ) {
-                repeat(state.glyphs.count()) { index ->
-                    val glyph = state.glyphs[index]
+                state.glyphs.forEach { glyph ->
                     GlyphCard(
-                        glyph = state.glyphs[index],
-                        onClick = {
-                            onGlyphClick(glyph.id)
-                        }
+                        glyph = glyph,
+                        onClick = { onIntent(AlphabetIntent.GlyphClicked(glyph.id)) },
                     )
                 }
             }

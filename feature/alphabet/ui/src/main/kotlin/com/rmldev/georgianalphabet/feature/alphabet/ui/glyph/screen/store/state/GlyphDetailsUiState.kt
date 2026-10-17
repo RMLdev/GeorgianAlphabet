@@ -3,5 +3,7 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state
 import androidx.compose.runtime.Stable
 
 @Stable
-class GlyphDetailsUiState {
-}
+internal data class GlyphDetailsUiState(
+    val symbol: String,
+    val name: String,
+)
