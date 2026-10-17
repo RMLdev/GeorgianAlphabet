@@ -222,7 +222,12 @@ private fun LetterHeaderPlayingPreview() {
     GeAlphTheme(darkTheme = false) {
         Surface {
             LetterHeader(
-                PreviewHeader.copy(name = "ani", sound = "a", knownScript = KnownScript.LATIN, isNamePlaying = true),
+                PreviewHeader.copy(
+                    name = "ani",
+                    sound = "a",
+                    knownScript = KnownScript.LATIN,
+                    isNamePlaying = true,
+                ),
                 onIntent = {},
             )
         }
