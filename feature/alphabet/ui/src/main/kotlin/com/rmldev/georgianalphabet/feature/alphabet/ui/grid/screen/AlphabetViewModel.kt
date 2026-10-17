@@ -22,11 +22,11 @@ internal class AlphabetViewModel @Inject constructor(
     actor = actor,
     reducer = reducer,
     initialState = AlphabetState(),
-    initialActions = listOf(AlphabetAction.LoadLetters),
+    // ObserveLetters never completes, so it must stay the last initial action
+    initialActions = listOf(AlphabetAction.ObserveLetters),
     uiStateMapper = uiStateMapper,
     intentToAction = { intent ->
         when (intent) {
-            AlphabetIntent.Stub -> AlphabetAction.Stub
             is AlphabetIntent.GlyphClicked -> AlphabetAction.OpenGlyph(intent.id)
         }
     },
