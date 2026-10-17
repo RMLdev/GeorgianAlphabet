@@ -1,5 +1,6 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.grid
 
+import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
 import com.rmldev.georgianalphabet.core.ui.ActorScope
 import com.rmldev.georgianalphabet.feature.alphabet.api.model.LearningLevel
 import com.rmldev.georgianalphabet.feature.alphabet.api.model.Letter
@@ -19,6 +20,7 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.A
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetStateToUiMapper
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetUiState
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphLearningProgress
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.tileFonts
 import com.rmldev.georgianalphabet.feature.preferences.api.model.KnownScript
 import com.rmldev.georgianalphabet.feature.preferences.api.model.UserPreferences
 import com.rmldev.georgianalphabet.feature.preferences.api.usecase.ObserveUserPreferencesUseCase
@@ -32,6 +34,8 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -322,5 +326,60 @@ class AlphabetStoreTest {
 
         assertEquals(listOf<AlphabetSideEffect>(AlphabetSideEffect.OpenGlyph(5)), scope.sideEffects)
         assertTrue(scope.events.isEmpty())
+    }
+
+    @Test
+    fun `toggle font shuffle switches on with a seed and off without one`() = runTest {
+        val off = RecordingScope(AlphabetState(), this)
+        with(actor()) { off.executeAction(AlphabetAction.ToggleFontShuffle) }
+        val on = RecordingScope(AlphabetState(fontShuffleSeed = 42), this)
+        with(actor()) { on.executeAction(AlphabetAction.ToggleFontShuffle) }
+
+        assertNotNull((off.events.single() as AlphabetEvent.FontShuffleChanged).seed)
+        assertEquals(listOf<AlphabetEvent>(AlphabetEvent.FontShuffleChanged(null)), on.events)
+    }
+
+    @Test
+    fun `reducer stores font shuffle seed`() {
+        val reducer = AlphabetReducer()
+
+        val on = reducer.reduce(AlphabetState(), AlphabetEvent.FontShuffleChanged(7))
+        val off = reducer.reduce(on, AlphabetEvent.FontShuffleChanged(null))
+
+        assertEquals(7L, on.fontShuffleSeed)
+        assertNull(off.fontShuffleSeed)
+    }
+
+    @Test
+    fun `without shuffle tiles keep the default font`() {
+        val ui = mapper(AlphabetState(letters = listOf(a, b)))
+
+        assertFalse(ui.fontsShuffled)
+        assertTrue(ui.tileFonts.isEmpty())
+    }
+
+    @Test
+    fun `shuffle gives every letter an open font, stable for the same seed`() {
+        val letters = (0 until 33).map { letter(it, 'ა' + it) } + archaic
+        val state = AlphabetState(letters = letters, fontShuffleSeed = 1)
+
+        val first = mapper(state)
+        val second = mapper(state.copy(progress = mapOf(0 to progress(0, LearningLevel.MASTER))))
+
+        assertTrue(first.fontsShuffled)
+        assertEquals(letters.map { it.id }.toSet(), first.tileFonts.keys)
+        assertTrue(first.tileFonts.values.all { it in FontCatalog.unlocked() })
+        assertTrue(first.tileFonts.values.toSet().size > 1)
+        assertEquals(first.tileFonts, second.tileFonts)
+        assertNotEquals(first.tileFonts, mapper(state.copy(fontShuffleSeed = 2)).tileFonts)
+    }
+
+    @Test
+    fun `neighbouring letters never share a font`() {
+        val letters = (0 until 33).map { letter(it, 'ა' + it) }
+
+        val fonts = letters.map { tileFonts(letters, seed = 3).getValue(it.id) }
+
+        assertTrue(fonts.zipWithNext().none { (left, right) -> left == right })
     }
 }

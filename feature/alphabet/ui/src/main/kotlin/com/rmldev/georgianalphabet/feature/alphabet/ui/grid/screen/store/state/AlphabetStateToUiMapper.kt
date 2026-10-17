@@ -26,6 +26,8 @@ internal class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -
                 AlphabetSort.LESSONS -> glyphs.toLessonSections(state.filter)
             }.toImmutableList(),
             archaicGlyphs = archaic.toGlyphs().toImmutableList(),
+            fontsShuffled = state.fontShuffleSeed != null,
+            tileFonts = tileFonts(state.letters, state.fontShuffleSeed),
         )
     }
 

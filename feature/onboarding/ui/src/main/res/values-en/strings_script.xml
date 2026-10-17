@@ -4,4 +4,7 @@
     <string name="feature_onboarding_ui_script_body">We\'ll use it to show how Georgian letters are read, and tasks will be in it. You can change it in settings.</string>
     <string name="feature_onboarding_ui_script_cyrillic">Cyrillic</string>
     <string name="feature_onboarding_ui_script_latin">Latin</string>
+    <string name="feature_onboarding_ui_script_cyrillic_description">Cyrillic: letters Б, Ж, Я</string>
+    <string name="feature_onboarding_ui_script_latin_description">Latin: letters G, Q, W</string>
+    <string name="feature_onboarding_ui_script_example">%1$s → %2$s</string>
 </resources>

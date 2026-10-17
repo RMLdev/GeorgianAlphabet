@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlin.random.Random
 
 private typealias AlphabetActorScope = ActorScope<AlphabetState, AlphabetEvent, AlphabetSideEffect>
 
@@ -28,6 +29,7 @@ internal class AlphabetActor @Inject constructor(
             is AlphabetAction.OpenGlyph -> sideEffect(AlphabetSideEffect.OpenGlyph(action.id))
             is AlphabetAction.SelectFilter -> event(AlphabetEvent.FilterSelected(action.filter))
             is AlphabetAction.SelectSort -> event(AlphabetEvent.SortSelected(action.sort))
+            AlphabetAction.ToggleFontShuffle -> toggleFontShuffle()
         }
     }
 
@@ -37,5 +39,11 @@ internal class AlphabetActor @Inject constructor(
         combine(observeProgress(), knownScript) { progress, script ->
             AlphabetEvent.LettersUpdated(letters, progress, script)
         }.collect { event(it) }
+    }
+
+    // A fresh seed on every switch-on keeps the fonts stable until the next press
+    private fun AlphabetActorScope.toggleFontShuffle() {
+        val seed = if (state.fontShuffleSeed == null) Random.nextLong() else null
+        event(AlphabetEvent.FontShuffleChanged(seed))
     }
 }

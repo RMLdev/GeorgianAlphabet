@@ -13,4 +13,6 @@ internal data class AlphabetState(
     /** Выбранный фильтр живёт только пока жив экран, между запусками не сохраняется. */
     val filter: AlphabetFilter = AlphabetFilter.ALL,
     val sort: AlphabetSort = AlphabetSort.ALPHABET,
+    /** Сид перемешивания шрифтов плиток; null — перемешивание выключено. */
+    val fontShuffleSeed: Long? = null,
 )

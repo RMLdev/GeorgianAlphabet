@@ -17,5 +17,7 @@ internal class AlphabetReducer @Inject constructor() : MviReducer<AlphabetState,
         is AlphabetEvent.FilterSelected -> oldState.copy(filter = event.filter)
 
         is AlphabetEvent.SortSelected -> oldState.copy(sort = event.sort)
+
+        is AlphabetEvent.FontShuffleChanged -> oldState.copy(fontShuffleSeed = event.seed)
     }
 }

@@ -4,4 +4,9 @@
     <string name="feature_onboarding_ui_script_body">Им подпишем, как читаются грузинские буквы, и на нём будут задания. Поменять можно в настройках.</string>
     <string name="feature_onboarding_ui_script_cyrillic">Кириллица</string>
     <string name="feature_onboarding_ui_script_latin">Латиница</string>
+    <string name="feature_onboarding_ui_script_cyrillic_description">Кириллица: буквы Б, Ж, Я</string>
+    <string name="feature_onboarding_ui_script_latin_description">Латиница: буквы G, Q, W</string>
+    <!-- Пример подписи буквы: ანი → ани. %1$s: название буквы по-грузински, %2$s: оно же на знакомом алфавите -->
+    <string name="feature_onboarding_ui_script_example">%1$s → %2$s</string>
+    <string name="feature_onboarding_ui_script_example_georgian" translatable="false">ანი</string>
 </resources>

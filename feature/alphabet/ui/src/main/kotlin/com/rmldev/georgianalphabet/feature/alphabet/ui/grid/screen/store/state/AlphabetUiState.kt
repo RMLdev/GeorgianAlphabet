@@ -1,8 +1,11 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state
 
 import androidx.compose.runtime.Stable
+import com.rmldev.georgianalphabet.core.designsystem.font.GeorgianFont
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 
 @Stable
 data class AlphabetUiState(
@@ -19,6 +22,9 @@ data class AlphabetUiState(
     val gridItems: ImmutableList<AlphabetGridItem> = persistentListOf(),
     /** Архаичные буквы для справочного блока под сеткой. */
     val archaicGlyphs: ImmutableList<GlyphUi> = persistentListOf(),
+    val fontsShuffled: Boolean = false,
+    /** Шрифт глифа по id буквы, пока шрифты перемешаны; буквы без записи — в шрифте по умолчанию. */
+    val tileFonts: ImmutableMap<Int, GeorgianFont> = persistentMapOf(),
 )
 
 @Stable

@@ -30,6 +30,7 @@ internal class AlphabetViewModel @Inject constructor(
             is AlphabetIntent.GlyphClicked -> AlphabetAction.OpenGlyph(intent.id)
             is AlphabetIntent.FilterSelected -> AlphabetAction.SelectFilter(intent.filter)
             is AlphabetIntent.SortSelected -> AlphabetAction.SelectSort(intent.sort)
+            AlphabetIntent.ShuffleFontsClicked -> AlphabetAction.ToggleFontShuffle
         }
     },
 )

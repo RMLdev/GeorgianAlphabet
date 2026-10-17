@@ -16,4 +16,7 @@ internal sealed interface AlphabetEvent {
     data class FilterSelected(val filter: AlphabetFilter) : AlphabetEvent
 
     data class SortSelected(val sort: AlphabetSort) : AlphabetEvent
+
+    /** [seed] — новое перемешивание шрифтов плиток; null — все плитки в шрифте по умолчанию. */
+    data class FontShuffleChanged(val seed: Long?) : AlphabetEvent
 }

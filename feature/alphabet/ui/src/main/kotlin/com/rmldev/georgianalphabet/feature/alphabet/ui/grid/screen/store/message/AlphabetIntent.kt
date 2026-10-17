@@ -10,4 +10,6 @@ internal sealed interface AlphabetIntent {
     data class FilterSelected(val filter: AlphabetFilter) : AlphabetIntent
 
     data class SortSelected(val sort: AlphabetSort) : AlphabetIntent
+
+    object ShuffleFontsClicked : AlphabetIntent
 }

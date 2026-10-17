@@ -12,4 +12,6 @@ internal sealed interface AlphabetAction {
     data class SelectFilter(val filter: AlphabetFilter) : AlphabetAction
 
     data class SelectSort(val sort: AlphabetSort) : AlphabetAction
+
+    object ToggleFontShuffle : AlphabetAction
 }
