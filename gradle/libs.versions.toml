@@ -13,8 +13,9 @@ kotlinxSerializationJson = "1.11.0"
 ksp = "2.3.4"
 okhttp = "5.5.0"
 retrofit = "3.0.0"
-# Room is not wired yet: needed for letter progress (see CLAUDE.md, "База данных")
 room = "2.8.5"
+# bundled SQLite driver: only for JVM tests of DAOs in :db modules
+sqlite = "2.6.2"
 androidxActivity = "1.13.0"
 # alpha BOM on purpose: Grid (AlphabetScreen) is stable only in Compose 1.13, the stable BOM has 1.12
 androidxComposeBom = "2026.10.00"
@@ -68,6 +69,7 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.r
 retrofit-kotlin-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
 androidx-compose-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore-core", version.ref = "androidxDataStore" }

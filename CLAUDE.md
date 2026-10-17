@@ -32,7 +32,7 @@ Android-приложение для изучения грузинского ал
 :feature:<name>:api       — контракт фичи
 :feature:<name>:impl      — реализация фичи
 :feature:<name>:ui        — presentation-слой фичи
-:feature:<name>:db        — хранилище фичи (Room) — пока ни в одной фиче не создан
+:feature:<name>:db        — хранилище фичи (Room), чистый Kotlin + room-runtime
 ```
 
 Модули **подключаются автоматически**: плагин `IncludeSubdirsAsModulesPlugin` включает в сборку каждую папку внутри `core/` и `feature/`, где есть `build.gradle.kts`. В `settings.gradle.kts` ничего добавлять не нужно.
@@ -93,7 +93,7 @@ Android-приложение для изучения грузинского ал
 
 ## База данных: единая RoomDatabase в `:app`
 
-> **Статус: целевая схема, ещё не реализована.** Сейчас нет ни одного модуля `:db`, нет `AppDatabase`/`DatabaseModule`, а Room/KSP не подключены к `:app` (плагины `ksp` и `room` уже есть в `libs.versions.toml`). `feature:alphabet:impl` пока пустой. Первая фича с хранилищем создаёт эту инфраструктуру по описанию ниже.
+> **Статус:** реализовано. `AppDatabase` и `DatabaseModule` лежат в `app/src/main/kotlin/.../database`, схема экспортируется в `app/schemas`. Первый модуль хранилища — `feature:alphabet:db` (прогресс букв). DAO тестируются на JVM прямо в `:db`: тестовая `@Database` в `src/test`, `kspTest(libs.room.compiler)` и `BundledSQLiteDriver` (см. `LetterProgressDaoTest`).
 
 Каждая фича описывает свою часть схемы в `:db`, а `:app` собирает всё в одну БД:
 
