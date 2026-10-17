@@ -1,10 +1,12 @@
 package com.rmldev.georgianalphabet.feature.alphabet.impl.di
 
+import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLetterDetailsUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLetterUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLettersUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.ObserveLettersProgressUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.impl.data.AlphabetRepository
 import com.rmldev.georgianalphabet.feature.alphabet.impl.data.StaticAlphabetRepository
+import com.rmldev.georgianalphabet.feature.alphabet.impl.domain.GetLetterDetailsUseCaseImpl
 import com.rmldev.georgianalphabet.feature.alphabet.impl.domain.GetLetterUseCaseImpl
 import com.rmldev.georgianalphabet.feature.alphabet.impl.domain.GetLettersUseCaseImpl
 import com.rmldev.georgianalphabet.feature.alphabet.impl.progress.ObserveLettersProgressUseCaseImpl
@@ -27,6 +29,9 @@ internal interface AlphabetFeatureModule {
 
     @Binds
     fun bindGetLetter(impl: GetLetterUseCaseImpl): GetLetterUseCase
+
+    @Binds
+    fun bindGetLetterDetails(impl: GetLetterDetailsUseCaseImpl): GetLetterDetailsUseCase
 
     @Binds
     fun bindProgressRepository(impl: RoomProgressRepository): ProgressRepository
