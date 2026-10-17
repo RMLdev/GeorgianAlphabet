@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_name_title">What\'s your name?</string>
+    <string name="feature_onboarding_ui_name_body">We\'ll show you how your name is written in Georgian.</string>
+    <string name="feature_onboarding_ui_name_label">Name or nickname</string>
+    <string name="feature_onboarding_ui_name_placeholder_cyrillic">For example, Анна</string>
+    <string name="feature_onboarding_ui_name_placeholder_latin">For example, Anna</string>
+</resources>

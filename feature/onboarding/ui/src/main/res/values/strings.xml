@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feature_onboarding_ui_welcome_title">Узнавай грузинские буквы в любом шрифте</string>
-    <string name="feature_onboarding_ui_start">Начать учить</string>
+    <!-- Общий каркас шагов 2–3. Строки шагов лежат в strings_<шаг>.xml -->
+    <string name="feature_onboarding_ui_back">Назад</string>
+    <string name="feature_onboarding_ui_next">Дальше</string>
+    <string name="feature_onboarding_ui_finish">Начать учить</string>
     <string name="feature_onboarding_ui_skip">Пропустить</string>
+    <string name="feature_onboarding_ui_step_progress">Шаг %1$d из %2$d</string>
 </resources>

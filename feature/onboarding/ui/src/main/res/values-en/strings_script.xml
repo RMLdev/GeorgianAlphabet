@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_script_title">Which alphabet do you know best?</string>
+    <string name="feature_onboarding_ui_script_body">We\'ll use it to show how Georgian letters are read, and tasks will be in it. You can change it in settings.</string>
+    <string name="feature_onboarding_ui_script_cyrillic">Cyrillic</string>
+    <string name="feature_onboarding_ui_script_latin">Latin</string>
+</resources>

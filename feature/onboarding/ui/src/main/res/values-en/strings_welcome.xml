@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_welcome_title">Recognize Georgian letters in any font</string>
+    <string name="feature_onboarding_ui_welcome_body">On shop signs, menus and in books. Every letter in a dozen different typefaces, five minutes a day.</string>
+    <string name="feature_onboarding_ui_welcome_start">Get started</string>
+    <string name="feature_onboarding_ui_welcome_skip">Skip</string>
+</resources>
