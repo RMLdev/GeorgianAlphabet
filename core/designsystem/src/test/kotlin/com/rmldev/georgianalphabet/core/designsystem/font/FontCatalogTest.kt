@@ -14,6 +14,12 @@ class FontCatalogTest {
 
     private val mkhedruli = (0x10D0..0x10F0).toSet()
 
+    private companion object {
+        // Карта уроков: 6 групп букв (concept.md 4)
+        const val LESSON_COUNT = 6
+        const val MKHEDRULI_COUNT = 33
+    }
+
     private fun fontFile(font: GeorgianFont): File {
         val name = if (font.id ==
             FontCatalog.DEFAULT_FONT_ID
@@ -56,6 +62,42 @@ class FontCatalogTest {
 
         assertEquals(6, unlocked.size)
         assertTrue(FontCatalog.byId("aznauri") in unlocked)
+    }
+
+    @Test
+    fun `locked fonts have an unlock condition and starters do not`() {
+        FontCatalog.all.forEach { font ->
+            assertEquals(font.unlockedByDefault, font.unlockCondition == null, font.id)
+        }
+        assertEquals(10, FontCatalog.all.count { it.unlockCondition != null })
+    }
+
+    @Test
+    fun `unlock conditions are valid and distinct`() {
+        val conditions = FontCatalog.all.mapNotNull { it.unlockCondition }
+
+        assertEquals(conditions.size, conditions.toSet().size)
+        conditions.forEach { condition ->
+            when (condition) {
+                // Последний урок — это AllLessons
+                is UnlockCondition.Lesson -> assertTrue(condition.number in 1 until LESSON_COUNT, "$condition")
+
+                is UnlockCondition.Streak -> assertTrue(condition.days > 0, "$condition")
+
+                is UnlockCondition.LettersMastered -> assertTrue(condition.count in 1..MKHEDRULI_COUNT, "$condition")
+
+                UnlockCondition.AllLessons -> Unit
+            }
+        }
+    }
+
+    @Test
+    fun `harder fonts never unlock by an earlier lesson than easier ones`() {
+        fun lessons(difficulty: Int) = FontCatalog.all
+            .filter { it.difficulty == difficulty }
+            .mapNotNull { (it.unlockCondition as? UnlockCondition.Lesson)?.number }
+
+        assertTrue(lessons(2).max() < (lessons(3).minOrNull() ?: Int.MAX_VALUE))
     }
 
     /** Кодовые точки из таблицы cmap (форматы 4 и 12) TrueType/OpenType-файла. */

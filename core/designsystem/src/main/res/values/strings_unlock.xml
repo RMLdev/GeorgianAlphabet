@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Условия открытия шрифта, подпись под замочком -->
+    <string name="core_designsystem_unlock_lesson">Урок %d</string>
+    <plurals name="core_designsystem_unlock_streak">
+        <item quantity="one">%d день подряд</item>
+        <item quantity="few">%d дня подряд</item>
+        <item quantity="many">%d дней подряд</item>
+        <item quantity="other">%d дня подряд</item>
+    </plurals>
+    <plurals name="core_designsystem_unlock_letters_mastered">
+        <item quantity="one">%d буква</item>
+        <item quantity="few">%d буквы</item>
+        <item quantity="many">%d букв</item>
+        <item quantity="other">%d буквы</item>
+    </plurals>
+    <string name="core_designsystem_unlock_all_lessons">Все уроки</string>
+</resources>

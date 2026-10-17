@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_designsystem_unlock_lesson">Lesson %d</string>
+    <plurals name="core_designsystem_unlock_streak">
+        <item quantity="one">%d-day streak</item>
+        <item quantity="other">%d-day streak</item>
+    </plurals>
+    <plurals name="core_designsystem_unlock_letters_mastered">
+        <item quantity="one">%d letter</item>
+        <item quantity="other">%d letters</item>
+    </plurals>
+    <string name="core_designsystem_unlock_all_lessons">All lessons</string>
+</resources>
