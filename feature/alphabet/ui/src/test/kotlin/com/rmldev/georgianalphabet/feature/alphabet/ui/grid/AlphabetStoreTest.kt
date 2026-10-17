@@ -1,7 +1,10 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.grid
 
 import com.rmldev.georgianalphabet.core.ui.ActorScope
+import com.rmldev.georgianalphabet.feature.alphabet.api.model.Letter
+import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLettersUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.AlphabetActor
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.AlphabetReducer
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetAction
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetEvent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetSideEffect
@@ -14,44 +17,93 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+private fun letter(id: Int, glyph: Char, name: String, archaic: Boolean = false, order: Int = id + 1) = Letter(
+    id = id, glyph = glyph, nameGeorgian = "", nameCyrillic = "", nameLatin = name,
+    soundCyrillic = "", soundLatin = "", ipa = "", lesson = if (archaic) null else 1,
+    archaic = archaic, order = order,
+)
+
+private class FakeGetLetters(private val letters: List<Letter>) : GetLettersUseCase {
+    override suspend fun invoke(): List<Letter> = letters
+}
+
+private class RecordingScope(override val state: AlphabetState, override val coroutineScope: CoroutineScope) :
+    ActorScope<AlphabetState, AlphabetEvent, AlphabetSideEffect> {
+    val events = mutableListOf<AlphabetEvent>()
+    val sideEffects = mutableListOf<AlphabetSideEffect>()
+    override fun event(event: AlphabetEvent) {
+        events += event
+    }
+    override suspend fun sideEffect(effect: AlphabetSideEffect) {
+        sideEffects += effect
+    }
+}
+
 class AlphabetStoreTest {
 
+    private val a = letter(0, 'ა', "ani")
+    private val b = letter(1, 'ბ', "bani")
+
     @Test
-    fun `mapper shows all 33 letters with names and stable progress`() {
+    fun `mapper maps letters to glyphs`() {
         val mapper = AlphabetStateToUiMapper()
 
-        val first = mapper(AlphabetState())
-        val second = mapper(AlphabetState())
+        val first = mapper(AlphabetState(listOf(a, b)))
+        val second = mapper(AlphabetState(listOf(a, b)))
 
-        assertEquals(33, first.glyphs.size)
+        assertEquals(2, first.glyphs.size)
         assertEquals('ბ', first.glyphs[1].symbol)
         assertEquals("bani", first.glyphs[1].name)
+        assertEquals(1, first.glyphs[1].id)
         assertTrue(first.glyphs.all { it.progress == GlyphLearningProgress.NEW })
         assertEquals(first, second)
     }
 
     @Test
-    fun `grid rows are calculated from letters count`() {
-        val uiState = AlphabetStateToUiMapper()(AlphabetState())
+    fun `mapper handles empty state`() {
+        val ui = AlphabetStateToUiMapper()(AlphabetState())
 
-        assertEquals(4, uiState.gridColumnsCount)
-        assertEquals(9, uiState.gridRowsCount)
+        assertTrue(ui.glyphs.isEmpty())
+        assertEquals(0, ui.gridRowsCount)
+    }
+
+    @Test
+    fun `grid rows are calculated from letters count`() {
+        val letters = (0 until 33).map { letter(it, 'ა', "x") }
+        val ui = AlphabetStateToUiMapper()(AlphabetState(letters))
+
+        assertEquals(4, ui.gridColumnsCount)
+        assertEquals(9, ui.gridRowsCount)
+    }
+
+    @Test
+    fun `reducer stores loaded letters`() {
+        val result = AlphabetReducer().reduce(AlphabetState(), AlphabetEvent.LettersLoaded(listOf(a, b)))
+
+        assertEquals(listOf(a, b), result.letters)
+    }
+
+    @Test
+    fun `load letters emits modern letters sorted by order`() = runTest {
+        val archaic = letter(33, 'ჱ', "hae", archaic = true, order = 7)
+        val late = letter(2, 'გ', "gani", order = 3)
+        val scope = RecordingScope(AlphabetState(), this)
+
+        with(AlphabetActor(FakeGetLetters(listOf(late, archaic, a)))) {
+            scope.executeAction(AlphabetAction.LoadLetters)
+        }
+
+        assertEquals(listOf<AlphabetEvent>(AlphabetEvent.LettersLoaded(listOf(a, late))), scope.events)
+        assertTrue(scope.sideEffects.isEmpty())
     }
 
     @Test
     fun `open glyph action produces navigation side effect`() = runTest {
-        val sideEffects = mutableListOf<AlphabetSideEffect>()
-        val scope = object : ActorScope<AlphabetState, AlphabetEvent, AlphabetSideEffect> {
-            override val state = AlphabetState()
-            override val coroutineScope: CoroutineScope = this@runTest
-            override fun event(event: AlphabetEvent) = Unit
-            override suspend fun sideEffect(effect: AlphabetSideEffect) {
-                sideEffects += effect
-            }
-        }
+        val scope = RecordingScope(AlphabetState(), this)
 
-        with(AlphabetActor()) { scope.executeAction(AlphabetAction.OpenGlyph(5)) }
+        with(AlphabetActor(FakeGetLetters(emptyList()))) { scope.executeAction(AlphabetAction.OpenGlyph(5)) }
 
-        assertEquals(listOf<AlphabetSideEffect>(AlphabetSideEffect.OpenGlyph(5)), sideEffects)
+        assertEquals(listOf<AlphabetSideEffect>(AlphabetSideEffect.OpenGlyph(5)), scope.sideEffects)
+        assertTrue(scope.events.isEmpty())
     }
 }

@@ -2,6 +2,7 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store
 
 import com.rmldev.georgianalphabet.core.ui.ActorScope
 import com.rmldev.georgianalphabet.core.ui.MviActor
+import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLetterUseCase
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsAction
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsEvent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsSideEffect
@@ -10,12 +11,16 @@ import javax.inject.Inject
 
 private typealias GlyphDetailsActorScope = ActorScope<GlyphDetailsState, GlyphDetailsEvent, GlyphDetailsSideEffect>
 
-internal class GlyphDetailsActor @Inject constructor() :
+internal class GlyphDetailsActor @Inject constructor(private val getLetter: GetLetterUseCase) :
     MviActor<GlyphDetailsAction, GlyphDetailsState, GlyphDetailsEvent, GlyphDetailsSideEffect> {
 
-    override suspend fun GlyphDetailsActorScope.executeAction(
-        action: GlyphDetailsAction
-    ) {
+    override suspend fun GlyphDetailsActorScope.executeAction(action: GlyphDetailsAction) {
+        when (action) {
+            GlyphDetailsAction.Stub -> Unit
 
+            GlyphDetailsAction.LoadLetter -> event(
+                GlyphDetailsEvent.LetterLoaded(getLetter(state.glyphId)),
+            )
+        }
     }
 }

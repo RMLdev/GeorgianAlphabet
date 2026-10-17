@@ -7,10 +7,7 @@ import javax.inject.Inject
 
 internal class AlphabetReducer @Inject constructor() : MviReducer<AlphabetState, AlphabetEvent> {
 
-    override fun reduce(
-        oldState: AlphabetState,
-        event: AlphabetEvent
-    ): AlphabetState {
-        return oldState
+    override fun reduce(oldState: AlphabetState, event: AlphabetEvent): AlphabetState = when (event) {
+        is AlphabetEvent.LettersLoaded -> oldState.copy(letters = event.letters)
     }
 }

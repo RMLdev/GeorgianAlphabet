@@ -22,6 +22,7 @@ internal class AlphabetViewModel @Inject constructor(
     actor = actor,
     reducer = reducer,
     initialState = AlphabetState(),
+    initialActions = listOf(AlphabetAction.LoadLetters),
     uiStateMapper = uiStateMapper,
     intentToAction = { intent ->
         when (intent) {
