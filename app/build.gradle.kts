@@ -26,6 +26,8 @@ android {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.compose.material3.navigationSuite)
     implementation(libs.androidx.compose.material3.adaptive.navigation3)
     implementation(libs.androidx.navigation3.runtime)

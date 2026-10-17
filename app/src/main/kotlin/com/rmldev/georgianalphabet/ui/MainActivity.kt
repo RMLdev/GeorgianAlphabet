@@ -6,11 +6,10 @@ import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.entryProvider
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
@@ -21,11 +20,8 @@ import com.rmldev.georgianalphabet.core.navigation.rememberNavigator
 import com.rmldev.georgianalphabet.core.navigation.state.rememberNavigationState
 import com.rmldev.georgianalphabet.feature.alphabet.api.AlphabetNavKey
 import com.rmldev.georgianalphabet.feature.onboarding.api.OnboardingNavKey
-import com.rmldev.georgianalphabet.feature.preferences.api.usecase.ObserveUserPreferencesUseCase
 import com.rmldev.georgianalphabet.navigation.TOP_LEVEL_ITEMS
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.serialization.modules.SerializersModuleBuilder
 import javax.inject.Inject
 
@@ -38,26 +34,20 @@ internal class MainActivity : ComponentActivity() {
     @Inject
     lateinit var keySerializerRegistrars: Set<@JvmSuppressWildcards SerializersModuleBuilder.() -> Unit>
 
-    @Inject
-    lateinit var observeUserPreferences: ObserveUserPreferencesUseCase
-
-    // null, пока DataStore не прочитан
-    private var onboardingCompleted: Boolean? by mutableStateOf(null)
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        lifecycleScope.launch {
-            onboardingCompleted = observeUserPreferences().first().onboardingCompleted
-        }
         keepSplashUntilReady()
 
         setContent {
-            val completed = onboardingCompleted ?: return@setContent
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val ready = uiState as? MainUiState.Ready ?: return@setContent
 
             val navigationState = rememberNavigationState(
-                isFirstLaunch = !completed,
+                isFirstLaunch = ready.showOnboarding,
                 keySerializerRegistrars = keySerializerRegistrars,
                 startTab = AlphabetNavKey,
                 tabKeys = TOP_LEVEL_ITEMS.keys,
@@ -97,7 +87,7 @@ internal class MainActivity : ComponentActivity() {
         content.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {
-                    val ready = onboardingCompleted != null
+                    val ready = viewModel.uiState.value is MainUiState.Ready
                     if (ready) content.viewTreeObserver.removeOnPreDrawListener(this)
                     return ready
                 }
