@@ -10,6 +10,7 @@ class PureKotlinLibPlugin : Plugin<Project> {
         applyPlugin("kotlin-jvm")
         applyPlugin("dependency-analysis")
         applyPlugin("rmldev-testing")
+        applyPlugin("rmldev-static-analysis")
 
         configureKotlin<KotlinJvmProjectExtension>()
     }

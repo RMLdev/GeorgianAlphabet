@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>MagicNumber:LearningColors.kt:LearningColors$3</ID>
+    <ID>MatchingDeclarationName:Background.kt:BackgroundTheme</ID>
+    <ID>MatchingDeclarationName:Tint.kt:TintTheme</ID>
+  </CurrentIssues>
+</SmellBaseline>

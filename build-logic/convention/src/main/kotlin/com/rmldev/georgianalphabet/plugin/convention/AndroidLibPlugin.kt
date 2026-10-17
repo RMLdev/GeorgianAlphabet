@@ -13,6 +13,7 @@ class AndroidLibPlugin : Plugin<Project> {
             applyPlugin("android-library")
             applyPlugin("dependency-analysis")
             applyPlugin("rmldev-testing")
+            applyPlugin("rmldev-static-analysis")
 
             configure<LibraryExtension> {
                 resourcePrefix = path.split("""\W""".toRegex())

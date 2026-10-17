@@ -14,6 +14,7 @@ dependencies {
     compileOnly(libs.compose.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.kover.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
 }
@@ -79,6 +80,12 @@ gradlePlugin {
             id = libs.plugins.rmldev.feature.ui.get().pluginId
             implementationClass =
                 "com.rmldev.georgianalphabet.plugin.convention.FeatureUiPlugin"
+        }
+
+        register("staticAnalysisPlugin") {
+            id = libs.plugins.rmldev.static.analysis.get().pluginId
+            implementationClass =
+                "com.rmldev.georgianalphabet.plugin.convention.StaticAnalysisPlugin"
         }
 
         register("testingPlugin") {

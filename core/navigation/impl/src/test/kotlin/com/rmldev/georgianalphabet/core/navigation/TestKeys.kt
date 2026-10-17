@@ -1,12 +1,12 @@
 package com.rmldev.georgianalphabet.core.navigation
 
+import androidx.compose.runtime.mutableStateOf
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.OverlayScreenKey
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
 import com.rmldev.georgianalphabet.core.navigation.api.TabKey
 import com.rmldev.georgianalphabet.core.navigation.backstack.GeAlphBackStack
 import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
-import androidx.compose.runtime.mutableStateOf
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -64,5 +64,4 @@ internal fun navigationState(
 internal val NavigationState.currentKeys: List<NavigationKey>
     get() = visibleBackStack.map { it.key }
 
-internal fun NavigationState.keysOf(tab: TabKey): List<NavigationKey> =
-    backStacksByTabs.getValue(tab).map { it.key }
+internal fun NavigationState.keysOf(tab: TabKey): List<NavigationKey> = backStacksByTabs.getValue(tab).map { it.key }

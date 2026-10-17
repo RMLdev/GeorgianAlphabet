@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>EmptyDefaultConstructor:ActionResult.kt:ActionResultBuilder</ID>
+    <ID>TooGenericExceptionCaught:StoreViewModel.kt:StoreViewModel$e: Throwable</ID>
+  </CurrentIssues>
+</SmellBaseline>

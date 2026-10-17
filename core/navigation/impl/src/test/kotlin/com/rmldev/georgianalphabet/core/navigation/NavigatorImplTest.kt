@@ -12,10 +12,8 @@ class NavigatorImplTest {
 
     private var exitCount = 0
 
-    private fun navigator(
-        state: NavigationState,
-        interceptors: List<NavigationInterceptor> = emptyList(),
-    ) = NavigatorImpl(state, interceptors, onExit = { exitCount++ })
+    private fun navigator(state: NavigationState, interceptors: List<NavigationInterceptor> = emptyList()) =
+        NavigatorImpl(state, interceptors, onExit = { exitCount++ })
 
     @Test
     fun `navigateTo pushes key on current tab`() {

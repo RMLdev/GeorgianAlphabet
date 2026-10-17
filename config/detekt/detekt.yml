@@ -1,0 +1,26 @@
+# Extends the default detekt config (buildUponDefaultConfig = true).
+
+naming:
+  FunctionNaming:
+    # @Composable functions are PascalCase
+    ignoreAnnotated: ['Composable']
+  TopLevelPropertyNaming:
+    constantPattern: '[A-Z][_A-Z0-9]*'
+
+complexity:
+  LongParameterList:
+    ignoreAnnotated: ['Composable']
+
+style:
+  MagicNumber:
+    ignoreAnnotated: ['Composable', 'Preview']
+    ignorePropertyDeclaration: true
+  UnusedPrivateFunction:
+    ignoreAnnotated: ['Preview']
+  # Formatting is checked by ktlint (spotless)
+  NewLineAtEndOfFile:
+    active: false
+  MaxLineLength:
+    active: false
+  WildcardImport:
+    active: false

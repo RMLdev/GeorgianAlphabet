@@ -20,13 +20,15 @@ internal class DataStoreProviderImpl(
     private val dataStoreFileProducer: (String) -> File,
     private val aeadSerializerCreator: AeadSerializerCreator,
     private val scope: CoroutineScope,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) : DataStoreProvider {
 
     private val dataStores = ConcurrentHashMap<String, CachedStore>()
 
     private val mutex = Mutex()
 
+    // Any creation failure is rethrown with the store name for context
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun <T : Any> provide(
         entityClazz: KClass<T>,
         entitySerializer: Serializer<T>,
@@ -42,7 +44,7 @@ internal class DataStoreProviderImpl(
                 } catch (e: Exception) {
                     throw IllegalStateException(
                         "Can't create DataStore<${entityClazz.simpleName}> with name $dataStoreFileName",
-                        e
+                        e,
                     )
                 }
                 CachedStore(entityClazz, store).also { dataStores[dataStoreFileName] = it }
@@ -52,10 +54,7 @@ internal class DataStoreProviderImpl(
         return cached.cast(entityClazz, dataStoreFileName)
     }
 
-    private class CachedStore(
-        val entityClazz: KClass<*>,
-        val store: DataStore<*>,
-    ) {
+    private class CachedStore(val entityClazz: KClass<*>, val store: DataStore<*>) {
         fun <T : Any> cast(requested: KClass<T>, fileName: String): DataStore<T> {
             require(entityClazz == requested) {
                 "DataStore '$fileName' is already opened for ${entityClazz.simpleName}, " +
@@ -73,10 +72,11 @@ internal class DataStoreProviderImpl(
     ): DataStore<T> {
         val serializer = when (dataStoreCreationData) {
             is DataStoreCreationData.Default -> entitySerializer
+
             is DataStoreCreationData.Encrypted -> aeadSerializerCreator.create(
                 dataStoreCreationData,
                 entitySerializer,
-                dataStoreFileName
+                dataStoreFileName,
             )
         }
 

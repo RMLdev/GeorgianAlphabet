@@ -33,12 +33,12 @@ class ApplicationPlugin : Plugin<Project> {
         extension.buildTypes.getByName("release").signingConfig = extension.signingConfigs.getByName("release")
     }
 
-
     override fun apply(target: Project) {
         with(target) {
             applyPlugin("android-application")
             applyPlugin("dependency-analysis")
             applyPlugin("rmldev-testing")
+            applyPlugin("rmldev-static-analysis")
 
             configure<ApplicationExtension> {
                 defaultConfig.apply {
