@@ -9,10 +9,8 @@ android {
 
 dependencies {
     api(project(":core:navigation:api"))
-    api(libs.paging.common)
     api(libs.androidx.lifecycle.viewModel.navigation3)
     implementation(libs.androidx.lifecycle.runtimeCompose)
 
-    runtimeOnly(libs.androidx.runtime)
     runtimeOnly(libs.androidx.navigation3.runtime)
 }

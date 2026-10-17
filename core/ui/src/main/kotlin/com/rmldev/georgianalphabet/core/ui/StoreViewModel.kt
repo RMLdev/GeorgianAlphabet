@@ -3,7 +3,6 @@ package com.rmldev.georgianalphabet.core.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -73,9 +72,5 @@ abstract class StoreViewModel<Intent : Any, Action : Any, State : Any, UiState :
      */
     open fun onError(action: Action, e: Throwable) {
         Log.e(this::class.simpleName, "Failed to execute $action", e)
-    }
-
-    protected fun <Item : Any> bindPaging(binder: PagingBinder<State, Item>): Flow<PagingData<Item>> {
-        return binder.bind(mutableState, viewModelScope)
     }
 }

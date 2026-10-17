@@ -14,6 +14,5 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewModel.navigation3)
     implementation(libs.androidx.navigation3.runtime)
 
-    runtimeOnly(libs.androidx.runtime)
     runtimeOnly(libs.androidx.compose.runtime)
 }

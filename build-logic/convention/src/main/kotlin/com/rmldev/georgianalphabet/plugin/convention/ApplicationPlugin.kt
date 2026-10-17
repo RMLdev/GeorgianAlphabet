@@ -37,6 +37,7 @@ class ApplicationPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("com.android.application")
+            pluginManager.apply("com.autonomousapps.dependency-analysis")
             pluginManager.apply("com.rmldev.testing")
 
             configure<ApplicationExtension> {

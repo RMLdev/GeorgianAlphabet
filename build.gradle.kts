@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.room) apply false
+    alias(libs.plugins.dependency.analysis)
     alias(libs.plugins.kover)
 }
 
@@ -16,3 +17,5 @@ dependencies {
     // skip intermediate projects (:core, :feature:alphabet) that have no build.gradle.kts
     subprojects.filter { it.buildFile.exists() }.forEach { kover(it) }
 }
+
+// Unused and misdeclared dependencies: ./gradlew buildHealth
