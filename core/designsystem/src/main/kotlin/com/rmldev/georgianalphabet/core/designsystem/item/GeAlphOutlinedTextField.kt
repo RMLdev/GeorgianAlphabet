@@ -32,31 +32,15 @@ fun GeAlphOutlinedTextField(
     onKeyboardAction: KeyboardActionHandler? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    val label: @Composable () -> Unit = { FieldLabel(text = labelText, isFocused = isFocused) }
+    val placeholder: @Composable () -> Unit = { FieldPlaceholder(text = placeholderText) }
 
     if (isSecure) {
         OutlinedSecureTextField(
             state = state,
             labelPosition = TextFieldLabelPosition.Above(),
-            label = {
-                Text(
-                    text = labelText,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = if (isFocused) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onBackground
-                        },
-                    ),
-                )
-            },
-            placeholder = {
-                Text(
-                    text = placeholderText,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            },
+            label = label,
+            placeholder = placeholder,
             shape = MaterialTheme.shapes.medium,
             colors = GeAlphOutlinedTextFieldDefaults.colors(),
             textStyle = MaterialTheme.typography.bodyLarge,
@@ -69,26 +53,8 @@ fun GeAlphOutlinedTextField(
         OutlinedTextField(
             state = state,
             labelPosition = TextFieldLabelPosition.Above(),
-            label = {
-                Text(
-                    text = labelText,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = if (isFocused) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            MaterialTheme.colorScheme.onBackground
-                        },
-                    ),
-                )
-            },
-            placeholder = {
-                Text(
-                    text = placeholderText,
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        color = MaterialTheme.colorScheme.outline,
-                    ),
-                )
-            },
+            label = label,
+            placeholder = placeholder,
             shape = MaterialTheme.shapes.medium,
             colors = GeAlphOutlinedTextFieldDefaults.colors(),
             textStyle = MaterialTheme.typography.bodyLarge,
@@ -99,6 +65,30 @@ fun GeAlphOutlinedTextField(
                 .onFocusEvent({ isFocused = it.isFocused }),
         )
     }
+}
+
+@Composable
+private fun FieldLabel(text: String, isFocused: Boolean) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge.copy(
+            color = if (isFocused) {
+                MaterialTheme.colorScheme.primary
+            } else {
+                MaterialTheme.colorScheme.onBackground
+            },
+        ),
+    )
+}
+
+@Composable
+private fun FieldPlaceholder(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelLarge.copy(
+            color = MaterialTheme.colorScheme.outline,
+        ),
+    )
 }
 
 object GeAlphOutlinedTextFieldDefaults {

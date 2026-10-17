@@ -40,7 +40,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.rmldev.georgianalphabet.core.designsystem.item.GeAlphOutlinedTextField
@@ -256,26 +256,18 @@ private fun previewState(name: String, fragments: List<Pair<String, String>>): N
 private val PreviewName = listOf("Р" to "რ", "о" to "ო", "м" to "მ", "а" to "ა", "н" to "ნ")
 
 @Composable
-private fun NameStepPreview(state: NameStepUiState, darkTheme: Boolean) {
-    GeAlphTheme(darkTheme = darkTheme) {
+private fun NameStepPreview(state: NameStepUiState) {
+    GeAlphTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             NameStep(state = state, onIntent = {}, modifier = Modifier.padding(24.dp))
         }
     }
 }
 
-@Preview(name = "Empty · light", widthDp = 390)
+@PreviewLightDark
 @Composable
-private fun NameStepEmptyLightPreview() = NameStepPreview(previewState("", emptyList()), darkTheme = false)
+private fun NameStepEmptyPreview() = NameStepPreview(previewState("", emptyList()))
 
-@Preview(name = "Empty · dark", widthDp = 390)
+@PreviewLightDark
 @Composable
-private fun NameStepEmptyDarkPreview() = NameStepPreview(previewState("", emptyList()), darkTheme = true)
-
-@Preview(name = "Filled · light", widthDp = 390)
-@Composable
-private fun NameStepFilledLightPreview() = NameStepPreview(previewState("Роман", PreviewName), darkTheme = false)
-
-@Preview(name = "Filled · dark", widthDp = 390)
-@Composable
-private fun NameStepFilledDarkPreview() = NameStepPreview(previewState("Роман", PreviewName), darkTheme = true)
+private fun NameStepFilledPreview() = NameStepPreview(previewState("Роман", PreviewName))
