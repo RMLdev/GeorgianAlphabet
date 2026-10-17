@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_alphabet_ui_screen_name">Alphabet</string>
+
+    <string name="feature_alphabet_ui_level_new">new</string>
+    <string name="feature_alphabet_ui_level_familiar">familiar</string>
+    <string name="feature_alphabet_ui_level_confident">confident</string>
+    <string name="feature_alphabet_ui_level_master">mastered</string>
+
+    <string name="feature_alphabet_ui_tile_description">Letter %1$s, sound %2$s, %3$s</string>
+    <string name="feature_alphabet_ui_tile_description_no_sound">Letter %1$s, %2$s</string>
+</resources>
