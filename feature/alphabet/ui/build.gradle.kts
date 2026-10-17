@@ -11,5 +11,6 @@ android {
 dependencies {
     api(project(":feature:alphabet:api"))
     implementation(project(":feature:preferences:api"))
+    implementation(project(":core:audio:api"))
     implementation(libs.kotlinx.collections.immutable)
 }

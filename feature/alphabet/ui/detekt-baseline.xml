@@ -5,15 +5,8 @@
     <ID>EmptyClassBlock:AlphabetEvent.kt:AlphabetEvent${ }</ID>
     <ID>EmptyClassBlock:AlphabetSideEffect.kt:AlphabetSideEffect${ }</ID>
     <ID>EmptyClassBlock:AlphabetState.kt:AlphabetState${ }</ID>
-    <ID>EmptyClassBlock:GlyphDetailsEvent.kt:GlyphDetailsEvent${ }</ID>
-    <ID>EmptyClassBlock:GlyphDetailsSideEffect.kt:GlyphDetailsSideEffect${ }</ID>
-    <ID>EmptyClassBlock:GlyphDetailsState.kt:GlyphDetailsState${ }</ID>
-    <ID>EmptyClassBlock:GlyphDetailsUiState.kt:GlyphDetailsUiState${ }</ID>
     <ID>EmptyFunctionBlock:AlphabetActor.kt:AlphabetActor${ }</ID>
-    <ID>EmptyFunctionBlock:GlyphDetailsActor.kt:GlyphDetailsActor${ }</ID>
     <ID>MagicNumber:AlphabetStateToUiMapper.kt:AlphabetStateToUiMapper$4</ID>
     <ID>UnusedParameter:AlphabetScreen.kt:onIntent: (AlphabetIntent) -&gt; Unit</ID>
-    <ID>UnusedParameter:GlyphDetailsScreen.kt:onIntent: (GlyphDetailsIntent) -&gt; Unit</ID>
-    <ID>UnusedParameter:GlyphDetailsScreen.kt:state: GlyphDetailsUiState</ID>
   </CurrentIssues>
 </SmellBaseline>

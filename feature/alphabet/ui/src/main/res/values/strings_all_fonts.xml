@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Экран «Все шрифты», задача 30 (glyph/allfonts/) -->
+<resources>
+    <string name="feature_alphabet_ui_all_fonts_title">Все шрифты</string>
+    <string name="feature_alphabet_ui_all_fonts_back">Назад к карточке буквы</string>
+</resources>
