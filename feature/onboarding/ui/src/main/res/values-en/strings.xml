@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_welcome_title">Recognize Georgian letters in any font</string>
+    <string name="feature_onboarding_ui_start">Start learning</string>
+    <string name="feature_onboarding_ui_skip">Skip</string>
+</resources>
