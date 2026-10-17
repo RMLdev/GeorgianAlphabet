@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.androidx.compose.material3.adaptive.navigation3)
     implementation(libs.androidx.navigation3.runtime)
 
+    implementation(project(":core:audio:impl"))
     implementation(project(":core:coroutines"))
     implementation(project(":core:datastore:impl"))
     implementation(project(":core:designsystem"))
