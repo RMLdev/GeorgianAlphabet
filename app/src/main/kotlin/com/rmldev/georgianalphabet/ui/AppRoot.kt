@@ -27,14 +27,14 @@ import com.rmldev.georgianalphabet.core.navigation.api.BackStackEntry
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.Navigator
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
-import com.rmldev.georgianalphabet.core.navigation.state.NavigationState2
+import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
 import com.rmldev.georgianalphabet.core.navigation.state.toEntries
 import com.rmldev.georgianalphabet.navigation.TOP_LEVEL_ITEMS
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AppRoot(
-    navigationState: NavigationState2,
+    navigationState: NavigationState,
     navigator: Navigator,
     entryProvider: (NavigationKey) -> NavEntry<NavigationKey>,
     windowAdaptiveInfo: WindowAdaptiveInfo = currentWindowAdaptiveInfoV2(),

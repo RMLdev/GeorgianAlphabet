@@ -9,7 +9,7 @@ import okhttp3.Route
 import javax.inject.Inject
 import javax.inject.Provider
 
-internal class DjcAppAuthenticator @Inject constructor(
+internal class TokenAuthenticator @Inject constructor(
     private val tokenRefresher: Provider<AuthTokenRefresher>,
 ) : Authenticator {
 

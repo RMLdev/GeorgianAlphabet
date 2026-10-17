@@ -19,19 +19,19 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.OverlayScreenKey
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
 import com.rmldev.georgianalphabet.core.navigation.api.TabKey
-import com.rmldev.georgianalphabet.core.navigation.backstack.DjcBackStack
-import com.rmldev.georgianalphabet.core.navigation.backstack.rememberDjcNavBackStack
+import com.rmldev.georgianalphabet.core.navigation.backstack.GeAlphBackStack
+import com.rmldev.georgianalphabet.core.navigation.backstack.rememberGeAlphBackStack
 import kotlinx.serialization.PolymorphicSerializer
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.SerializersModuleBuilder
 
 @Stable
-class NavigationState2(
+class NavigationState(
     screenOverlayState: MutableState<ScreenOverlay>,
     currentTabState: MutableState<TabKey>,
     val startTab: TabKey,
-    val overlayBackStack: DjcBackStack<NavigationKey>,
-    val backStacksByTabs: Map<TabKey, DjcBackStack<NavigationKey>>,
+    val overlayBackStack: GeAlphBackStack<NavigationKey>,
+    val backStacksByTabs: Map<TabKey, GeAlphBackStack<NavigationKey>>,
 ) {
     var screenOverlay: ScreenOverlay by screenOverlayState
         private set
@@ -39,10 +39,10 @@ class NavigationState2(
     var currentTab: TabKey by currentTabState
         private set
 
-    val currentTabBackStack: DjcBackStack<NavigationKey>
+    val currentTabBackStack: GeAlphBackStack<NavigationKey>
         get() = backStacksByTabs.getValue(currentTab)
 
-    val visibleBackStack: DjcBackStack<NavigationKey>
+    val visibleBackStack: GeAlphBackStack<NavigationKey>
         get() = if (screenOverlay == ScreenOverlay.Hidden) currentTabBackStack else overlayBackStack
 
     val currentEntry: NavigationKey by derivedStateOf {
@@ -123,10 +123,10 @@ class NavigationState2(
     fun toNavigationContext(): NavigationContext {
         return object : NavigationContext {
             override val currentTab: TabKey
-                get() = this@NavigationState2.currentTab
+                get() = this@NavigationState.currentTab
 
             override val currentBackStack: List<NavigationKey>
-                get() = this@NavigationState2.visibleBackStack.toList().map { it.key }
+                get() = this@NavigationState.visibleBackStack.toList().map { it.key }
 
             override fun getStackByTab(tabKey: TabKey): List<NavigationKey>? {
                 return backStacksByTabs[tabKey]?.toList()?.map { it.key }
@@ -142,15 +142,15 @@ fun rememberNavigationState(
     startTab: TabKey,
     tabKeys: Set<TabKey>,
     startKey: NavigationKey = startTab,
-): NavigationState2 {
+): NavigationState {
     val configuration = rememberNavSavedStateConfiguration(keySerializerRegistrars)
     val backStacksByTabs = tabKeys.associateWith { tab ->
-        key(tab) { rememberDjcNavBackStack(configuration, tab) }
+        key(tab) { rememberGeAlphBackStack(configuration, tab) }
     }
 
     // The overlay stack is empty while the overlay is hidden. On first launch the start key
     // is shown above the tabs in Blocking mode (e.g. onboarding).
-    val overlayBackStack = rememberDjcNavBackStack(
+    val overlayBackStack = rememberGeAlphBackStack(
         configuration,
         *(if (isFirstLaunch) arrayOf(startKey) else emptyArray()),
     )
@@ -167,7 +167,7 @@ fun rememberNavigationState(
     ) { mutableStateOf(startTab) }
 
     return remember(startTab, startKey, tabKeys) {
-        NavigationState2(
+        NavigationState(
             screenOverlayState = screenOverlayState,
             currentTabState = currentTabState,
             startTab = startTab,

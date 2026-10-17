@@ -23,7 +23,7 @@ internal abstract class NetworkModule {
 
     @Binds
     @Singleton
-    abstract fun bindsAuthenticator(djcAppAuthenticator: DjcAppAuthenticator): Authenticator
+    abstract fun bindsAuthenticator(tokenAuthenticator: TokenAuthenticator): Authenticator
 
     companion object {
 

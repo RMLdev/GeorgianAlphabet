@@ -9,9 +9,9 @@ annotation class ApplicationScope
 
 @Qualifier
 @Retention(RUNTIME)
-annotation class Dispatcher(val dispatcher: DjcDispatchers)
+annotation class Dispatcher(val dispatcher: GeAlphDispatchers)
 
-enum class DjcDispatchers {
+enum class GeAlphDispatchers {
     Default,
     IO,
 }

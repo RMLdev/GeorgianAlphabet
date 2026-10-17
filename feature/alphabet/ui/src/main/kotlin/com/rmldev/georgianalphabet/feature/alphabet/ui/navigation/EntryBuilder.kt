@@ -5,11 +5,11 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.Navigator
 import com.rmldev.georgianalphabet.feature.alphabet.api.AlphabetNavKey
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.GlyphDetailsRoute
-import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.AlphabetGreedRoute
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.AlphabetGridRoute
 
 fun EntryProviderScope<NavigationKey>.provideEntries(navigator: Navigator) {
     entry<AlphabetNavKey> {
-        AlphabetGreedRoute(
+        AlphabetGridRoute(
             onGlyphClick = { navigator.navigateTo(GlyphDetailsNavKey(it)) }
         )
     }
