@@ -40,9 +40,12 @@ sealed interface UnlockCondition {
 @Composable
 fun UnlockCondition.label(): String = when (this) {
     is UnlockCondition.Lesson -> stringResource(R.string.core_designsystem_unlock_lesson, number)
+
     is UnlockCondition.Streak -> pluralStringResource(R.plurals.core_designsystem_unlock_streak, days, days)
+
     is UnlockCondition.LettersMastered ->
         pluralStringResource(R.plurals.core_designsystem_unlock_letters_mastered, count, count)
+
     UnlockCondition.AllLessons -> stringResource(R.string.core_designsystem_unlock_all_lessons)
 }
 

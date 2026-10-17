@@ -81,8 +81,11 @@ class FontCatalogTest {
             when (condition) {
                 // Последний урок — это AllLessons
                 is UnlockCondition.Lesson -> assertTrue(condition.number in 1 until LESSON_COUNT, "$condition")
+
                 is UnlockCondition.Streak -> assertTrue(condition.days > 0, "$condition")
+
                 is UnlockCondition.LettersMastered -> assertTrue(condition.count in 1..MKHEDRULI_COUNT, "$condition")
+
                 UnlockCondition.AllLessons -> Unit
             }
         }
