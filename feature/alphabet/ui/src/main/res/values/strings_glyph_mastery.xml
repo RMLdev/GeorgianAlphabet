@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Блок «Освоение», задача 26 (section/MasterySection.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_mastery_title">Освоение</string>
+
+    <!-- Big number: recognized fonts, all fonts of the catalog -->
+    <string name="feature_alphabet_ui_mastery_count">%1$d из %2$d</string>
+    <!-- Caption after the number; quantity is the count of all fonts («из 15 шрифтов») -->
+    <plurals name="feature_alphabet_ui_mastery_fonts_recognized">
+        <item quantity="one">шрифта узнаёшь</item>
+        <item quantity="few">шрифтов узнаёшь</item>
+        <item quantity="many">шрифтов узнаёшь</item>
+        <item quantity="other">шрифтов узнаёшь</item>
+    </plurals>
+    <!-- Caption with accuracy: the caption above, accuracy in percent -->
+    <string name="feature_alphabet_ui_mastery_with_accuracy">%1$s · точность %2$d%%</string>
+
+    <!-- Font cell statuses: legend and TalkBack -->
+    <string name="feature_alphabet_ui_mastery_status_recognized">узнаёшь</string>
+    <string name="feature_alphabet_ui_mastery_status_learning">ещё учишь</string>
+    <string name="feature_alphabet_ui_mastery_status_locked">закрыт</string>
+    <!-- Font cell, read by TalkBack: font name, status -->
+    <string name="feature_alphabet_ui_mastery_cell_description">%1$s: %2$s</string>
+</resources>
