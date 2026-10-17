@@ -31,6 +31,8 @@ room {
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.compose.material3.navigationSuite)
     implementation(libs.androidx.compose.material3.adaptive.navigation3)
     implementation(libs.androidx.navigation3.runtime)
@@ -45,6 +47,7 @@ dependencies {
     implementation(project(":feature:alphabet:db"))
     implementation(project(":feature:alphabet:impl"))
     implementation(project(":feature:alphabet:ui"))
+    implementation(project(":feature:onboarding:ui"))
     implementation(project(":feature:preferences:impl"))
 
     implementation(libs.room.runtime)
