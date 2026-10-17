@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -77,18 +78,7 @@ internal fun GlyphTopBar(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surfaceContainer)
-            .drawBehind {
-                if (dividerAlpha > 0f) {
-                    val y = size.height - DividerThickness.toPx() / 2
-                    drawLine(
-                        color = dividerColor,
-                        start = Offset(0f, y),
-                        end = Offset(size.width, y),
-                        strokeWidth = DividerThickness.toPx(),
-                        alpha = dividerAlpha,
-                    )
-                }
-            }
+            .bottomDivider(dividerColor) { dividerAlpha }
             .windowInsetsPadding(WindowInsets.statusBars)
             .height(GlyphTopBarHeight)
             .padding(horizontal = 4.dp),
@@ -123,6 +113,21 @@ internal fun GlyphTopBar(
                 contentDescription = stringResource(R.string.feature_alphabet_ui_glyph_toolbar_all_fonts),
             )
         }
+    }
+}
+
+/** Линия по нижнему краю; [alpha] читается на отрисовке. */
+private fun Modifier.bottomDivider(color: Color, alpha: () -> Float): Modifier = drawBehind {
+    val value = alpha()
+    if (value > 0f) {
+        val y = size.height - DividerThickness.toPx() / 2
+        drawLine(
+            color = color,
+            start = Offset(0f, y),
+            end = Offset(size.width, y),
+            strokeWidth = DividerThickness.toPx(),
+            alpha = value,
+        )
     }
 }
 
