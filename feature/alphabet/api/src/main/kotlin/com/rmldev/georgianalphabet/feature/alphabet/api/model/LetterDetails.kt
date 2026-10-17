@@ -29,7 +29,4 @@ data class ExampleWord(
 )
 
 /** Текст на языках интерфейса; нужный выбирает UI по текущей локали. */
-data class LocalizedText(
-    val ru: String,
-    val en: String,
-)
+data class LocalizedText(val ru: String, val en: String)
