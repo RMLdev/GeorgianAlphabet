@@ -16,9 +16,9 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class DjsBackStackSerializerTest {
+class GeAlphBackStackSerializerTest {
 
-    private val serializer = DjsBackStackSerializer(PolymorphicSerializer(NavigationKey::class))
+    private val serializer = GeAlphBackStackSerializer(PolymorphicSerializer(NavigationKey::class))
 
     private val json = Json {
         serializersModule = SerializersModule {
@@ -34,7 +34,7 @@ class DjsBackStackSerializerTest {
 
     @Test
     fun `round trip keeps keys, order and entry ids`() {
-        val stack = DjcBackStack<NavigationKey>(HomeTab, Details(1), Settings, ModalScreen(7), BlockingScreen)
+        val stack = GeAlphBackStack<NavigationKey>(HomeTab, Details(1), Settings, ModalScreen(7), BlockingScreen)
 
         val restored = json.decodeFromString(serializer, json.encodeToString(serializer, stack))
 
@@ -43,7 +43,7 @@ class DjsBackStackSerializerTest {
 
     @Test
     fun `stable serial names are used in saved state`() {
-        val encoded = json.encodeToString(serializer, DjcBackStack<NavigationKey>(HomeTab, Details(3)))
+        val encoded = json.encodeToString(serializer, GeAlphBackStack<NavigationKey>(HomeTab, Details(3)))
 
         assert("\"HomeTab\"" in encoded) { encoded }
         assert("\"Details\"" in encoded) { encoded }
@@ -58,7 +58,7 @@ class DjsBackStackSerializerTest {
         }
 
         assertFailsWith<SerializationException> {
-            json.encodeToString(serializer, DjcBackStack<NavigationKey>(HomeTab, Details(1)))
+            json.encodeToString(serializer, GeAlphBackStack<NavigationKey>(HomeTab, Details(1)))
         }
     }
 }

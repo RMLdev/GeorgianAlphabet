@@ -4,7 +4,7 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationCommand
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationContext
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationInterceptor
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
-import com.rmldev.georgianalphabet.core.navigation.state.NavigationState2
+import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -13,7 +13,7 @@ class NavigationStateBugsTest {
 
     private var exitCount = 0
 
-    private fun navigator(state: NavigationState2, vararg interceptors: NavigationInterceptor) =
+    private fun navigator(state: NavigationState, vararg interceptors: NavigationInterceptor) =
         NavigatorImpl(state, interceptors.toList(), onExit = { exitCount++ })
 
     private val replaceInterceptor = object : NavigationInterceptor {
