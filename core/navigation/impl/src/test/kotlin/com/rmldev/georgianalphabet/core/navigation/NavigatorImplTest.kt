@@ -4,7 +4,7 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationCommand
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationContext
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationInterceptor
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
-import com.rmldev.georgianalphabet.core.navigation.state.NavigationState2
+import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -13,7 +13,7 @@ class NavigatorImplTest {
     private var exitCount = 0
 
     private fun navigator(
-        state: NavigationState2,
+        state: NavigationState,
         interceptors: List<NavigationInterceptor> = emptyList(),
     ) = NavigatorImpl(state, interceptors, onExit = { exitCount++ })
 
