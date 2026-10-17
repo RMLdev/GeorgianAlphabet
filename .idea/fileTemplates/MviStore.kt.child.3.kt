@@ -12,6 +12,6 @@ internal class ${NAME}Reducer @Inject constructor() : MviReducer<${NAME}State, $
         oldState: ${NAME}State,
         event: ${NAME}Event
     ): ${NAME}State {
-        return ${NAME}State()
+        return oldState
     }
 }
