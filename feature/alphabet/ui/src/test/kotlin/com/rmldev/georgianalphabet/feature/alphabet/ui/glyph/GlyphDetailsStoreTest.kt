@@ -2,6 +2,8 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph
 
 import androidx.lifecycle.SavedStateHandle
 import com.rmldev.georgianalphabet.core.audio.api.AudioAssets
+import com.rmldev.georgianalphabet.core.audio.api.SoundNotFoundException
+import com.rmldev.georgianalphabet.core.audio.api.SoundPlayer
 import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
 import com.rmldev.georgianalphabet.core.ui.ActorScope
 import com.rmldev.georgianalphabet.feature.alphabet.api.model.ExampleWord
@@ -33,6 +35,7 @@ import com.rmldev.georgianalphabet.feature.preferences.api.usecase.ObserveUserPr
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runCurrent
@@ -84,6 +87,31 @@ private class FakeObservePreferences(private val flow: Flow<UserPreferences>) : 
     override fun invoke(): Flow<UserPreferences> = flow
 }
 
+/** Plays only [available] paths, like assets without the missing files. */
+private class FakeSoundPlayer(private val available: Set<String> = emptySet()) : SoundPlayer {
+    private val mutablePlaying = MutableStateFlow<String?>(null)
+    override val playing: StateFlow<String?> = mutablePlaying
+    val requested = mutableListOf<String>()
+    var stops = 0
+
+    override suspend fun play(assetPath: String): Result<Unit> {
+        requested += assetPath
+        mutablePlaying.value = null
+        if (assetPath !in available) return Result.failure(SoundNotFoundException(assetPath))
+        mutablePlaying.value = assetPath
+        return Result.success(Unit)
+    }
+
+    override fun stop() {
+        stops++
+        mutablePlaying.value = null
+    }
+
+    fun finish() {
+        mutablePlaying.value = null
+    }
+}
+
 private fun preferences(script: KnownScript) =
     UserPreferences(onboardingCompleted = true, knownScript = script, userName = null)
 
@@ -104,6 +132,7 @@ class GlyphDetailsStoreTest {
     private val reducer = GlyphDetailsReducer()
     private val mapper = GlyphDetailsStateToUiMapper()
     private val details = FakeGetLetterDetails(listOf(ANI_DETAILS))
+    private val player = FakeSoundPlayer(setOf(AudioAssets.letter(0), "audio/words/ara.mp3"))
 
     private fun actor(
         letters: List<Letter> = listOf(ANI, SANI, KANI, ARCHAIC),
@@ -114,6 +143,7 @@ class GlyphDetailsStoreTest {
         details,
         FakeObserveProgress(progress),
         FakeObservePreferences(preferences),
+        player,
     )
 
     private suspend fun GlyphDetailsActor.execute(scope: RecordingScope, action: GlyphDetailsAction) =
@@ -166,7 +196,7 @@ class GlyphDetailsStoreTest {
 
         val actor = actor(progress = progress, preferences = preferences)
 
-        val job = launch { actor.execute(scope, GlyphDetailsAction.ObserveProgress) }
+        val job = launch { actor.execute(scope, GlyphDetailsAction.Observe) }
         runCurrent()
         // Progress of another letter doesn't touch this card
         progress.value = mapOf(1 to LetterProgress.new(1).copy(total = 3))
@@ -184,7 +214,7 @@ class GlyphDetailsStoreTest {
                 GlyphDetailsEvent.ProgressUpdated(aniProgress, KnownScript.CYRILLIC),
                 GlyphDetailsEvent.ProgressUpdated(aniProgress, KnownScript.LATIN),
             ),
-            scope.events,
+            scope.events.filterIsInstance<GlyphDetailsEvent.ProgressUpdated>(),
         )
     }
 
@@ -206,6 +236,75 @@ class GlyphDetailsStoreTest {
             scope.sideEffects,
         )
         assertTrue(scope.events.isEmpty())
+        // Leaving the card silences it
+        assertEquals(3, player.stops)
+    }
+
+    @Test
+    fun `play name plays letter asset`() = runTest {
+        val scope = RecordingScope(GlyphDetailsState(0), this)
+
+        actor().execute(scope, GlyphDetailsAction.PlayName)
+
+        assertEquals(listOf(AudioAssets.letter(0)), player.requested)
+        assertEquals(AudioAssets.letter(0), player.playing.value)
+    }
+
+    @Test
+    fun `play word plays its asset and skips words without one`() = runTest {
+        val noAudio = ANI_DETAILS.copy(
+            words = ANI_DETAILS.words + ExampleWord("ბანი", "бани", "bani", LocalizedText("бани", "bani")),
+        )
+        val scope = RecordingScope(GlyphDetailsState(0, details = noAudio), this)
+        val actor = actor()
+
+        actor.execute(scope, GlyphDetailsAction.PlayWord("ბანი"))
+        actor.execute(scope, GlyphDetailsAction.PlayWord("უცნობი"))
+        actor.execute(scope, GlyphDetailsAction.PlayWord("არა"))
+
+        assertEquals(listOf("audio/words/ara.mp3"), player.requested)
+    }
+
+    @Test
+    fun `missing sound file is silent`() = runTest {
+        val scope = RecordingScope(GlyphDetailsState(5), this)
+
+        actor().execute(scope, GlyphDetailsAction.PlayName)
+
+        assertEquals(listOf(AudioAssets.letter(5)), player.requested)
+        assertNull(player.playing.value)
+        assertTrue(scope.events.isEmpty())
+        assertTrue(scope.sideEffects.isEmpty())
+    }
+
+    @Test
+    fun `observe follows playing sound`() = runTest {
+        val scope = RecordingScope(GlyphDetailsState(0), this)
+        val actor = actor()
+
+        val job = launch { actor.execute(scope, GlyphDetailsAction.Observe) }
+        runCurrent()
+        actor.execute(scope, GlyphDetailsAction.PlayName)
+        runCurrent()
+        player.finish()
+        runCurrent()
+        job.cancel()
+
+        assertEquals(
+            listOf(
+                GlyphDetailsEvent.PlayingChanged(null),
+                GlyphDetailsEvent.PlayingChanged(AudioAssets.letter(0)),
+                GlyphDetailsEvent.PlayingChanged(null),
+            ),
+            scope.events.filterIsInstance<GlyphDetailsEvent.PlayingChanged>(),
+        )
+    }
+
+    @Test
+    fun `stop sound stops the player`() {
+        actor().stopSound()
+
+        assertEquals(1, player.stops)
     }
 
     @Test
