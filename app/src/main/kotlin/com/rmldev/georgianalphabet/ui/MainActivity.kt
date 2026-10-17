@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.entryProvider
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
@@ -45,9 +46,11 @@ internal class MainActivity : ComponentActivity() {
                 onExit = ::finish
             )
 
-            val entryProvider = entryProvider {
-                entryBuilders.forEach {
-                    it(navigator)
+            val entryProvider = remember(navigator) {
+                entryProvider {
+                    entryBuilders.forEach {
+                        it(navigator)
+                    }
                 }
             }
 

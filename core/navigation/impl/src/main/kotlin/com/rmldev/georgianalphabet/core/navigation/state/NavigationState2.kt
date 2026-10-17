@@ -55,7 +55,9 @@ class NavigationState2(
     }
 
     fun pushKey(key: NavigationKey) {
-        if (key.tag == visibleBackStack.lastOrNull()?.key?.tag) return
+        // Navigating to the screen that is already on top (e.g. a double tap) is ignored.
+        // Keys with different arguments (Details(1) -> Details(2)) are different screens.
+        if (key == visibleBackStack.lastOrNull()?.key) return
 
         when (key) {
             is TabKey -> {
@@ -92,8 +94,9 @@ class NavigationState2(
     }
 
     fun replaceTop(key: NavigationKey) {
-        visibleBackStack.removeAt(overlayBackStack.lastIndex)
-        visibleBackStack.add(BackStackEntry.new(key))
+        val stack = visibleBackStack
+        stack.removeAt(stack.lastIndex)
+        stack.add(BackStackEntry.new(key))
     }
 
     fun popWhere(predicate: (NavigationKey) -> Boolean) {
@@ -145,7 +148,12 @@ fun rememberNavigationState(
         key(tab) { rememberDjcNavBackStack(configuration, tab) }
     }
 
-    val overlayBackStack = rememberDjcNavBackStack(configuration, startKey)
+    // The overlay stack is empty while the overlay is hidden. On first launch the start key
+    // is shown above the tabs in Blocking mode (e.g. onboarding).
+    val overlayBackStack = rememberDjcNavBackStack(
+        configuration,
+        *(if (isFirstLaunch) arrayOf(startKey) else emptyArray()),
+    )
 
     val screenOverlayState = rememberSerializable(
         configuration = configuration,
