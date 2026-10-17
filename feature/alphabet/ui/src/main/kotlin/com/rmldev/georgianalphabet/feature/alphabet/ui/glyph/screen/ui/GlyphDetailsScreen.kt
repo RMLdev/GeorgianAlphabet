@@ -41,7 +41,7 @@ internal fun GlyphDetailsScreen(
                 .windowInsetsPadding(WindowInsets.systemBars)
         ) {
             Text(
-                text = "ა",
+                text = state.symbol,
                 style = GlyphTextStyle.Hero,
             )
         }

@@ -2,29 +2,26 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state
 
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
-import kotlin.random.Random
 
-class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -> AlphabetUiState {
+internal class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -> AlphabetUiState {
 
     override fun invoke(state: AlphabetState): AlphabetUiState {
         return AlphabetUiState(
-            screenTitle = "Алфавит",
-            glyphs = listOf(
-                'ა', 'ბ', 'გ', 'დ', 'ე', 'ვ', 'ზ', 'თ', 'ი', 'კ', 'ლ',
-                'მ', 'ნ', 'ო', 'პ', 'ჟ', 'რ', 'ს', 'ტ', 'უ', 'ფ', 'ქ',
-                'ღ', 'ყ', 'შ', 'ჩ', 'ც', 'ძ', 'წ', 'ჭ', 'ხ', 'ჯ', 'ჰ'
-            ).mapIndexed { index, ch ->
+            glyphs = state.letters.map { letter ->
                 GlyphUi(
-                    index,
-                    ch,
-                    "ani",
-                    Random.nextInt(0, 4).let {
-                        GlyphLearningProgress.entries[it]
-                    },
+                    id = letter.id,
+                    symbol = letter.symbol,
+                    name = letter.name,
+                    // Learning progress isn't stored yet
+                    progress = GlyphLearningProgress.NEW,
                 )
             }.toImmutableList(),
-            gridColumnsCount = 4,
-            gridRowsCount = 9,
+            gridColumnsCount = GRID_COLUMNS_COUNT,
+            gridRowsCount = (state.letters.size + GRID_COLUMNS_COUNT - 1) / GRID_COLUMNS_COUNT,
         )
+    }
+
+    private companion object {
+        const val GRID_COLUMNS_COUNT = 4
     }
 }

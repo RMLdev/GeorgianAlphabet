@@ -25,7 +25,8 @@ internal class AlphabetViewModel @Inject constructor(
     uiStateMapper = uiStateMapper,
     intentToAction = { intent ->
         when (intent) {
-            AlphabetIntent.Stub, is AlphabetIntent.GlyphClicked -> AlphabetAction.Stub
+            AlphabetIntent.Stub -> AlphabetAction.Stub
+            is AlphabetIntent.GlyphClicked -> AlphabetAction.OpenGlyph(intent.id)
         }
     },
 )

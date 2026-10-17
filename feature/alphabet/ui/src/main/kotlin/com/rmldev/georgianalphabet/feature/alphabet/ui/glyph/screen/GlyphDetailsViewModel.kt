@@ -10,22 +10,32 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.messag
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsState
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsStateToUiMapper
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsUiState
+import com.rmldev.georgianalphabet.feature.alphabet.ui.letters.mkhedruliLetter
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-internal class GlyphDetailsViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = GlyphDetailsViewModel.Factory::class)
+internal class GlyphDetailsViewModel @AssistedInject constructor(
+    @Assisted glyphId: Int,
     actor: GlyphDetailsActor,
     reducer: GlyphDetailsReducer,
     uiStateMapper: GlyphDetailsStateToUiMapper,
 ) : StoreViewModel<GlyphDetailsIntent, GlyphDetailsAction, GlyphDetailsState, GlyphDetailsUiState, GlyphDetailsSideEffect, GlyphDetailsEvent>(
     actor = actor,
     reducer = reducer,
-    initialState = GlyphDetailsState(),
+    initialState = GlyphDetailsState(letter = mkhedruliLetter(glyphId)),
     uiStateMapper = uiStateMapper,
     intentToAction = { intent ->
         when (intent) {
             GlyphDetailsIntent.Stub -> GlyphDetailsAction.Stub
         }
     },
-)
+) {
+
+    @AssistedFactory
+    interface Factory {
+        fun create(glyphId: Int): GlyphDetailsViewModel
+    }
+}

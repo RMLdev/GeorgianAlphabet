@@ -6,7 +6,6 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Stable
 data class AlphabetUiState(
-    val screenTitle: String,
     val glyphs: ImmutableList<GlyphUi> = listOf<GlyphUi>().toImmutableList(),
     val gridColumnsCount: Int,
     val gridRowsCount: Int,
