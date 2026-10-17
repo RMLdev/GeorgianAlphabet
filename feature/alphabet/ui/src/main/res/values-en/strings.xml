@@ -9,4 +9,12 @@
 
     <string name="feature_alphabet_ui_tile_description">Letter %1$s, sound %2$s, %3$s</string>
     <string name="feature_alphabet_ui_tile_description_no_sound">Letter %1$s, %2$s</string>
+
+    <plurals name="feature_alphabet_ui_subtitle">
+        <item quantity="one">Mkhedruli · %1$d letter · %2$d mastered</item>
+        <item quantity="other">Mkhedruli · %1$d letters · %2$d mastered</item>
+    </plurals>
+
+    <string name="feature_alphabet_ui_lesson_title">Lesson %1$d</string>
+    <string name="feature_alphabet_ui_lesson_progress">%1$d of %2$d mastered</string>
 </resources>

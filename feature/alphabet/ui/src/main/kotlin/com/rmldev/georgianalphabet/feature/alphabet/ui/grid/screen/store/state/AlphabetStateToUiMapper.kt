@@ -1,26 +1,21 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state
 
+import com.rmldev.georgianalphabet.feature.alphabet.api.model.Letter
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 
 internal class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -> AlphabetUiState {
 
-    override fun invoke(state: AlphabetState): AlphabetUiState = AlphabetUiState(
-        glyphs = state.letters.map { letter ->
-            GlyphUi(
-                id = letter.id,
-                symbol = letter.glyph,
-                name = letter.nameLatin,
-                sound = letter.soundLatin.takeUnless { letter.archaic },
-                // Learning progress isn't stored yet
-                progress = GlyphLearningProgress.NEW,
-            )
-        }.toImmutableList(),
-        gridColumnsCount = GRID_COLUMNS_COUNT,
-        gridRowsCount = (state.letters.size + GRID_COLUMNS_COUNT - 1) / GRID_COLUMNS_COUNT,
-    )
+    override fun invoke(state: AlphabetState): AlphabetUiState {
+        fun List<Letter>.toGlyphs() = map { it.toGlyphUi(state.progress[it.id], state.knownScript) }
 
-    private companion object {
-        const val GRID_COLUMNS_COUNT = 4
+        val (archaic, modern) = state.letters.partition { it.archaic }
+        val glyphs = modern.toGlyphs()
+        return AlphabetUiState(
+            lettersCount = glyphs.size,
+            masteredCount = glyphs.count { it.progress == GlyphLearningProgress.MASTERED },
+            gridItems = glyphs.map(AlphabetGridItem::Glyph).toImmutableList(),
+            archaicGlyphs = archaic.toGlyphs().toImmutableList(),
+        )
     }
 }

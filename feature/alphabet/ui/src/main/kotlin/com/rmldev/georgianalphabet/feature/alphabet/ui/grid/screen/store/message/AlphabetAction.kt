@@ -1,9 +1,8 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message
 
 internal sealed interface AlphabetAction {
-    object Stub : AlphabetAction
-
-    object LoadLetters : AlphabetAction
+    /** Подписка на буквы, прогресс и знакомый алфавит. Не завершается, пока жив экран. */
+    object ObserveLetters : AlphabetAction
 
     data class OpenGlyph(val id: Int) : AlphabetAction
 }

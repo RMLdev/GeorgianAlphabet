@@ -2,14 +2,32 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.persistentListOf
 
 @Stable
 data class AlphabetUiState(
-    val glyphs: ImmutableList<GlyphUi> = listOf<GlyphUi>().toImmutableList(),
-    val gridColumnsCount: Int,
-    val gridRowsCount: Int,
+    /** Буквы мхедрули без архаичных: они не входят ни в уроки, ни в счётчики. */
+    val lettersCount: Int = 0,
+    val masteredCount: Int = 0,
+    /** Содержимое сетки по порядку: плитки и заголовки секций на всю ширину. */
+    val gridItems: ImmutableList<AlphabetGridItem> = persistentListOf(),
+    /** Архаичные буквы для справочного блока под сеткой. */
+    val archaicGlyphs: ImmutableList<GlyphUi> = persistentListOf(),
 )
+
+@Stable
+sealed interface AlphabetGridItem {
+    val key: String
+
+    data class Glyph(val glyph: GlyphUi) : AlphabetGridItem {
+        override val key: String get() = "glyph-${glyph.id}"
+    }
+
+    /** Заголовок секции урока в режиме «По урокам»: «Урок N · освоено x из y». */
+    data class LessonHeader(val lesson: Int, val masteredCount: Int, val lettersCount: Int) : AlphabetGridItem {
+        override val key: String get() = "lesson-$lesson"
+    }
+}
 
 @Stable
 data class GlyphUi(
@@ -19,6 +37,7 @@ data class GlyphUi(
     // null for archaic letters: their tiles show only the name
     val sound: String?,
     val progress: GlyphLearningProgress,
+    val lesson: Int?,
 )
 
 enum class GlyphLearningProgress {
