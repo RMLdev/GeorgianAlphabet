@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_welcome_title">Узнавай грузинские буквы в любом шрифте</string>
+    <string name="feature_onboarding_ui_start">Начать учить</string>
+    <string name="feature_onboarding_ui_skip">Пропустить</string>
+</resources>
