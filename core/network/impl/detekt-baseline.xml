@@ -2,6 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues/>
   <CurrentIssues>
-    <ID>ReturnCount:DjcAppAuthenticator.kt:DjcAppAuthenticator$override fun authenticate: Request?</ID>
+    <ID>ReturnCount:TokenAuthenticator.kt:TokenAuthenticator$override fun authenticate: Request?</ID>
   </CurrentIssues>
 </SmellBaseline>

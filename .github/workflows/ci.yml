@@ -26,8 +26,8 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - uses: android-actions/setup-android@v3
-
+      # The runner image ships the Android SDK with accepted licenses (ANDROID_HOME);
+      # AGP downloads the missing compileSdk 37.1 platform by itself.
       - uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}

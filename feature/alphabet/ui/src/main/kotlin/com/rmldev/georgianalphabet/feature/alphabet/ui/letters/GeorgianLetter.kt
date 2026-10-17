@@ -6,11 +6,7 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.letters
  * Temporary data source for the feature screens, to be replaced by an alphabet
  * repository in `feature:alphabet:impl`.
  */
-internal data class GeorgianLetter(
-    val id: Int,
-    val symbol: Char,
-    val name: String,
-)
+internal data class GeorgianLetter(val id: Int, val symbol: Char, val name: String)
 
 internal val MKHEDRULI: List<GeorgianLetter> = listOf(
     'ა' to "ani", 'ბ' to "bani", 'გ' to "gani", 'დ' to "doni", 'ე' to "eni",
