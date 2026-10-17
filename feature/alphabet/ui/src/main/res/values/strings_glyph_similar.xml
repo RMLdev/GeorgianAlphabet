@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Похожие буквы, «Артикуляция» и кнопки внизу карточки, задача 28 (section/SimilarLetters.kt, section/CardActions.kt) -->
+<resources>
+    <string name="feature_alphabet_ui_glyph_all_fonts">Все шрифты</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Тулбар карточки буквы, задача 24 (section/GlyphTopBar.kt) -->
+<resources>
+    <string name="feature_alphabet_ui_glyph_back">Назад к алфавиту</string>
+    <string name="feature_alphabet_ui_glyph_toolbar_all_fonts">Все шрифты</string>
+</resources>

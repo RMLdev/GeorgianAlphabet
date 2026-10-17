@@ -5,6 +5,7 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.Navigator
 import com.rmldev.georgianalphabet.core.navigation.api.TabKey
 import com.rmldev.georgianalphabet.feature.alphabet.api.AlphabetNavKey
+import com.rmldev.georgianalphabet.feature.alphabet.ui.navigation.AllFontsNavKey
 import com.rmldev.georgianalphabet.feature.alphabet.ui.navigation.GlyphDetailsNavKey
 import com.rmldev.georgianalphabet.feature.alphabet.ui.navigation.provideEntries
 import dagger.Module
@@ -34,6 +35,7 @@ interface AlphabetUiFeatureModule {
             polymorphic(NavigationKey::class) {
                 subclass(AlphabetNavKey::class)
                 subclass(GlyphDetailsNavKey::class)
+                subclass(AllFontsNavKey::class)
             }
             polymorphic(TabKey::class) {
                 subclass(AlphabetNavKey::class)

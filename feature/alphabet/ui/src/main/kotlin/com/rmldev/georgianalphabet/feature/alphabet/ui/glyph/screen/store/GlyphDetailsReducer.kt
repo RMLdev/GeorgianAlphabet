@@ -8,6 +8,20 @@ import javax.inject.Inject
 internal class GlyphDetailsReducer @Inject constructor() : MviReducer<GlyphDetailsState, GlyphDetailsEvent> {
 
     override fun reduce(oldState: GlyphDetailsState, event: GlyphDetailsEvent): GlyphDetailsState = when (event) {
-        is GlyphDetailsEvent.LetterLoaded -> oldState.copy(letter = event.letter)
+        is GlyphDetailsEvent.LetterLoaded -> oldState.copy(
+            isLoaded = true,
+            letter = event.letter,
+            details = event.details,
+            relatedLetters = event.relatedLetters.associateBy { it.id },
+        )
+
+        is GlyphDetailsEvent.ProgressUpdated -> oldState.copy(
+            progress = event.progress,
+            knownScript = event.knownScript,
+        )
+
+        is GlyphDetailsEvent.FontSelected -> oldState.copy(currentFontId = event.fontId)
+
+        is GlyphDetailsEvent.PlayingChanged -> oldState.copy(playingId = event.playingId)
     }
 }
