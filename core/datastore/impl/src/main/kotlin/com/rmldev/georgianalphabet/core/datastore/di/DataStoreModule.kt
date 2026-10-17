@@ -37,6 +37,7 @@ internal object DataStoreModule {
     )
 
     @Provides
+    @Singleton
     fun providesAeadSerializerCreator(
         @ApplicationContext applicationContext: Context,
     ): AeadSerializerCreator = AeadSerializerCreatorImpl(applicationContext)

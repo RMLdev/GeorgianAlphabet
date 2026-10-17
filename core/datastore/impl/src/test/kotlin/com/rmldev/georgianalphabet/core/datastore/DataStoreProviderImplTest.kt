@@ -1,7 +1,11 @@
 package com.rmldev.georgianalphabet.core.datastore
 
+import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.rmldev.georgianalphabet.core.datastore.api.DataStoreCreationData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -12,6 +16,8 @@ import org.junit.rules.TemporaryFolder
 import java.io.InputStream
 import java.io.OutputStream
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 import kotlin.test.assertNotSame
 import kotlin.test.assertSame
 import kotlin.test.fail
@@ -61,6 +67,45 @@ class DataStoreProviderImplTest {
         assertEquals("", store.data.first())
         store.updateData { "hello" }
         assertEquals("hello", store.data.first())
+    }
+
+    @Test
+    fun `concurrent provide creates a single store`() = runTest {
+        val provider = provider()
+
+        val stores = (1..50).map {
+            async(Dispatchers.Default) { provider.provide(String::class, StringSerializer, "settings") }
+        }.awaitAll()
+
+        assertEquals(1, stores.toSet().size)
+    }
+
+    @Test
+    fun `same file with another type fails with clear message`() = runTest {
+        val provider = provider()
+        provider.provide(String::class, StringSerializer, "settings")
+
+        val error = assertFailsWith<IllegalArgumentException> {
+            provider.provide(Int::class, IntSerializer, "settings")
+        }
+        assertTrue("String" in error.message.orEmpty() && "Int" in error.message.orEmpty(), error.message)
+    }
+
+    @Test
+    fun `corrupted file is replaced with default value`() = runTest {
+        tmp.root.resolve("number").writeText("not a number")
+
+        val store = provider().provide(Int::class, IntSerializer, "number")
+
+        assertEquals(0, store.data.first())
+    }
+
+    private object IntSerializer : Serializer<Int> {
+        override val defaultValue: Int = 0
+        override suspend fun readFrom(input: InputStream): Int =
+            input.readBytes().decodeToString().toIntOrNull()
+                ?: throw CorruptionException("Not an int")
+        override suspend fun writeTo(t: Int, output: OutputStream) = output.write(t.toString().encodeToByteArray())
     }
 
     private object StringSerializer : Serializer<String> {

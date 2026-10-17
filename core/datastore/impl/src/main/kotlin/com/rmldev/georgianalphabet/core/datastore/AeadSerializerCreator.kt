@@ -24,8 +24,8 @@ internal interface AeadSerializerCreator {
     ): Serializer<T>
 }
 
-class AeadSerializerCreatorImpl(
-    val applicationContext: Context,
+internal class AeadSerializerCreatorImpl(
+    private val applicationContext: Context,
 ) : AeadSerializerCreator {
 
     override fun <T : Any> create(
