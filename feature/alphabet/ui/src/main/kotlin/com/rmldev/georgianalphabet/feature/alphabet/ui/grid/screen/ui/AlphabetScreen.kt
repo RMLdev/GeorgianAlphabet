@@ -143,12 +143,16 @@ private val PreviewState = AlphabetUiState(
 
 @Preview(name = "light", widthDp = 360, heightDp = 480)
 @Composable
-private fun AlphabetScreenLightPreview() = GeAlphTheme(darkTheme = false) {
-    AlphabetScreen(PreviewState, onIntent = {})
+private fun AlphabetScreenLightPreview() {
+    GeAlphTheme(darkTheme = false) {
+        AlphabetScreen(PreviewState, onIntent = {})
+    }
 }
 
 @Preview(name = "dark", widthDp = 360, heightDp = 480)
 @Composable
-private fun AlphabetScreenDarkPreview() = GeAlphTheme(darkTheme = true) {
-    AlphabetScreen(PreviewState, onIntent = {})
+private fun AlphabetScreenDarkPreview() {
+    GeAlphTheme(darkTheme = true) {
+        AlphabetScreen(PreviewState, onIntent = {})
+    }
 }
