@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.TextUnit
 import com.rmldev.georgianalphabet.core.designsystem.R
 
 /**
- * Noto Serif Georgian Regular, bundled in res/font (SIL OFL 1.1, see NOTO_SERIF_GEORGIAN_OFL.txt).
+ * Noto Serif Georgian Regular, bundled in res/font (SIL OFL 1.1, see assets/licenses/fonts/noto_serif_georgian.txt).
  * The standard face of learning glyphs: the alphabet grid, archaic letters, the first page of
  * the letter card and the "standard" glyph next to the right answer.
  */
