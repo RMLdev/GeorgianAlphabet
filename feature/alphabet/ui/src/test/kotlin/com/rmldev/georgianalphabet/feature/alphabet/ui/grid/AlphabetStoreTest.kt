@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -156,19 +156,22 @@ class AlphabetStoreTest {
         val progressFlow = MutableStateFlow<Map<Int, LetterProgress>>(emptyMap())
         val preferencesFlow = MutableStateFlow(preferences(KnownScript.CYRILLIC))
         val scope = RecordingScope(AlphabetState(), this)
-        val sorted = listOf(a, archaic, late)
+        val sorted = listOf(a, late, archaic)
 
-        val job = launch(UnconfinedTestDispatcher(testScheduler)) {
+        backgroundScope.launch {
             with(actor(listOf(late, archaic, a), progressFlow, preferencesFlow)) {
                 scope.executeAction(AlphabetAction.ObserveLetters)
             }
         }
+        runCurrent()
         val progress = mapOf(0 to progress(0, LearningLevel.MASTER))
         progressFlow.value = progress
+        runCurrent()
         // userName change doesn't touch the alphabet
         preferencesFlow.value = preferencesFlow.value.copy(userName = "Роман")
+        runCurrent()
         preferencesFlow.value = preferences(KnownScript.LATIN)
-        job.cancel()
+        runCurrent()
 
         assertEquals(
             listOf<AlphabetEvent>(
