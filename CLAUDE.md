@@ -28,7 +28,6 @@ Android-приложение для изучения грузинского ал
 :core:navigation:impl     — NavigationState, NavigatorImpl, бэкстеки (GeAlphBackStack)
 :core:coroutines          — диспетчеры и @ApplicationScope
 :core:datastore:api|impl  — DataStoreProvider (в т.ч. зашифрованные сторы)
-:core:network:api|impl    — OkHttp/Retrofit
 :feature:<name>:api       — контракт фичи
 :feature:<name>:impl      — реализация фичи
 :feature:<name>:ui        — presentation-слой фичи

@@ -34,7 +34,6 @@ dependencies {
     implementation(project(":core:datastore:impl"))
     implementation(project(":core:designsystem"))
     implementation(project(":core:navigation:impl"))
-    implementation(project(":core:network:impl"))
     implementation(project(":core:ui"))
 
     implementation(project(":feature:alphabet:impl"))

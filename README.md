@@ -56,7 +56,6 @@ core/
   navigation/api|impl   ключи навигации (NavigationKey, TabKey, OverlayScreenKey), Navigator, бэкстеки
   coroutines/           диспетчеры и @ApplicationScope
   datastore/api|impl    DataStoreProvider, в т.ч. зашифрованные сторы
-  network/api|impl      OkHttp/Retrofit
 feature/
   alphabet/api|impl|ui  справочник алфавита: сетка букв и карточка буквы
 build-logic/
