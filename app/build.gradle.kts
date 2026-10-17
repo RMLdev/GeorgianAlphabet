@@ -39,6 +39,7 @@ dependencies {
 
     implementation(project(":feature:alphabet:impl"))
     implementation(project(":feature:alphabet:ui"))
+    implementation(project(":feature:onboarding:ui"))
     implementation(project(":feature:preferences:impl"))
 
     testImplementation(libs.junit)
