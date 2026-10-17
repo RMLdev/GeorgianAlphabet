@@ -85,9 +85,16 @@ internal class DataStoreProviderImpl(
         return DataStoreFactory.create(
             serializer = serializer,
             scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
-            corruptionHandler = ReplaceFileCorruptionHandler { entitySerializer.defaultValue },
+            corruptionHandler = ReplaceFileCorruptionHandler {
+                Log.w(TAG, "DataStore '$dataStoreFileName' is corrupted, replaced with default value", it)
+                entitySerializer.defaultValue
+            },
         ) {
-            dataStoreFileProducer(dataStoreFileName)
+            val relativePath = when (dataStoreCreationData) {
+                is DataStoreCreationData.Default -> dataStoreFileName
+                is DataStoreCreationData.Encrypted -> "${DataStoreFiles.ENCRYPTED_DIR}/$dataStoreFileName"
+            }
+            dataStoreFileProducer(relativePath)
         }
     }
 

@@ -1,6 +1,7 @@
 package com.rmldev.georgianalphabet.core.datastore
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.IOException
 import androidx.datastore.core.Serializer
 import androidx.datastore.tink.AeadSerializer
@@ -47,11 +48,11 @@ class AeadSerializerCreatorImpl(
 
         val handle = try {
             buildKeyset(dataStoreCreationData)
-        } catch (_: GeneralSecurityException) {
-            resetKeys(dataStoreCreationData)
+        } catch (e: GeneralSecurityException) {
+            resetKeys(dataStoreCreationData, e)
             buildKeyset(dataStoreCreationData)
-        } catch (_: IOException) {
-            resetKeys(dataStoreCreationData)
+        } catch (e: IOException) {
+            resetKeys(dataStoreCreationData, e)
             buildKeyset(dataStoreCreationData)
         }
         return handle.getPrimitive(
@@ -67,17 +68,29 @@ class AeadSerializerCreatorImpl(
             .withSharedPref(
                 applicationContext,
                 dataStoreCreationData.keysetName,
-                dataStoreCreationData.keysetPrefsFileName
+                DataStoreFiles.KEYSET_PREFS_FILE_NAME
             )
             .withKeyTemplate(KeyTemplate.createFrom(PredefinedAeadParameters.AES256_GCM))
             .withMasterKeyUri("android-keystore://${dataStoreCreationData.masterKeyName}")
             .build()
             .keysetHandle
 
-    private fun resetKeys(dataStoreCreationData: DataStoreCreationData.Encrypted) {
-        applicationContext.deleteSharedPreferences(dataStoreCreationData.keysetPrefsFileName)
+    // The keyset can't be decrypted (e.g. it was restored but the Keystore master key wasn't).
+    // Old encrypted data is unreadable after this, the store starts from defaultValue.
+    private fun resetKeys(dataStoreCreationData: DataStoreCreationData.Encrypted, cause: Exception) {
+        Log.w(TAG, "Reset keyset '${dataStoreCreationData.keysetName}', encrypted data is lost", cause)
+
+        applicationContext
+            .getSharedPreferences(DataStoreFiles.KEYSET_PREFS_FILE_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .remove(dataStoreCreationData.keysetName)
+            .commit()
         KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
             .deleteEntry(dataStoreCreationData.masterKeyName)
+    }
+
+    private companion object {
+        const val TAG = "AeadSerializerCreator"
     }
 
     private class LazyAead(create: () -> Aead) : Aead {

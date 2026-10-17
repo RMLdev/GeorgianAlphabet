@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample backup rules file; uncomment and customize as necessary.
-   See https://developer.android.com/guide/topics/data/autobackup
-   for details.
-   Note: This file is ignored for devices older than API 31
-   See https://developer.android.com/about/versions/12/backup-restore
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Auto Backup rules for Android 11 (API 30) and lower. For API 31+ see data_extraction_rules.xml.
+
+   Encrypted DataStore files and their Tink keysets are excluded: the keyset is protected by a
+   master key from AndroidKeyStore, which is never backed up, so they can't be decrypted after
+   a restore anyway. Paths are defined in core/datastore/impl/.../DataStoreFiles.kt.
 -->
 <full-backup-content>
-    <!--
-   <include domain="sharedpref" path="."/>
-   <exclude domain="sharedpref" path="device.xml"/>
--->
+    <exclude domain="sharedpref" path="core_datastore_keysets.xml" />
+    <exclude domain="file" path="datastore/encrypted/" />
 </full-backup-content>
