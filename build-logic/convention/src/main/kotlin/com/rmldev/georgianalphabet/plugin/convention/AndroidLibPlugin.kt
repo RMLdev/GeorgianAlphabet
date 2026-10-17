@@ -25,7 +25,11 @@ class AndroidLibPlugin : Plugin<Project> {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
 
-                compileSdk = AndroidProjectConfig.COMPILE_SDK
+                compileSdk {
+                    version = release(AndroidProjectConfig.COMPILE_SDK) {
+                        minorApiLevel = AndroidProjectConfig.COMPILE_SDK_MINOR_LEVEL
+                    }
+                }
 
                 configureKotlin<KotlinAndroidProjectExtension>()
             }
