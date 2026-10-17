@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Сцена глифа карточки буквы, задача 23 (section/GlyphStage.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_glyph_stage_prev_font">Previous font</string>
+    <string name="feature_alphabet_ui_glyph_stage_next_font">Next font</string>
+    <string name="feature_alphabet_ui_glyph_stage_glyph_description">Letter %1$s, font %2$s</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_1">Difficulty 1 of 3, simple</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_2">Difficulty 2 of 3, unusual</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_3">Difficulty 3 of 3, decorative</string>
+    <string name="feature_alphabet_ui_glyph_stage_counter">%1$d / %2$d</string>
+    <string name="feature_alphabet_ui_glyph_stage_counter_locked">locked fonts</string>
+    <plurals name="feature_alphabet_ui_glyph_stage_locked_title">
+        <item quantity="one">%d more font</item>
+        <item quantity="other">%d more fonts</item>
+    </plurals>
+    <string name="feature_alphabet_ui_glyph_stage_locked_subtitle">Unlocked by lessons\nand day streaks</string>
+    <string name="feature_alphabet_ui_glyph_stage_how_to_unlock">How to unlock</string>
+</resources>
