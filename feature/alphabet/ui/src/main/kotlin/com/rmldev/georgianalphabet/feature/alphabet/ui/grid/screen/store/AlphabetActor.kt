@@ -26,6 +26,8 @@ internal class AlphabetActor @Inject constructor(
         when (action) {
             AlphabetAction.ObserveLetters -> observeLetters()
             is AlphabetAction.OpenGlyph -> sideEffect(AlphabetSideEffect.OpenGlyph(action.id))
+            is AlphabetAction.SelectFilter -> event(AlphabetEvent.FilterSelected(action.filter))
+            is AlphabetAction.SelectSort -> event(AlphabetEvent.SortSelected(action.sort))
         }
     }
 

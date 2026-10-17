@@ -2,6 +2,8 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.messag
 
 import com.rmldev.georgianalphabet.feature.alphabet.api.model.Letter
 import com.rmldev.georgianalphabet.feature.alphabet.api.model.LetterProgress
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetFilter
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetSort
 import com.rmldev.georgianalphabet.feature.preferences.api.model.KnownScript
 
 internal sealed interface AlphabetEvent {
@@ -10,4 +12,8 @@ internal sealed interface AlphabetEvent {
         val progress: Map<Int, LetterProgress>,
         val knownScript: KnownScript,
     ) : AlphabetEvent
+
+    data class FilterSelected(val filter: AlphabetFilter) : AlphabetEvent
+
+    data class SortSelected(val sort: AlphabetSort) : AlphabetEvent
 }

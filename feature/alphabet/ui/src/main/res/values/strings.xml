@@ -24,4 +24,19 @@
     <!-- Lesson section in "by lessons" order: lesson number; mastered and total letters of the lesson -->
     <string name="feature_alphabet_ui_lesson_title">Урок %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">освоено %1$d из %2$d</string>
+
+    <!-- Mastery filter chips; "Изучаю" = familiar + confident letters -->
+    <string name="feature_alphabet_ui_filter_all">Все</string>
+    <string name="feature_alphabet_ui_filter_new">Новые</string>
+    <string name="feature_alphabet_ui_filter_learning">Изучаю</string>
+    <string name="feature_alphabet_ui_filter_mastered">Освоены</string>
+
+    <!-- Shown instead of an empty grid when no letter matches the filter -->
+    <string name="feature_alphabet_ui_filter_empty_new">Новых букв не осталось: все уже в работе</string>
+    <string name="feature_alphabet_ui_filter_empty_learning">Пока нет букв в изучении. Начни урок, и они появятся здесь</string>
+    <string name="feature_alphabet_ui_filter_empty_mastered">Освоенных букв пока нет. Продолжай заниматься</string>
+
+    <!-- Grid order segmented button -->
+    <string name="feature_alphabet_ui_sort_alphabet">По алфавиту</string>
+    <string name="feature_alphabet_ui_sort_lessons">По урокам</string>
 </resources>

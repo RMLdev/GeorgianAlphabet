@@ -13,5 +13,9 @@ internal class AlphabetReducer @Inject constructor() : MviReducer<AlphabetState,
             progress = event.progress,
             knownScript = event.knownScript,
         )
+
+        is AlphabetEvent.FilterSelected -> oldState.copy(filter = event.filter)
+
+        is AlphabetEvent.SortSelected -> oldState.copy(sort = event.sort)
     }
 }
