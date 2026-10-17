@@ -8,9 +8,9 @@ class FeatureUiPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.rmldev.plugin.hilt")
-            pluginManager.apply("com.rmldev.android.library")
-            pluginManager.apply("com.rmldev.android.compose")
+            applyPlugin("rmldev-hilt")
+            applyPlugin("rmldev-android-library")
+            applyPlugin("rmldev-android-compose")
 
             dependencies {
                 "implementation"(project(":core:ui"))

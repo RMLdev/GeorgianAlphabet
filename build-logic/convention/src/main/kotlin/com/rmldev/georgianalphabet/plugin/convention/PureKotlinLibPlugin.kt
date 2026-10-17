@@ -7,9 +7,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 class PureKotlinLibPlugin : Plugin<Project> {
 
     override fun apply(target: Project) = with(target) {
-        pluginManager.apply("org.jetbrains.kotlin.jvm")
-        pluginManager.apply("com.autonomousapps.dependency-analysis")
-        pluginManager.apply("com.rmldev.testing")
+        applyPlugin("kotlin-jvm")
+        applyPlugin("dependency-analysis")
+        applyPlugin("rmldev-testing")
 
         configureKotlin<KotlinJvmProjectExtension>()
     }

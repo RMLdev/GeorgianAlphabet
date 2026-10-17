@@ -8,7 +8,7 @@ class SerializationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
+            applyPlugin("kotlin-serialization")
 
             dependencies {
                 "implementation"(libs.findLibrary("kotlinx.serialization.json").get())

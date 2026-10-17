@@ -1,6 +1,5 @@
 package com.rmldev.georgianalphabet.plugin.convention
 
-import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
@@ -18,7 +17,7 @@ inline fun <reified T : KotlinBaseExtension> Project.configureKotlin() =
                 compilerOptions
             }
 
-            else -> TODO("Unsupported project extension $this ${T::class}")
+            else -> error("Unsupported Kotlin extension ${T::class.simpleName}: only Android and JVM projects are supported")
         }.apply {
             jvmToolchain(projectJavaVersionInt)
         }
