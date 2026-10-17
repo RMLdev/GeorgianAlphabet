@@ -39,6 +39,7 @@ class ApplicationPlugin : Plugin<Project> {
             applyPlugin("android-application")
             applyPlugin("dependency-analysis")
             applyPlugin("rmldev-testing")
+            applyPlugin("rmldev-static-analysis")
 
             configure<ApplicationExtension> {
                 defaultConfig.apply {

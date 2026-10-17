@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>EmptyClassBlock:ApplicationModule.kt:ApplicationModule${ }</ID>
+    <ID>EmptyClassBlock:GeAlphApplication.kt:GeAlphApplication${ }</ID>
+    <ID>MatchingDeclarationName:TopLevelItems.kt:TopLevelNavItem</ID>
+  </CurrentIssues>
+</SmellBaseline>

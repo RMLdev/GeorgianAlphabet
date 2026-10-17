@@ -10,6 +10,8 @@ plugins {
     alias(libs.plugins.room) apply false
     alias(libs.plugins.dependency.analysis)
     alias(libs.plugins.kover)
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.spotless)
 }
 
 // Merged coverage report: ./gradlew koverHtmlReport (build/reports/kover/html)
@@ -19,3 +21,20 @@ dependencies {
 }
 
 // Unused and misdeclared dependencies: ./gradlew buildHealth
+
+// ktlint checks only files changed against origin/main so the whole project
+// isn't reformatted at once. Fix: ./gradlew spotlessApply
+spotless {
+    ratchetFrom("origin/main")
+
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**")
+        ktlint(libs.versions.ktlint.get())
+    }
+    kotlinGradle {
+        target("**/*.kts")
+        targetExclude("**/build/**")
+        ktlint(libs.versions.ktlint.get())
+    }
+}
