@@ -4,8 +4,8 @@ import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.OverlayScreenKey
 import com.rmldev.georgianalphabet.core.navigation.api.ScreenOverlay
 import com.rmldev.georgianalphabet.core.navigation.api.TabKey
-import com.rmldev.georgianalphabet.core.navigation.backstack.DjcBackStack
-import com.rmldev.georgianalphabet.core.navigation.state.NavigationState2
+import com.rmldev.georgianalphabet.core.navigation.backstack.GeAlphBackStack
+import com.rmldev.georgianalphabet.core.navigation.state.NavigationState
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -53,16 +53,16 @@ internal fun navigationState(
     startTab: TabKey = HomeTab,
     tabs: List<TabKey> = listOf(HomeTab, ProfileTab),
     firstLaunchKey: OverlayScreenKey? = null,
-): NavigationState2 = NavigationState2(
+): NavigationState = NavigationState(
     screenOverlayState = mutableStateOf(if (firstLaunchKey != null) ScreenOverlay.Blocking else ScreenOverlay.Hidden),
     currentTabState = mutableStateOf(startTab),
     startTab = startTab,
-    overlayBackStack = if (firstLaunchKey != null) DjcBackStack(firstLaunchKey) else DjcBackStack(),
-    backStacksByTabs = tabs.associateWith { DjcBackStack(it) },
+    overlayBackStack = if (firstLaunchKey != null) GeAlphBackStack(firstLaunchKey) else GeAlphBackStack(),
+    backStacksByTabs = tabs.associateWith { GeAlphBackStack(it) },
 )
 
-internal val NavigationState2.currentKeys: List<NavigationKey>
+internal val NavigationState.currentKeys: List<NavigationKey>
     get() = visibleBackStack.map { it.key }
 
-internal fun NavigationState2.keysOf(tab: TabKey): List<NavigationKey> =
+internal fun NavigationState.keysOf(tab: TabKey): List<NavigationKey> =
     backStacksByTabs.getValue(tab).map { it.key }
