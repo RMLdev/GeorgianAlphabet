@@ -17,7 +17,7 @@ class FeatureUiPlugin : Plugin<Project> {
                 "implementation"(project(":core:designsystem"))
 
                 "implementation"(libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
-                "implementation"(libs.findLibrary("androidx.runtime").get())
+                "implementation"(libs.findLibrary("androidx.compose.runtime").get())
                 "implementation"(libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
                 "implementation"(libs.findLibrary("androidx.hilt.lifecycle.viewModelCompose").get())
                 "implementation"(libs.findLibrary("androidx.navigation3.runtime").get())
