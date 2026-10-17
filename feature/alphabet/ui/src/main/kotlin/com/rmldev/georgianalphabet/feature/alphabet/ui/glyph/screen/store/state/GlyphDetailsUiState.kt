@@ -35,6 +35,8 @@ internal data class GlyphStageUi(
     val currentFontIndex: Int = 0,
     /** Закрытые шрифты; 0 — страницы «Ещё N шрифтов» нет. */
     val lockedFontsCount: Int = 0,
+    /** Имя буквы на знакомом алфавите для озвучки глифа: «Буква ани, шрифт DejaVu Sans». */
+    val letterName: String = "",
 )
 
 /** Название, чтение и звук буквы. */
