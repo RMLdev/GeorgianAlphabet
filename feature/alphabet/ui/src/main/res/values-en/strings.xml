@@ -18,6 +18,8 @@
     <string name="feature_alphabet_ui_lesson_title">Lesson %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">%1$d of %2$d mastered</string>
 
+    <!-- Header toggle that draws every tile in a random open font -->
+    <string name="feature_alphabet_ui_shuffle_fonts">Show letters in different fonts</string>
     <string name="feature_alphabet_ui_legend_new">New</string>
     <string name="feature_alphabet_ui_legend_familiar">Familiar</string>
     <string name="feature_alphabet_ui_legend_confident">Confident</string>

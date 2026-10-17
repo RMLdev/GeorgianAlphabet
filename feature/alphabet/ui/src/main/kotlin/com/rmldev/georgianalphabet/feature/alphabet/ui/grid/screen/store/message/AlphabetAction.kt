@@ -5,4 +5,6 @@ internal sealed interface AlphabetAction {
     object ObserveLetters : AlphabetAction
 
     data class OpenGlyph(val id: Int) : AlphabetAction
+
+    object ToggleFontShuffle : AlphabetAction
 }

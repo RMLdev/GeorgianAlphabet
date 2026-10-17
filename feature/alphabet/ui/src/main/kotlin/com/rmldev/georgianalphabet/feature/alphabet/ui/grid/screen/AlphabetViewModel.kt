@@ -28,6 +28,7 @@ internal class AlphabetViewModel @Inject constructor(
     intentToAction = { intent ->
         when (intent) {
             is AlphabetIntent.GlyphClicked -> AlphabetAction.OpenGlyph(intent.id)
+            AlphabetIntent.ShuffleFontsClicked -> AlphabetAction.ToggleFontShuffle
         }
     },
 )

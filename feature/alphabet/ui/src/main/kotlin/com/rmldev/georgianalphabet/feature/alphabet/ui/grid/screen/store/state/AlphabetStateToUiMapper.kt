@@ -16,6 +16,8 @@ internal class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -
             masteredCount = glyphs.count { it.progress == GlyphLearningProgress.MASTERED },
             gridItems = glyphs.map(AlphabetGridItem::Glyph).toImmutableList(),
             archaicGlyphs = archaic.toGlyphs().toImmutableList(),
+            fontsShuffled = state.fontShuffleSeed != null,
+            tileFonts = tileFonts(state.letters, state.fontShuffleSeed),
         )
     }
 }

@@ -25,6 +25,8 @@
     <string name="feature_alphabet_ui_lesson_title">Урок %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">освоено %1$d из %2$d</string>
 
+    <!-- Header toggle that draws every tile in a random open font -->
+    <string name="feature_alphabet_ui_shuffle_fonts">Показывать буквы разными шрифтами</string>
     <!-- Mastery legend under the grid -->
     <string name="feature_alphabet_ui_legend_new">Новая</string>
     <string name="feature_alphabet_ui_legend_familiar">Знакомая</string>
