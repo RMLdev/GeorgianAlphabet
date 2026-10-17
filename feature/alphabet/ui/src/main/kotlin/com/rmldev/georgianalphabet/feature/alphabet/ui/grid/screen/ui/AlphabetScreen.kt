@@ -64,6 +64,17 @@ internal fun AlphabetScreen(state: AlphabetUiState, onIntent: (AlphabetIntent) -
             )
         }
         alphabetGridItems(state, onIntent)
+        fullWidthItem(key = "legend") {
+            MasteryLegend()
+        }
+        if (state.archaicGlyphs.isNotEmpty()) {
+            fullWidthItem(key = "archaic") {
+                ArchaicLetters(
+                    glyphs = state.archaicGlyphs,
+                    onGlyphClick = { onIntent(AlphabetIntent.GlyphClicked(it)) },
+                )
+            }
+        }
     }
 }
 

@@ -27,4 +27,15 @@
 
     <!-- Header toggle that draws every tile in a random open font -->
     <string name="feature_alphabet_ui_shuffle_fonts">Показывать буквы разными шрифтами</string>
+    <!-- Mastery legend under the grid -->
+    <string name="feature_alphabet_ui_legend_new">Новая</string>
+    <string name="feature_alphabet_ui_legend_familiar">Знакомая</string>
+    <string name="feature_alphabet_ui_legend_confident">Уверенная</string>
+    <string name="feature_alphabet_ui_legend_master">Мастер</string>
+
+    <!-- Archaic letters reference block under the grid -->
+    <string name="feature_alphabet_ui_archaic_title">Архаичные буквы</string>
+    <string name="feature_alphabet_ui_archaic_description">Встречаются в старых текстах и на памятниках. Только для справки, в уроки не входят.</string>
+    <!-- Archaic letter tile, read by TalkBack: letter name -->
+    <string name="feature_alphabet_ui_archaic_tile_description">Архаичная буква %1$s</string>
 </resources>
