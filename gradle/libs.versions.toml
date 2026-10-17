@@ -10,7 +10,7 @@ hilt = "2.60.1"
 kotlin = "2.4.21"
 kotlinxCoroutines = "1.11.0"
 kotlinxSerializationJson = "1.11.0"
-ksp = "2.3.4"
+ksp = "2.3.12"
 okhttp = "5.5.0"
 retrofit = "3.0.0"
 # Room is not wired yet: needed for letter progress (see CLAUDE.md, "База данных")
