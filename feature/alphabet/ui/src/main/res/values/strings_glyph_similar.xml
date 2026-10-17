@@ -2,4 +2,11 @@
 <!-- Похожие буквы, «Артикуляция» и кнопки внизу карточки, задача 28 (section/SimilarLetters.kt, section/CardActions.kt) -->
 <resources>
     <string name="feature_alphabet_ui_glyph_all_fonts">Все шрифты</string>
+    <string name="feature_alphabet_ui_glyph_similar_title">Похожие буквы</string>
+    <string name="feature_alphabet_ui_glyph_similar_by_shape">по виду</string>
+    <string name="feature_alphabet_ui_glyph_similar_by_sound">по звуку</string>
+    <!-- %1$s — имя буквы на знакомом алфавите -->
+    <string name="feature_alphabet_ui_glyph_similar_letter_description">Похожая буква %1$s</string>
+    <string name="feature_alphabet_ui_glyph_articulation">Артикуляция</string>
+    <string name="feature_alphabet_ui_glyph_articulation_soon">скоро</string>
 </resources>
