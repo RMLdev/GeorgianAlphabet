@@ -4,9 +4,7 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 
 /** Short transient focus: other apps duck while a sound plays and get focus back right after. */
-internal class SystemAudioFocus(
-    private val audioManager: AudioManager,
-) : AudioFocus {
+internal class SystemAudioFocus(private val audioManager: AudioManager) : AudioFocus {
 
     private var request: AudioFocusRequest? = null
 

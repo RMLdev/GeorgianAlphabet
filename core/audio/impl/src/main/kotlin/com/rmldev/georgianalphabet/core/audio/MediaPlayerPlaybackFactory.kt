@@ -12,9 +12,7 @@ internal val speechAudioAttributes: AudioAttributes = AudioAttributes.Builder()
     .build()
 
 /** Plays assets with [MediaPlayer]; mp3 is stored uncompressed in the APK, so `openFd` works. */
-internal class MediaPlayerPlaybackFactory(
-    private val assets: AssetManager,
-) : PlaybackFactory {
+internal class MediaPlayerPlaybackFactory(private val assets: AssetManager) : PlaybackFactory {
 
     // Any failure of MediaPlayer must release it before reaching SoundPlayerImpl
     @Suppress("TooGenericExceptionCaught")
