@@ -351,6 +351,7 @@ class GlyphDetailsStoreTest {
 
         val mastery = mapper(loaded(progress = progress)).mastery
 
+        assertEquals("ა", mastery.symbol)
         assertEquals(LearningLevel.FAMILIAR, mastery.level)
         assertEquals(2, mastery.recognizedCount)
         assertEquals(FontCatalog.all.size, mastery.fontsCount)

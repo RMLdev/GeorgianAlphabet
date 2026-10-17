@@ -30,7 +30,7 @@ internal class GlyphDetailsStateToUiMapper @Inject constructor() : (GlyphDetails
                 lockedFontsCount = FontCatalog.all.size - openFonts.size,
             ),
             header = letter.toHeader(state),
-            mastery = state.progress.toMastery(openFonts),
+            mastery = state.progress.toMastery(letter.glyph.toString(), openFonts),
             association = details?.association,
             words = details?.words.orEmpty().map { it.toUi(letter.glyph, state) }.toImmutableList(),
             similar = SimilarLettersUi(
@@ -58,9 +58,10 @@ internal class GlyphDetailsStateToUiMapper @Inject constructor() : (GlyphDetails
     }
 
     // Font ids outside the catalog (removed fonts) are not counted
-    private fun LetterProgress?.toMastery(openFonts: List<GeorgianFont>): MasteryUi {
+    private fun LetterProgress?.toMastery(symbol: String, openFonts: List<GeorgianFont>): MasteryUi {
         val recognized = this?.recognizedFontIds.orEmpty()
         return MasteryUi(
+            symbol = symbol,
             level = this?.level ?: LearningLevel.NEW,
             recognizedCount = FontCatalog.all.count { it.id in recognized },
             fontsCount = FontCatalog.all.size,
