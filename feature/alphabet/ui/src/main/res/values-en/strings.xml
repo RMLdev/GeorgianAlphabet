@@ -17,4 +17,13 @@
 
     <string name="feature_alphabet_ui_lesson_title">Lesson %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">%1$d of %2$d mastered</string>
+
+    <string name="feature_alphabet_ui_legend_new">New</string>
+    <string name="feature_alphabet_ui_legend_familiar">Familiar</string>
+    <string name="feature_alphabet_ui_legend_confident">Confident</string>
+    <string name="feature_alphabet_ui_legend_master">Mastered</string>
+
+    <string name="feature_alphabet_ui_archaic_title">Archaic letters</string>
+    <string name="feature_alphabet_ui_archaic_description">Found in old texts and on monuments. For reference only, not part of the lessons.</string>
+    <string name="feature_alphabet_ui_archaic_tile_description">Archaic letter %1$s</string>
 </resources>
