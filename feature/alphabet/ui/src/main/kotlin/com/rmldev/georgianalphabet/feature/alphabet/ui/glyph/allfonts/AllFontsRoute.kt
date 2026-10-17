@@ -1,50 +1,39 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.allfonts
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.systemBars
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.rmldev.georgianalphabet.core.designsystem.icon.GeAlphIcons
-import com.rmldev.georgianalphabet.feature.alphabet.ui.R
+import androidx.compose.runtime.getValue
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.rmldev.georgianalphabet.core.ui.CollectSideEffects
+import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.allfonts.screen.AllFontsViewModel
+import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.allfonts.screen.store.message.AllFontsSideEffect
+import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.allfonts.screen.ui.AllFontsScreen
 
 /**
- * «Все шрифты» буквы [letterId]. Заглушка до задачи 30: она заменит её экраном на своём сторе
- * по шаблону MviStore в этой же папке.
+ * «Все шрифты» буквы [letterId].
+ *
+ * @param onOpenFont вернуться на карточку буквы и показать её в выбранном шрифте: (letterId, fontId).
  */
-@Suppress("UnusedParameter") // letterId: the store of task 30 loads the letter
 @Composable
 internal fun AllFontsRoute(
     letterId: Int,
     onBack: () -> Unit,
+    onOpenFont: (Int, String) -> Unit,
+    viewModel: AllFontsViewModel = hiltViewModel<AllFontsViewModel, AllFontsViewModel.Factory>(
+        creationCallback = { factory -> factory.create(letterId) },
+    ),
 ) {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .windowInsetsPadding(WindowInsets.systemBars),
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack) {
-                Icon(
-                    GeAlphIcons.ArrowBack,
-                    contentDescription = stringResource(R.string.feature_alphabet_ui_all_fonts_back),
-                )
-            }
-            Text(
-                stringResource(R.string.feature_alphabet_ui_all_fonts_title),
-                style = MaterialTheme.typography.titleLarge,
-            )
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    CollectSideEffects(viewModel.sideEffects) { sideEffect ->
+        when (sideEffect) {
+            is AllFontsSideEffect.OpenFont -> onOpenFont(sideEffect.letterId, sideEffect.fontId)
+            AllFontsSideEffect.Back -> onBack()
         }
     }
+
+    AllFontsScreen(
+        state = state,
+        onIntent = viewModel::dispatch,
+    )
 }

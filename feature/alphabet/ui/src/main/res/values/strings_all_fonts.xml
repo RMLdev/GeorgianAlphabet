@@ -3,4 +3,17 @@
 <resources>
     <string name="feature_alphabet_ui_all_fonts_title">Все шрифты</string>
     <string name="feature_alphabet_ui_all_fonts_back">Назад к карточке буквы</string>
+    <!-- «Буква ани · открыто 7 из 15» -->
+    <string name="feature_alphabet_ui_all_fonts_subtitle">Буква %1$s · открыто %2$d из %3$d</string>
+    <string name="feature_alphabet_ui_all_fonts_progress">Открыто шрифтов</string>
+    <string name="feature_alphabet_ui_all_fonts_group_simple">Простые</string>
+    <string name="feature_alphabet_ui_all_fonts_group_unusual">Необычные</string>
+    <string name="feature_alphabet_ui_all_fonts_group_decorative">Декоративные</string>
+    <string name="feature_alphabet_ui_all_fonts_group_count">%1$d из %2$d</string>
+    <!-- «Ани, шрифт DejaVu Sans» -->
+    <string name="feature_alphabet_ui_all_fonts_font_open">%1$s, шрифт %2$s</string>
+    <string name="feature_alphabet_ui_all_fonts_font_recognized">%1$s, шрифт %2$s, узнаёшь</string>
+    <!-- «Шрифт Aznauri закрыт, откроется: 30 дней подряд» -->
+    <string name="feature_alphabet_ui_all_fonts_font_locked">Шрифт %1$s закрыт, откроется: %2$s</string>
+    <string name="feature_alphabet_ui_all_fonts_open_font">Открыть в карточке</string>
 </resources>
