@@ -29,9 +29,7 @@ import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
 import com.rmldev.georgianalphabet.core.designsystem.icon.GeAlphIcons
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
 import com.rmldev.georgianalphabet.core.designsystem.theme.GlyphTextStyle
@@ -42,7 +40,6 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.FontCellUi
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.MasteryUi
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
 
 private const val GRID_COLUMNS = 8
 private const val MASTERY_SEGMENTS = 3
@@ -279,54 +276,3 @@ private val FontCellStatus.labelRes: Int
         FontCellStatus.LEARNING -> R.string.feature_alphabet_ui_mastery_status_learning
         FontCellStatus.LOCKED -> R.string.feature_alphabet_ui_mastery_status_locked
     }
-
-private val PreviewMastery = MasteryUi(
-    symbol = "ა",
-    level = LearningLevel.CONFIDENT,
-    recognizedCount = 3,
-    fontsCount = FontCatalog.all.size,
-    accuracyPercent = 91,
-    cells = FontCatalog.all.mapIndexed { index, font ->
-        val status = when {
-            index < 3 -> FontCellStatus.RECOGNIZED
-            font.unlockedByDefault -> FontCellStatus.LEARNING
-            else -> FontCellStatus.LOCKED
-        }
-        FontCellUi(font, status)
-    }.toImmutableList(),
-)
-
-@Preview(name = "light", widthDp = 360)
-@Composable
-private fun MasterySectionLightPreview() {
-    GeAlphTheme(darkTheme = false) {
-        MasterySection(PreviewMastery, onIntent = {}, Modifier.background(MaterialTheme.colorScheme.background))
-    }
-}
-
-@Preview(name = "dark", widthDp = 360)
-@Composable
-private fun MasterySectionDarkPreview() {
-    GeAlphTheme(darkTheme = true) {
-        MasterySection(PreviewMastery, onIntent = {}, Modifier.background(MaterialTheme.colorScheme.background))
-    }
-}
-
-@Preview(name = "new letter, light", widthDp = 360)
-@Composable
-private fun MasterySectionNewPreview() {
-    GeAlphTheme(darkTheme = false) {
-        MasterySection(
-            PreviewMastery.copy(
-                level = LearningLevel.NEW,
-                recognizedCount = 0,
-                accuracyPercent = null,
-                cells = PreviewMastery.cells.map {
-                    if (it.status == FontCellStatus.RECOGNIZED) it.copy(status = FontCellStatus.LEARNING) else it
-                }.toImmutableList(),
-            ),
-            onIntent = {},
-            Modifier.background(MaterialTheme.colorScheme.background),
-        )
-    }
-}
