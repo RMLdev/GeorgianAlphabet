@@ -2,4 +2,5 @@
 package ${BASE_PACKAGE}.screen.store.message
 
 internal sealed interface ${NAME}SideEffect {
+    object Stub : ${NAME}SideEffect
 }

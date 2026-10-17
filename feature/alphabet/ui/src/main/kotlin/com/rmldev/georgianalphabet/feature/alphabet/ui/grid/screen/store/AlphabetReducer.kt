@@ -11,6 +11,6 @@ internal class AlphabetReducer @Inject constructor() : MviReducer<AlphabetState,
         oldState: AlphabetState,
         event: AlphabetEvent
     ): AlphabetState {
-        return AlphabetState()
+        return oldState
     }
 }

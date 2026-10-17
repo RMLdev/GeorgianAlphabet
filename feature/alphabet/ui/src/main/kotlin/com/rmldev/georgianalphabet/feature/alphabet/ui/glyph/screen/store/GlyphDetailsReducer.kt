@@ -12,6 +12,6 @@ internal class GlyphDetailsReducer @Inject constructor() :
         oldState: GlyphDetailsState,
         event: GlyphDetailsEvent
     ): GlyphDetailsState {
-        return GlyphDetailsState()
+        return oldState
     }
 }
