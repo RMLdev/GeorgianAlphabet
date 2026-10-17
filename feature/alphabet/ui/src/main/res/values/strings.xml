@@ -24,4 +24,16 @@
     <!-- Lesson section in "by lessons" order: lesson number; mastered and total letters of the lesson -->
     <string name="feature_alphabet_ui_lesson_title">Урок %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">освоено %1$d из %2$d</string>
+
+    <!-- Mastery legend under the grid -->
+    <string name="feature_alphabet_ui_legend_new">Новая</string>
+    <string name="feature_alphabet_ui_legend_familiar">Знакомая</string>
+    <string name="feature_alphabet_ui_legend_confident">Уверенная</string>
+    <string name="feature_alphabet_ui_legend_master">Мастер</string>
+
+    <!-- Archaic letters reference block under the grid -->
+    <string name="feature_alphabet_ui_archaic_title">Архаичные буквы</string>
+    <string name="feature_alphabet_ui_archaic_description">Встречаются в старых текстах и на памятниках. Только для справки, в уроки не входят.</string>
+    <!-- Archaic letter tile, read by TalkBack: letter name -->
+    <string name="feature_alphabet_ui_archaic_tile_description">Архаичная буква %1$s</string>
 </resources>
