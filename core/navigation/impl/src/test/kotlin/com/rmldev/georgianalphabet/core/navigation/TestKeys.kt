@@ -52,12 +52,12 @@ internal data object BlockingScreen : OverlayScreenKey {
 internal fun navigationState(
     startTab: TabKey = HomeTab,
     tabs: List<TabKey> = listOf(HomeTab, ProfileTab),
-    overlay: ScreenOverlay = ScreenOverlay.Hidden,
+    firstLaunchKey: OverlayScreenKey? = null,
 ): NavigationState2 = NavigationState2(
-    screenOverlayState = mutableStateOf(overlay),
+    screenOverlayState = mutableStateOf(if (firstLaunchKey != null) ScreenOverlay.Blocking else ScreenOverlay.Hidden),
     currentTabState = mutableStateOf(startTab),
     startTab = startTab,
-    overlayBackStack = DjcBackStack(startTab),
+    overlayBackStack = if (firstLaunchKey != null) DjcBackStack(firstLaunchKey) else DjcBackStack(),
     backStacksByTabs = tabs.associateWith { DjcBackStack(it) },
 )
 
