@@ -189,8 +189,7 @@ class AlphabetStoreTest {
         assertTrue(scope.sideEffects.isEmpty())
     }
 
-    private fun AlphabetUiState.glyphIds() =
-        gridItems.filterIsInstance<AlphabetGridItem.Glyph>().map { it.glyph.id }
+    private fun AlphabetUiState.glyphIds() = gridItems.filterIsInstance<AlphabetGridItem.Glyph>().map { it.glyph.id }
 
     // a, b — урок 1; c, d — урок 2; e — урок 3
     private val lessonLetters = listOf(
@@ -251,9 +250,11 @@ class AlphabetStoreTest {
         assertEquals(
             listOf(
                 AlphabetGridItem.LessonHeader(lesson = 1, masteredCount = 1, lettersCount = 2),
-                "glyph-0", "glyph-1",
+                "glyph-0",
+                "glyph-1",
                 AlphabetGridItem.LessonHeader(lesson = 2, masteredCount = 0, lettersCount = 2),
-                "glyph-2", "glyph-3",
+                "glyph-2",
+                "glyph-3",
                 AlphabetGridItem.LessonHeader(lesson = 3, masteredCount = 0, lettersCount = 1),
                 "glyph-4",
             ),
