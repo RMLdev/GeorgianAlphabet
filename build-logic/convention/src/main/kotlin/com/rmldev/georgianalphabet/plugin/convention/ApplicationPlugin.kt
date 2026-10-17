@@ -36,9 +36,9 @@ class ApplicationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.android.application")
-            pluginManager.apply("com.autonomousapps.dependency-analysis")
-            pluginManager.apply("com.rmldev.testing")
+            applyPlugin("android-application")
+            applyPlugin("dependency-analysis")
+            applyPlugin("rmldev-testing")
 
             configure<ApplicationExtension> {
                 defaultConfig.apply {

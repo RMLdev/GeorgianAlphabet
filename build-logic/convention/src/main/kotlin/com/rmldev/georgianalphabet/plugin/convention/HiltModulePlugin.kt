@@ -9,7 +9,7 @@ class HiltModulePlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.google.devtools.ksp")
+            applyPlugin("ksp")
 
             dependencies {
                 "ksp"(libs.findLibrary("hilt.compiler").get())
@@ -22,7 +22,7 @@ class HiltModulePlugin : Plugin<Project> {
             }
 
             pluginManager.withPlugin("com.android.base") {
-                pluginManager.apply("com.google.dagger.hilt.android")
+                applyPlugin("hilt")
                 dependencies {
                     "implementation"(libs.findLibrary("hilt.android").get())
                 }

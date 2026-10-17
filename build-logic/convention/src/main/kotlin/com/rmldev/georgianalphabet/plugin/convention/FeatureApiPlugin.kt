@@ -8,8 +8,8 @@ class FeatureApiPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.rmldev.plugin.kotlin.library")
-            pluginManager.apply("com.rmldev.serialization")
+            applyPlugin("rmldev-kotlin-library")
+            applyPlugin("rmldev-serialization")
 
             dependencies {
                 "api"(project(":core:navigation:api"))

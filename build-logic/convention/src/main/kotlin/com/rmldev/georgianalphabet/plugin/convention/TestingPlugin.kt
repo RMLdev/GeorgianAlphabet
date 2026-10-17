@@ -14,7 +14,7 @@ class TestingPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("org.jetbrains.kotlinx.kover")
+            applyPlugin("kover")
 
             dependencies {
                 "testImplementation"(libs.findLibrary("junit").get())

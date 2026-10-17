@@ -7,8 +7,8 @@ class FeatureImplPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
-            pluginManager.apply("com.rmldev.plugin.hilt")
-            pluginManager.apply("com.rmldev.plugin.kotlin.library")
+            applyPlugin("rmldev-hilt")
+            applyPlugin("rmldev-kotlin-library")
         }
     }
 }

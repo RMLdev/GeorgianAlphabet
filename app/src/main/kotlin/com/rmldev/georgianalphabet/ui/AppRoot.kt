@@ -1,11 +1,14 @@
 package com.rmldev.georgianalphabet.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.WindowAdaptiveInfo
@@ -16,13 +19,10 @@ import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffo
 import androidx.compose.material3.adaptive.navigationsuite.rememberNavigationSuiteScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.res.stringResource
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.result.rememberResultEventBus
 import androidx.navigation3.ui.NavDisplay
-import androidx.navigationevent.NavigationEvent
 import com.rmldev.georgianalphabet.core.navigation.api.BackStackEntry
 import com.rmldev.georgianalphabet.core.navigation.api.NavigationKey
 import com.rmldev.georgianalphabet.core.navigation.api.Navigator
@@ -70,7 +70,7 @@ fun AppRoot(
             }
         },
         layoutType = layoutType,
-        containerColor = Color.Transparent,
+        containerColor = MaterialTheme.colorScheme.background,
         state = navigationSuiteScaffoldState
     ) {
         val listDetailStrategy = rememberListDetailSceneStrategy<BackStackEntry<NavigationKey>>()
@@ -92,16 +92,13 @@ fun AppRoot(
             sceneStrategies = listOf(listDetailStrategy),
             onBack = { navigator.back() },
             predictivePopTransitionSpec = { swipeEdge ->
-                fadeIn() togetherWith (fadeOut() + scaleOut(
-                    targetScale = 0.75f, transformOrigin = TransformOrigin.Center.copy(
-                        pivotFractionX = when (swipeEdge) {
-                            NavigationEvent.EDGE_LEFT -> 1f
-                            NavigationEvent.EDGE_RIGHT -> 0f
-                            else -> 0.5f
-                        }
-                    )
-                ))
+                ContentTransform(
+                    fadeIn(animationSpec = tween(DEFAULT_TRANSITION_DURATION_MILLISECOND)),
+                    fadeOut(animationSpec = tween(DEFAULT_TRANSITION_DURATION_MILLISECOND)),
+                )
             }
         )
     }
 }
+
+const val DEFAULT_TRANSITION_DURATION_MILLISECOND = 700
