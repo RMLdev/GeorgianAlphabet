@@ -16,12 +16,14 @@ data class GlyphUi(
     val id: Int,
     val symbol: Char,
     val name: String,
-    val progress: GlyphLearningProgress
+    // null for archaic letters: their tiles show only the name
+    val sound: String?,
+    val progress: GlyphLearningProgress,
 )
 
 enum class GlyphLearningProgress {
     NEW,
     STARTED,
     ADVANCED,
-    MASTERED
+    MASTERED,
 }

@@ -17,9 +17,16 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-private fun letter(id: Int, glyph: Char, name: String, archaic: Boolean = false, order: Int = id + 1) = Letter(
+private fun letter(
+    id: Int,
+    glyph: Char,
+    name: String,
+    archaic: Boolean = false,
+    order: Int = id + 1,
+    sound: String = "",
+) = Letter(
     id = id, glyph = glyph, nameGeorgian = "", nameCyrillic = "", nameLatin = name,
-    soundCyrillic = "", soundLatin = "", ipa = "", lesson = if (archaic) null else 1,
+    soundCyrillic = "", soundLatin = sound, ipa = "", lesson = if (archaic) null else 1,
     archaic = archaic, order = order,
 )
 
@@ -57,6 +64,17 @@ class AlphabetStoreTest {
         assertEquals(1, first.glyphs[1].id)
         assertTrue(first.glyphs.all { it.progress == GlyphLearningProgress.NEW })
         assertEquals(first, second)
+    }
+
+    @Test
+    fun `mapper keeps sound for regular letters and drops it for archaic ones`() {
+        val regular = letter(22, 'ღ', "ghani", sound = "gh")
+        val archaic = letter(33, 'ჱ', "ei", archaic = true, sound = "ei")
+
+        val ui = AlphabetStateToUiMapper()(AlphabetState(listOf(regular, archaic)))
+
+        assertEquals("gh", ui.glyphs[0].sound)
+        assertEquals(null, ui.glyphs[1].sound)
     }
 
     @Test
