@@ -10,6 +10,9 @@ internal data class AlphabetState(
     /** Прогресс по id буквы; буквы без записи — новые. */
     val progress: Map<Int, LetterProgress> = emptyMap(),
     val knownScript: KnownScript = KnownScript.CYRILLIC,
+    /** Выбранный фильтр живёт только пока жив экран, между запусками не сохраняется. */
+    val filter: AlphabetFilter = AlphabetFilter.ALL,
+    val sort: AlphabetSort = AlphabetSort.ALPHABET,
     /** Сид перемешивания шрифтов плиток; null — перемешивание выключено. */
     val fontShuffleSeed: Long? = null,
 )

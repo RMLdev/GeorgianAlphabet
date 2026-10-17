@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -34,7 +35,10 @@ import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
 import com.rmldev.georgianalphabet.core.designsystem.theme.GlyphTextStyle
 import com.rmldev.georgianalphabet.feature.alphabet.ui.R
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.message.AlphabetIntent
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetFilter
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetFilterUi
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetGridItem
+import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetSort
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.AlphabetUiState
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphLearningProgress
 import com.rmldev.georgianalphabet.feature.alphabet.ui.grid.screen.store.state.GlyphUi
@@ -62,6 +66,23 @@ internal fun AlphabetScreen(state: AlphabetUiState, onIntent: (AlphabetIntent) -
                 fontsShuffled = state.fontsShuffled,
                 onShuffleFontsClick = { onIntent(AlphabetIntent.ShuffleFontsClicked) },
             )
+        }
+        fullWidthItem(key = "filters") {
+            AlphabetFilterChips(
+                filters = state.filters,
+                selected = state.selectedFilter,
+                onSelect = { onIntent(AlphabetIntent.FilterSelected(it)) },
+            )
+        }
+        fullWidthItem(key = "sort") {
+            AlphabetSortSelector(
+                selected = state.selectedSort,
+                onSelect = { onIntent(AlphabetIntent.SortSelected(it)) },
+                modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
+            )
+        }
+        if (state.isFilterResultEmpty) {
+            fullWidthItem(key = "filter-empty") { AlphabetFilterEmpty(state.selectedFilter) }
         }
         alphabetGridItems(state, onIntent)
         fullWidthItem(key = "legend") {
@@ -156,12 +177,19 @@ private fun tileGlyphStyle(font: GeorgianFont?): TextStyle = remember(font) {
 
 @Composable
 private fun LessonHeader(header: AlphabetGridItem.LessonHeader) {
-    Column(Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp)) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 4.dp, end = 4.dp, top = 12.dp, bottom = 2.dp),
+    ) {
         Text(
             text = stringResource(R.string.feature_alphabet_ui_lesson_title, header.lesson),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.semantics { heading() },
+            modifier = Modifier
+                .alignByBaseline()
+                .semantics { heading() },
         )
         Text(
             text = stringResource(
@@ -171,6 +199,7 @@ private fun LessonHeader(header: AlphabetGridItem.LessonHeader) {
             ),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.alignByBaseline(),
         )
     }
 }
@@ -178,6 +207,8 @@ private fun LessonHeader(header: AlphabetGridItem.LessonHeader) {
 private val PreviewState = AlphabetUiState(
     lettersCount = 33,
     masteredCount = 1,
+    filters = AlphabetFilter.entries.zip(listOf(33, 30, 2, 1), ::AlphabetFilterUi).toImmutableList(),
+    selectedSort = AlphabetSort.LESSONS,
     gridItems = listOf(
         AlphabetGridItem.LessonHeader(lesson = 1, masteredCount = 1, lettersCount = 6),
         AlphabetGridItem.Glyph(GlyphUi(0, 'ა', "ани", "а", GlyphLearningProgress.MASTERED, 1)),

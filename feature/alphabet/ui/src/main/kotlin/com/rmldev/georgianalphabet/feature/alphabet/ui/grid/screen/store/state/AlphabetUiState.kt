@@ -12,6 +12,12 @@ data class AlphabetUiState(
     /** Буквы мхедрули без архаичных: они не входят ни в уроки, ни в счётчики. */
     val lettersCount: Int = 0,
     val masteredCount: Int = 0,
+    /** Чипы фильтров по порядку со счётчиками букв. */
+    val filters: ImmutableList<AlphabetFilterUi> = persistentListOf(),
+    val selectedFilter: AlphabetFilter = AlphabetFilter.ALL,
+    val selectedSort: AlphabetSort = AlphabetSort.ALPHABET,
+    /** Под фильтр не попала ни одна буква: вместо пустой сетки показать сообщение. */
+    val isFilterResultEmpty: Boolean = false,
     /** Содержимое сетки по порядку: плитки и заголовки секций на всю ширину. */
     val gridItems: ImmutableList<AlphabetGridItem> = persistentListOf(),
     /** Архаичные буквы для справочного блока под сеткой. */
@@ -20,6 +26,9 @@ data class AlphabetUiState(
     /** Шрифт глифа по id буквы, пока шрифты перемешаны; буквы без записи — в шрифте по умолчанию. */
     val tileFonts: ImmutableMap<Int, GeorgianFont> = persistentMapOf(),
 )
+
+@Stable
+data class AlphabetFilterUi(val filter: AlphabetFilter, val count: Int)
 
 @Stable
 sealed interface AlphabetGridItem {

@@ -18,6 +18,18 @@
     <string name="feature_alphabet_ui_lesson_title">Lesson %1$d</string>
     <string name="feature_alphabet_ui_lesson_progress">%1$d of %2$d mastered</string>
 
+    <string name="feature_alphabet_ui_filter_all">All</string>
+    <string name="feature_alphabet_ui_filter_new">New</string>
+    <string name="feature_alphabet_ui_filter_learning">Learning</string>
+    <string name="feature_alphabet_ui_filter_mastered">Mastered</string>
+
+    <string name="feature_alphabet_ui_filter_empty_new">No new letters left: you\'ve started them all</string>
+    <string name="feature_alphabet_ui_filter_empty_learning">No letters in progress yet. Start a lesson and they\'ll show up here</string>
+    <string name="feature_alphabet_ui_filter_empty_mastered">No mastered letters yet. Keep practicing</string>
+
+    <string name="feature_alphabet_ui_sort_alphabet">Alphabetical</string>
+    <string name="feature_alphabet_ui_sort_lessons">By lesson</string>
+
     <!-- Header toggle that draws every tile in a random open font -->
     <string name="feature_alphabet_ui_shuffle_fonts">Show letters in different fonts</string>
     <string name="feature_alphabet_ui_legend_new">New</string>
