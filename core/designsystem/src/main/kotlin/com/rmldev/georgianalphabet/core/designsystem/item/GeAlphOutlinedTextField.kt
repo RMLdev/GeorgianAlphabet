@@ -12,6 +12,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldLabelPosition
+import androidx.compose.material3.TextFieldLabelScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,7 +33,7 @@ fun GeAlphOutlinedTextField(
     onKeyboardAction: KeyboardActionHandler? = null,
 ) {
     var isFocused by remember { mutableStateOf(false) }
-    val label: @Composable () -> Unit = { FieldLabel(text = labelText, isFocused = isFocused) }
+    val label: @Composable TextFieldLabelScope.() -> Unit = { FieldLabel(text = labelText, isFocused = isFocused) }
     val placeholder: @Composable () -> Unit = { FieldPlaceholder(text = placeholderText) }
 
     if (isSecure) {
