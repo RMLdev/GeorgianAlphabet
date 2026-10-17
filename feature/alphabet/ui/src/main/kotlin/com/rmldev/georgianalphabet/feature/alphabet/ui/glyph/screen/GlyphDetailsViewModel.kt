@@ -27,7 +27,7 @@ internal class GlyphDetailsViewModel @AssistedInject constructor(
     @Assisted glyphId: Int,
     @Assisted fontId: String?,
     savedStateHandle: SavedStateHandle,
-    actor: GlyphDetailsActor,
+    private val actor: GlyphDetailsActor,
     reducer: GlyphDetailsReducer,
     uiStateMapper: GlyphDetailsStateToUiMapper,
 ) : StoreViewModel<
@@ -41,8 +41,8 @@ internal class GlyphDetailsViewModel @AssistedInject constructor(
     actor = actor,
     reducer = reducer,
     initialState = GlyphDetailsState(glyphId, currentFontId = savedStateHandle.restoreFontId(fontId)),
-    // ObserveProgress never completes, so it must stay the last initial action
-    initialActions = listOf(GlyphDetailsAction.LoadLetter, GlyphDetailsAction.ObserveProgress),
+    // Observe never completes, so it must stay the last initial action
+    initialActions = listOf(GlyphDetailsAction.LoadLetter, GlyphDetailsAction.Observe),
     uiStateMapper = uiStateMapper,
     intentToAction = { it.toAction() },
 ) {
@@ -51,6 +51,12 @@ internal class GlyphDetailsViewModel @AssistedInject constructor(
         viewModelScope.launch {
             state.map { it.currentFontId }.distinctUntilChanged().collect { savedStateHandle.saveFontId(it) }
         }
+    }
+
+    // The screen left the back stack: its sound must not outlive it
+    override fun onCleared() {
+        actor.stopSound()
+        super.onCleared()
     }
 
     @AssistedFactory
