@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_alphabet_ui_screen_name">Алфавит</string>
+
+    <!-- Mastery levels of a letter -->
+    <string name="feature_alphabet_ui_level_new">новая</string>
+    <string name="feature_alphabet_ui_level_familiar">знакомая</string>
+    <string name="feature_alphabet_ui_level_confident">уверенная</string>
+    <string name="feature_alphabet_ui_level_master">мастер</string>
+
+    <!-- Letter tile, read by TalkBack: name, sound, mastery level -->
+    <string name="feature_alphabet_ui_tile_description">Буква %1$s, звук %2$s, %3$s</string>
+    <!-- Archaic letter tile: name, mastery level -->
+    <string name="feature_alphabet_ui_tile_description_no_sound">Буква %1$s, %2$s</string>
 </resources>

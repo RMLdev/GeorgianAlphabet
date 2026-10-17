@@ -1,0 +1,49 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "c94531e7707852dcbf71c7d8f815eb5b",
+    "entities": [
+      {
+        "tableName": "letter_progress",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`letter_id` INTEGER NOT NULL, `correct` INTEGER NOT NULL, `total` INTEGER NOT NULL, `recognized_font_ids` TEXT NOT NULL, PRIMARY KEY(`letter_id`))",
+        "fields": [
+          {
+            "fieldPath": "letterId",
+            "columnName": "letter_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correct",
+            "columnName": "correct",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "total",
+            "columnName": "total",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "recognizedFontIds",
+            "columnName": "recognized_font_ids",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "letter_id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c94531e7707852dcbf71c7d8f815eb5b')"
+    ]
+  }
+}

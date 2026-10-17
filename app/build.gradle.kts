@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.rmldev.hilt)
     alias(libs.plugins.rmldev.coroutines)
     alias(libs.plugins.rmldev.serialization)
+    alias(libs.plugins.room)
 }
 
 android {
@@ -23,6 +24,10 @@ android {
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
@@ -37,9 +42,14 @@ dependencies {
     implementation(project(":core:network:impl"))
     implementation(project(":core:ui"))
 
+    implementation(project(":feature:alphabet:db"))
     implementation(project(":feature:alphabet:impl"))
     implementation(project(":feature:alphabet:ui"))
     implementation(project(":feature:onboarding:impl"))
+    implementation(project(":feature:preferences:impl"))
+
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 
     testImplementation(libs.junit)
 }

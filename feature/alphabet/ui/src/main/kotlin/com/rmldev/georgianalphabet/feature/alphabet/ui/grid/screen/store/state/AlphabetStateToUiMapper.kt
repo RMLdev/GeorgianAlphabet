@@ -11,6 +11,7 @@ internal class AlphabetStateToUiMapper @Inject constructor() : (AlphabetState) -
                 id = letter.id,
                 symbol = letter.glyph,
                 name = letter.nameLatin,
+                sound = letter.soundLatin.takeUnless { letter.archaic },
                 // Learning progress isn't stored yet
                 progress = GlyphLearningProgress.NEW,
             )
