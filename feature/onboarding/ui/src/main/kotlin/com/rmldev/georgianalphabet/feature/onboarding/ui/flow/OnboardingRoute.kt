@@ -1,13 +1,13 @@
-package com.rmldev.georgianalphabet.feature.onboarding.ui.welcome
+package com.rmldev.georgianalphabet.feature.onboarding.ui.flow
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rmldev.georgianalphabet.core.ui.CollectSideEffects
-import com.rmldev.georgianalphabet.feature.onboarding.ui.welcome.screen.OnboardingViewModel
-import com.rmldev.georgianalphabet.feature.onboarding.ui.welcome.screen.store.message.OnboardingSideEffect
-import com.rmldev.georgianalphabet.feature.onboarding.ui.welcome.screen.ui.OnboardingScreen
+import com.rmldev.georgianalphabet.feature.onboarding.ui.flow.screen.OnboardingViewModel
+import com.rmldev.georgianalphabet.feature.onboarding.ui.flow.screen.store.message.OnboardingSideEffect
+import com.rmldev.georgianalphabet.feature.onboarding.ui.flow.screen.ui.OnboardingScreen
 
 @Composable
 internal fun OnboardingRoute(onFinished: () -> Unit, viewModel: OnboardingViewModel = hiltViewModel()) {

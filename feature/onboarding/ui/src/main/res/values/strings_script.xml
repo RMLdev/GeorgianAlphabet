@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_onboarding_ui_script_title">Какой алфавит тебе ближе?</string>
+    <string name="feature_onboarding_ui_script_body">Им подпишем, как читаются грузинские буквы, и на нём будут задания. Поменять можно в настройках.</string>
+    <string name="feature_onboarding_ui_script_cyrillic">Кириллица</string>
+    <string name="feature_onboarding_ui_script_latin">Латиница</string>
+</resources>

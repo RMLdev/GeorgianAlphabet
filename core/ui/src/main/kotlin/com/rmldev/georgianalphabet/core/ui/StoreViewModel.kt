@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -27,6 +28,10 @@ abstract class StoreViewModel<Intent : Any, Action : Any, State : Any, UiState :
 ) : ViewModel() {
 
     private val mutableState: MutableStateFlow<State> = MutableStateFlow(initialState)
+
+    /** Current store state, e.g. to mirror it into SavedStateHandle. Change it only through the actor. */
+    protected val state: StateFlow<State> = mutableState.asStateFlow()
+
     private val sideEffectsChannel = Channel<SideEffect>(capacity = Channel.BUFFERED)
 
     val sideEffects: Flow<SideEffect>
