@@ -1,1 +1,0 @@
-com.rmldev.georgianalphabet.core.designsystem.test
