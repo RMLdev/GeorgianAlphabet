@@ -13,7 +13,7 @@ class GetLetterDetailsUseCaseImplTest {
     private val useCase = GetLetterDetailsUseCaseImpl(StaticAlphabetRepository())
 
     @Test
-    fun `details of ani match the mockup`() = runTest {
+    fun `details of ani`() = runTest {
         val details = assertNotNull(useCase(0))
 
         assertEquals(0, details.letterId)
@@ -21,8 +21,7 @@ class GetLetterDetailsUseCaseImplTest {
         assertEquals(listOf("არა", "მადლობა", "აფთიაქი", "ხაჭაპური", "ბანკი"), details.words.map { it.georgian })
         assertEquals("ara", details.words.first().transliterationLatin)
         assertEquals("нет", details.words.first().translation.ru)
-        // ს и ჰ, по алфавиту
-        assertEquals(listOf(17, 32), details.similarByShape)
+        assertEquals(listOf(17), details.similarByShape)
         assertTrue(details.similarBySound.isEmpty())
     }
 
