@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Название, транслит, МФА и звук, задача 25 (section/LetterHeader.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_glyph_header_cyrillic">Cyrillic</string>
+    <string name="feature_alphabet_ui_glyph_header_latin">Latin</string>
+    <string name="feature_alphabet_ui_glyph_header_ipa">IPA</string>
+    <string name="feature_alphabet_ui_glyph_header_listen">Listen: %1$s</string>
+    <string name="feature_alphabet_ui_glyph_header_playing">Playing</string>
+</resources>
