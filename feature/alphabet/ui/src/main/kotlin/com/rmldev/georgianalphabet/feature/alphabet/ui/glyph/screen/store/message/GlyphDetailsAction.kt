@@ -12,7 +12,7 @@ internal sealed interface GlyphDetailsAction {
     /** Название буквы: `audio/letters/<id>.mp3`. */
     object PlayName : GlyphDetailsAction
 
-    /** Слово-пример по его мхедрули; играет `audioAsset` слова, без файла — ничего. */
+    /** Слово-пример по его мхедрули; играет файл слова (см. `audioPath`), нет файла — тишина. */
     data class PlayWord(val georgian: String) : GlyphDetailsAction
 
     data class OpenLetter(val letterId: Int) : GlyphDetailsAction

@@ -11,6 +11,7 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.messag
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsEvent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsSideEffect
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsState
+import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.audioPath
 import com.rmldev.georgianalphabet.feature.preferences.api.usecase.ObserveUserPreferencesUseCase
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.combine
@@ -43,7 +44,7 @@ internal class GlyphDetailsActor @Inject constructor(
             GlyphDetailsAction.PlayName -> play(AudioAssets.letter(state.glyphId))
 
             is GlyphDetailsAction.PlayWord ->
-                play(state.details?.words?.firstOrNull { it.georgian == action.georgian }?.audioAsset)
+                play(state.details?.words?.firstOrNull { it.georgian == action.georgian }?.audioPath())
 
             is GlyphDetailsAction.OpenLetter -> {
                 stopSound()

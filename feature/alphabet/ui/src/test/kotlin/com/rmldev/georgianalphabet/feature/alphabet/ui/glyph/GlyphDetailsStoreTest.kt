@@ -61,7 +61,7 @@ private val ANI_DETAILS = LetterDetails(
     letterId = 0,
     association = LocalizedText("арбуз", "watermelon"),
     words = listOf(
-        ExampleWord("არა", "ара", "ara", LocalizedText("нет", "no"), audioAsset = "audio/words/ara.mp3"),
+        ExampleWord("არა", "ара", "ara", LocalizedText("нет", "no")),
     ),
     similarByShape = listOf(17),
     similarBySound = listOf(9, 99),
@@ -251,18 +251,18 @@ class GlyphDetailsStoreTest {
     }
 
     @Test
-    fun `play word plays its asset and skips words without one`() = runTest {
-        val noAudio = ANI_DETAILS.copy(
-            words = ANI_DETAILS.words + ExampleWord("ბანი", "бани", "bani", LocalizedText("бани", "bani")),
-        )
-        val scope = RecordingScope(GlyphDetailsState(0, details = noAudio), this)
+    fun `play word plays file by word slug and ignores unknown words`() = runTest {
+        val khachapuri =
+            ExampleWord("ხაჭაპური", "хачапури", "Khach'ap'uri", LocalizedText("хачапури", "khachapuri"))
+        val details = ANI_DETAILS.copy(words = ANI_DETAILS.words + khachapuri)
+        val scope = RecordingScope(GlyphDetailsState(0, details = details), this)
         val actor = actor()
 
-        actor.execute(scope, GlyphDetailsAction.PlayWord("ბანი"))
         actor.execute(scope, GlyphDetailsAction.PlayWord("უცნობი"))
         actor.execute(scope, GlyphDetailsAction.PlayWord("არა"))
+        actor.execute(scope, GlyphDetailsAction.PlayWord("ხაჭაპური"))
 
-        assertEquals(listOf("audio/words/ara.mp3"), player.requested)
+        assertEquals(listOf("audio/words/ara.mp3", "audio/words/khachapuri.mp3"), player.requested)
     }
 
     @Test
@@ -481,6 +481,7 @@ class GlyphDetailsStoreTest {
         assertTrue(name.header.isNamePlaying)
         assertFalse(name.words.single().isPlaying)
         assertFalse(word.header.isNamePlaying)
+        assertEquals("audio/words/ara.mp3", word.words.single().audio)
         assertTrue(word.words.single().isPlaying)
     }
 

@@ -84,8 +84,8 @@ internal class GlyphDetailsStateToUiMapper @Inject constructor() : (GlyphDetails
             KnownScript.LATIN -> transliterationLatin
         },
         translation = translation,
-        audio = audioAsset,
-        isPlaying = audioAsset != null && audioAsset == state.playingId,
+        audio = audioPath(),
+        isPlaying = audioPath() == state.playingId,
     )
 
     private fun List<Int>.toSimilar(state: GlyphDetailsState) = mapNotNull { id ->
