@@ -7,6 +7,14 @@ plugins {
 
 android {
     namespace = "com.rmldev.georgianalphabet.core.network.impl"
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    defaultConfig {
+        buildConfigField("String", "BASE_URL", "\"https://dummyjson.com/\"")
+    }
 }
 
 dependencies {

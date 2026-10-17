@@ -37,7 +37,6 @@ internal abstract class NetworkModule {
         @Singleton
         fun providesBaseOkHttpClient(): OkHttpClient {
             return OkHttpClient.Builder().build()
-
         }
 
         @Provides
@@ -51,20 +50,9 @@ internal abstract class NetworkModule {
             return base.get()
                 .newBuilder()
                 .addInterceptor(authHeaderInterceptor)
-                .addInterceptor(
-                    HttpLoggingInterceptor({ Log.d("Network", it) })
-                        .apply {
-                            setLevel(
-                                if (true)
-                                    HttpLoggingInterceptor.Level.BODY
-                                else
-                                    HttpLoggingInterceptor.Level.NONE
-                            )
-                        }
-                )
+                .addDebugLogging()
                 .authenticator(authenticator)
                 .build()
-
         }
 
         @Provides
@@ -72,16 +60,7 @@ internal abstract class NetworkModule {
         fun providesAuthenticatedRetrofit(
             @Authenticated okHttpClient: dagger.Lazy<OkHttpClient>,
             json: Json,
-        ): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/")
-                .callFactory { okHttpClient.get().newCall(it) }
-                .addConverterFactory(
-                    json.asConverterFactory("application/json".toMediaType())
-                )
-                .build()
-
-        }
+        ): Retrofit = createRetrofit(okHttpClient, json)
 
         @Provides
         @Singleton
@@ -89,20 +68,10 @@ internal abstract class NetworkModule {
         fun providesUnauthenticatedOkHttpClient(
             base: dagger.Lazy<OkHttpClient>,
         ): OkHttpClient {
-            return base.get().newBuilder()
-                .addInterceptor(
-                    HttpLoggingInterceptor({ Log.d("Network", it) })
-                        .apply {
-                            setLevel(
-                                if (true)
-                                    HttpLoggingInterceptor.Level.BODY
-                                else
-                                    HttpLoggingInterceptor.Level.NONE
-                            )
-                        }
-                )
+            return base.get()
+                .newBuilder()
+                .addDebugLogging()
                 .build()
-
         }
 
         @Provides
@@ -111,15 +80,30 @@ internal abstract class NetworkModule {
         fun providesUnauthenticatedRetrofit(
             @Unauthenticated okHttpClient: dagger.Lazy<OkHttpClient>,
             json: Json,
+        ): Retrofit = createRetrofit(okHttpClient, json)
+
+        private fun OkHttpClient.Builder.addDebugLogging(): OkHttpClient.Builder = apply {
+            if (!BuildConfig.DEBUG) return@apply
+
+            addInterceptor(
+                HttpLoggingInterceptor { Log.d("Network", it) }.apply {
+                    level = HttpLoggingInterceptor.Level.BODY
+                    redactHeader("Authorization")
+                }
+            )
+        }
+
+        private fun createRetrofit(
+            okHttpClient: dagger.Lazy<OkHttpClient>,
+            json: Json,
         ): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .callFactory { okHttpClient.get().newCall(it) }
                 .addConverterFactory(
                     json.asConverterFactory("application/json".toMediaType())
                 )
                 .build()
-
         }
     }
 }
