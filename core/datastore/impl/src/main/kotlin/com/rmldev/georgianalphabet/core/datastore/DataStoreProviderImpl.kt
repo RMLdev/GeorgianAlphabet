@@ -13,6 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
 internal class DataStoreProviderImpl(
@@ -22,7 +23,7 @@ internal class DataStoreProviderImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : DataStoreProvider {
 
-    private val dataStores: HashMap<String, DataStore<*>> = hashMapOf()
+    private val dataStores = ConcurrentHashMap<String, CachedStore>()
 
     private val mutex = Mutex()
 
@@ -32,40 +33,37 @@ internal class DataStoreProviderImpl(
         dataStoreFileName: String,
         dataStoreCreationData: DataStoreCreationData,
     ): DataStore<T> {
-        val dataStore = if (getStore<T>(dataStoreFileName) == null) {
-            mutex.withLock {
-                if (getStore<T>(dataStoreFileName) == null) {
-                    val store = runCatching {
-                        createDataStore(
-                            entitySerializer,
-                            dataStoreFileName,
-                            dataStoreCreationData,
-                        )
-                    }.onFailure {
-                        if (it is CancellationException) throw it
-
-                        Log.e(
-                            TAG,
-                            "Can't retrieve DataStore<${entityClazz.simpleName}> with name $dataStoreFileName",
-                            it
-                        )
-                    }.getOrNull()
-
-                    store?.let { dataStores[dataStoreFileName] = it }
+        val cached = dataStores[dataStoreFileName] ?: mutex.withLock {
+            dataStores[dataStoreFileName] ?: run {
+                val store = try {
+                    createDataStore(entitySerializer, dataStoreFileName, dataStoreCreationData)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    throw IllegalStateException(
+                        "Can't create DataStore<${entityClazz.simpleName}> with name $dataStoreFileName",
+                        e
+                    )
                 }
-                getStore(dataStoreFileName)
+                CachedStore(entityClazz, store).also { dataStores[dataStoreFileName] = it }
             }
-        } else {
-            getStore<T>(dataStoreFileName)
         }
 
-        return requireNotNull(dataStore) {
-            "Can't retrieve DataStore<${entityClazz.simpleName}> with name $dataStoreFileName"
-        }
+        return cached.cast(entityClazz, dataStoreFileName)
     }
 
-    private fun <T : Any> getStore(fileName: String): DataStore<T>? {
-        return dataStores[fileName] as DataStore<T>?
+    private class CachedStore(
+        val entityClazz: KClass<*>,
+        val store: DataStore<*>,
+    ) {
+        fun <T : Any> cast(requested: KClass<T>, fileName: String): DataStore<T> {
+            require(entityClazz == requested) {
+                "DataStore '$fileName' is already opened for ${entityClazz.simpleName}, " +
+                    "can't open it for ${requested.simpleName}"
+            }
+            @Suppress("UNCHECKED_CAST")
+            return store as DataStore<T>
+        }
     }
 
     private fun <T : Any> createDataStore(
