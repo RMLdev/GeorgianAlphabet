@@ -23,11 +23,7 @@ internal data class AllFontsUiState(
 
 /** Шрифты одной сложности: 1 — простые, 2 — необычные, 3 — декоративные. */
 @Immutable
-internal data class FontGroupUi(
-    val difficulty: Int,
-    val openCount: Int,
-    val fonts: ImmutableList<FontTileUi>,
-)
+internal data class FontGroupUi(val difficulty: Int, val openCount: Int, val fonts: ImmutableList<FontTileUi>)
 
 /**
  * Плитка шрифта. Закрытый шрифт показывает условие открытия `font.unlockCondition`.
@@ -35,8 +31,4 @@ internal data class FontGroupUi(
  * @param isRecognized букву узнают в этом шрифте; только для открытого шрифта.
  */
 @Immutable
-internal data class FontTileUi(
-    val font: GeorgianFont,
-    val isOpen: Boolean,
-    val isRecognized: Boolean = false,
-)
+internal data class FontTileUi(val font: GeorgianFont, val isOpen: Boolean, val isRecognized: Boolean = false)

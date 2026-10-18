@@ -26,11 +26,8 @@ internal class AllFontsActor @Inject constructor(
     override suspend fun AllFontsActorScope.executeAction(action: AllFontsAction) {
         when (action) {
             AllFontsAction.LoadLetter -> event(AllFontsEvent.LetterLoaded(getLetter(state.letterId)))
-
             AllFontsAction.ObserveProgress -> observeProgress()
-
             is AllFontsAction.OpenFont -> openFont(action.fontId)
-
             AllFontsAction.Back -> sideEffect(AllFontsSideEffect.Back)
         }
     }

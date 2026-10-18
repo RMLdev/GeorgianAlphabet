@@ -9,7 +9,6 @@ internal class AllFontsReducer @Inject constructor() : MviReducer<AllFontsState,
 
     override fun reduce(oldState: AllFontsState, event: AllFontsEvent): AllFontsState = when (event) {
         is AllFontsEvent.LetterLoaded -> oldState.copy(isLoaded = true, letter = event.letter)
-
         is AllFontsEvent.ProgressUpdated -> oldState.copy(progress = event.progress, knownScript = event.knownScript)
     }
 }
