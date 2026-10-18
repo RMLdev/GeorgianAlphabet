@@ -57,6 +57,8 @@ internal data class LetterHeaderUi(
 /** Блок «Освоение»: уровень, «N из M шрифтов узнаёшь», точность и ячейки шрифтов. */
 @Stable
 internal data class MasteryUi(
+    /** Глиф буквы для ячеек шрифтов. */
+    val symbol: String = "",
     val level: LearningLevel = LearningLevel.NEW,
     /** Шрифты каталога, в которых букву узнают. */
     val recognizedCount: Int = 0,

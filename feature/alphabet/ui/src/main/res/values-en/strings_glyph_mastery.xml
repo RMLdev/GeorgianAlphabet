@@ -1,3 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Блок «Освоение», задача 26 (section/MasterySection.kt) -->
-<resources></resources>
+<!-- Mastery block, task 26 (section/MasterySection.kt) -->
+<resources>
+    <string name="feature_alphabet_ui_mastery_title">Mastery</string>
+
+    <string name="feature_alphabet_ui_mastery_count">%1$d of %2$d</string>
+    <plurals name="feature_alphabet_ui_mastery_fonts_recognized">
+        <item quantity="one">font recognized</item>
+        <item quantity="other">fonts recognized</item>
+    </plurals>
+    <string name="feature_alphabet_ui_mastery_with_accuracy">%1$s · accuracy %2$d%%</string>
+
+    <string name="feature_alphabet_ui_mastery_status_recognized">recognized</string>
+    <string name="feature_alphabet_ui_mastery_status_learning">still learning</string>
+    <string name="feature_alphabet_ui_mastery_status_locked">locked</string>
+    <string name="feature_alphabet_ui_mastery_cell_description">%1$s: %2$s</string>
+</resources>
