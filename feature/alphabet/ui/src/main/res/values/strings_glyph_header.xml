@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Название, транслит, МФА и звук, задача 25 (section/LetterHeader.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_glyph_header_cyrillic">кириллица</string>
+    <string name="feature_alphabet_ui_glyph_header_latin">латиница</string>
+    <string name="feature_alphabet_ui_glyph_header_ipa">МФА</string>
+    <string name="feature_alphabet_ui_glyph_header_ipa_value" translatable="false">[%1$s]</string>
+    <!-- Кнопка звука: «Послушать: ани» -->
+    <string name="feature_alphabet_ui_glyph_header_listen">Послушать: %1$s</string>
+    <string name="feature_alphabet_ui_glyph_header_playing">Звучит</string>
+</resources>
