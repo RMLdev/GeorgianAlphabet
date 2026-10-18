@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Сцена глифа карточки буквы, задача 23 (section/GlyphStage.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_glyph_stage_prev_font">Предыдущий шрифт</string>
+    <string name="feature_alphabet_ui_glyph_stage_next_font">Следующий шрифт</string>
+    <!-- Озвучка глифа: имя буквы, название шрифта -->
+    <string name="feature_alphabet_ui_glyph_stage_glyph_description">Буква %1$s, шрифт %2$s</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_1">Сложность 1 из 3, простой</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_2">Сложность 2 из 3, необычный</string>
+    <string name="feature_alphabet_ui_glyph_stage_difficulty_3">Сложность 3 из 3, декоративный</string>
+    <!-- Номер текущего шрифта из открытых: «3 / 7» -->
+    <string name="feature_alphabet_ui_glyph_stage_counter">%1$d / %2$d</string>
+    <string name="feature_alphabet_ui_glyph_stage_counter_locked">закрытые шрифты</string>
+    <plurals name="feature_alphabet_ui_glyph_stage_locked_title">
+        <item quantity="one">Ещё %d шрифт</item>
+        <item quantity="few">Ещё %d шрифта</item>
+        <item quantity="many">Ещё %d шрифтов</item>
+        <item quantity="other">Ещё %d шрифта</item>
+    </plurals>
+    <string name="feature_alphabet_ui_glyph_stage_locked_subtitle">Открываются за уроки\nи серию дней</string>
+    <string name="feature_alphabet_ui_glyph_stage_how_to_unlock">Как открыть</string>
+</resources>

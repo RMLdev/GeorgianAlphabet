@@ -28,6 +28,7 @@ internal class GlyphDetailsStateToUiMapper @Inject constructor() : (GlyphDetails
                 fonts = openFonts.toImmutableList(),
                 currentFontIndex = openFonts.indexOfFirst { it.id == state.currentFontId }.coerceAtLeast(0),
                 lockedFontsCount = FontCatalog.all.size - openFonts.size,
+                letterName = letter.name(state.knownScript),
             ),
             header = letter.toHeader(state),
             mastery = state.progress.toMastery(letter.glyph.toString(), openFonts),
