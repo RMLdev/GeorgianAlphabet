@@ -35,7 +35,7 @@ fun EntryProviderScope<NavigationKey>.provideEntries(navigator: Navigator) {
             onBack = navigator::back,
             // Back to the card in the chosen font: the old card is replaced, not duplicated
             onOpenFont = { letterId, fontId ->
-                navigator.popWhere { it == key || it is GlyphDetailsNavKey && it.id == letterId }
+                navigator.popWhere { it == key || (it is GlyphDetailsNavKey && it.id == letterId) }
                 navigator.navigateTo(GlyphDetailsNavKey(letterId, fontId))
             },
         )
