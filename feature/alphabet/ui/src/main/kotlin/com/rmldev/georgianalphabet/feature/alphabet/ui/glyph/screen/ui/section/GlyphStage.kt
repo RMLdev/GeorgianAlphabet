@@ -6,15 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -34,7 +31,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -46,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
 import com.rmldev.georgianalphabet.core.designsystem.font.GeorgianFont
 import com.rmldev.georgianalphabet.core.designsystem.icon.GeAlphIcons
-import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphShapeDefaults
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
 import com.rmldev.georgianalphabet.core.designsystem.theme.GlyphTextStyle
 import com.rmldev.georgianalphabet.feature.alphabet.ui.R
@@ -55,8 +50,6 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
-/** Высота тулбара над сценой: глиф не заходит под кнопки «Назад» и «Все шрифты». */
-private val TOOLBAR_HEIGHT = 64.dp
 private const val LOCKED_PAGE_KEY = "locked"
 
 /**
@@ -66,6 +59,9 @@ private const val LOCKED_PAGE_KEY = "locked"
  * Текущий шрифт хранит стор: перелистывание отправляет [GlyphDetailsIntent.FontSelected],
  * а смена [GlyphStageUi.currentFontIndex] извне (загрузка, `fontId` из NavKey, выбор в «Все шрифты»)
  * прокручивает пейджер. Страница закрытых шрифтов шрифтом не считается и в стор не попадает.
+ *
+ * Фон, скругление, отступы под тулбар и схлопывание задаёт контейнер в `GlyphDetailsScreen`:
+ * [modifier] приходит от него и уже занимает всю доступную область.
  */
 @Composable
 internal fun GlyphStage(
@@ -81,12 +77,7 @@ internal fun GlyphStage(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(GeAlphShapeDefaults.GlyphStage)
-            .background(MaterialTheme.colorScheme.surfaceContainer)
-            .windowInsetsPadding(WindowInsets.statusBars)
-            .padding(top = TOOLBAR_HEIGHT, start = 8.dp, end = 8.dp, bottom = 20.dp),
+        modifier = modifier.padding(horizontal = 8.dp),
     ) {
         PagerWithArrows(
             symbol = symbol,
@@ -230,7 +221,9 @@ private val PreviewStage = GlyphStageUi(
 @Composable
 private fun GlyphStageLightPreview() {
     GeAlphTheme(darkTheme = false) {
-        GlyphStage(symbol = "ა", state = PreviewStage, onIntent = {}, modifier = Modifier.fillMaxSize())
+        Box(Modifier.background(MaterialTheme.colorScheme.surfaceContainer)) {
+            GlyphStage(symbol = "ა", state = PreviewStage, onIntent = {}, modifier = Modifier.fillMaxSize())
+        }
     }
 }
 
@@ -238,6 +231,8 @@ private fun GlyphStageLightPreview() {
 @Composable
 private fun GlyphStageDarkPreview() {
     GeAlphTheme(darkTheme = true) {
-        GlyphStage(symbol = "ა", state = PreviewStage, onIntent = {}, modifier = Modifier.fillMaxSize())
+        Box(Modifier.background(MaterialTheme.colorScheme.surfaceContainer)) {
+            GlyphStage(symbol = "ა", state = PreviewStage, onIntent = {}, modifier = Modifier.fillMaxSize())
+        }
     }
 }
