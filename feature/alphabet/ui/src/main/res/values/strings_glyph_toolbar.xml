@@ -3,4 +3,6 @@
 <resources>
     <string name="feature_alphabet_ui_glyph_back">Назад к алфавиту</string>
     <string name="feature_alphabet_ui_glyph_toolbar_all_fonts">Все шрифты</string>
+    <!-- Заголовок тулбара после схлопывания сцены, %1$s — глиф буквы -->
+    <string name="feature_alphabet_ui_glyph_toolbar_title">Буква %1$s</string>
 </resources>

@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Ассоциация и примеры слов, задача 27 (section/AssociationSection.kt, section/ExampleWords.kt) -->
-<resources></resources>
+<resources>
+    <string name="feature_alphabet_ui_glyph_association_title">Association</string>
+    <string name="feature_alphabet_ui_glyph_association_illustration">Illustration for the letter %1$s</string>
+    <string name="feature_alphabet_ui_glyph_words_title">Example words</string>
+    <!-- Transliteration · translation -->
+    <string name="feature_alphabet_ui_glyph_word_subtitle">%1$s · %2$s</string>
+    <string name="feature_alphabet_ui_glyph_word_play">Listen to the word %1$s</string>
+    <string name="feature_alphabet_ui_glyph_word_playing">Playing</string>
+</resources>

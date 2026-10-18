@@ -1,5 +1,7 @@
 package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store
 
+import com.rmldev.georgianalphabet.core.audio.api.AudioAssets
+import com.rmldev.georgianalphabet.core.audio.api.SoundPlayer
 import com.rmldev.georgianalphabet.core.ui.ActorScope
 import com.rmldev.georgianalphabet.core.ui.MviActor
 import com.rmldev.georgianalphabet.feature.alphabet.api.usecase.GetLetterDetailsUseCase
@@ -9,10 +11,13 @@ import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.messag
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsEvent
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.message.GlyphDetailsSideEffect
 import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.GlyphDetailsState
+import com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.store.state.audioPath
 import com.rmldev.georgianalphabet.feature.preferences.api.usecase.ObserveUserPreferencesUseCase
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private typealias GlyphDetailsActorScope = ActorScope<GlyphDetailsState, GlyphDetailsEvent, GlyphDetailsSideEffect>
@@ -22,25 +27,48 @@ internal class GlyphDetailsActor @Inject constructor(
     private val getLetterDetails: GetLetterDetailsUseCase,
     private val observeLettersProgress: ObserveLettersProgressUseCase,
     private val observeUserPreferences: ObserveUserPreferencesUseCase,
+    private val soundPlayer: SoundPlayer,
 ) : MviActor<GlyphDetailsAction, GlyphDetailsState, GlyphDetailsEvent, GlyphDetailsSideEffect> {
 
     override suspend fun GlyphDetailsActorScope.executeAction(action: GlyphDetailsAction) {
         when (action) {
             GlyphDetailsAction.LoadLetter -> loadLetter()
 
-            GlyphDetailsAction.ObserveProgress -> observeProgress()
+            GlyphDetailsAction.Observe -> coroutineScope {
+                launch { observeProgress() }
+                launch { observePlaying() }
+            }
 
             is GlyphDetailsAction.SelectFont -> event(GlyphDetailsEvent.FontSelected(action.fontId))
 
-            // Sound is wired to SoundPlayer separately (task 29)
-            GlyphDetailsAction.PlayName, is GlyphDetailsAction.PlayWord -> Unit
+            GlyphDetailsAction.PlayName -> play(AudioAssets.letter(state.glyphId))
 
-            is GlyphDetailsAction.OpenLetter -> sideEffect(GlyphDetailsSideEffect.OpenLetter(action.letterId))
+            is GlyphDetailsAction.PlayWord ->
+                play(state.details?.words?.firstOrNull { it.georgian == action.georgian }?.audioPath())
 
-            GlyphDetailsAction.OpenAllFonts -> sideEffect(GlyphDetailsSideEffect.OpenAllFonts(state.glyphId))
+            is GlyphDetailsAction.OpenLetter -> {
+                stopSound()
+                sideEffect(GlyphDetailsSideEffect.OpenLetter(action.letterId))
+            }
 
-            GlyphDetailsAction.Back -> sideEffect(GlyphDetailsSideEffect.Back)
+            GlyphDetailsAction.OpenAllFonts -> {
+                stopSound()
+                sideEffect(GlyphDetailsSideEffect.OpenAllFonts(state.glyphId))
+            }
+
+            GlyphDetailsAction.Back -> {
+                stopSound()
+                sideEffect(GlyphDetailsSideEffect.Back)
+            }
         }
+    }
+
+    /** Остановить звук: экран уходит со стека или с переднего плана. */
+    fun stopSound() = soundPlayer.stop()
+
+    // A missing file or a playback error stays silent: the button just does nothing (task 21 adds the files)
+    private suspend fun play(assetPath: String?) {
+        if (assetPath != null) soundPlayer.play(assetPath)
     }
 
     private suspend fun GlyphDetailsActorScope.loadLetter() {
@@ -60,5 +88,9 @@ internal class GlyphDetailsActor @Inject constructor(
         combine(progress, knownScript) { letterProgress, script ->
             GlyphDetailsEvent.ProgressUpdated(letterProgress, script)
         }.collect { event(it) }
+    }
+
+    private suspend fun GlyphDetailsActorScope.observePlaying() {
+        soundPlayer.playing.collect { event(GlyphDetailsEvent.PlayingChanged(it)) }
     }
 }
