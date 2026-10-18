@@ -1,5 +1,6 @@
 package com.rmldev.georgianalphabet.core.audio
 
+import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -17,11 +18,7 @@ internal class MediaPlayerPlaybackFactory(private val assets: AssetManager) : Pl
     // Any failure of MediaPlayer must release it before reaching SoundPlayerImpl
     @Suppress("TooGenericExceptionCaught")
     override fun start(assetPath: String, onFinished: () -> Unit): Playback {
-        val descriptor = try {
-            assets.openFd(assetPath)
-        } catch (e: IOException) {
-            throw SoundNotFoundException(assetPath, e)
-        }
+        val descriptor = openOrPlaceholder(assetPath)
         val player = MediaPlayer()
         try {
             descriptor.use { player.setDataSource(it.fileDescriptor, it.startOffset, it.length) }
@@ -38,6 +35,17 @@ internal class MediaPlayerPlaybackFactory(private val assets: AssetManager) : Pl
             throw e
         }
         return MediaPlayerPlayback(player)
+    }
+
+    private fun openOrPlaceholder(assetPath: String): AssetFileDescriptor = try {
+        assets.openFd(assetPath)
+    } catch (e: IOException) {
+        val placeholder = PLACEHOLDER_SOUND_PATH ?: throw SoundNotFoundException(assetPath, e)
+        try {
+            assets.openFd(placeholder)
+        } catch (_: IOException) {
+            throw SoundNotFoundException(assetPath, e)
+        }
     }
 }
 
