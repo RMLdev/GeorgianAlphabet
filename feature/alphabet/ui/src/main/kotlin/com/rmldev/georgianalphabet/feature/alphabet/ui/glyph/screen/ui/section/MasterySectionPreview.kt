@@ -3,6 +3,7 @@ package com.rmldev.georgianalphabet.feature.alphabet.ui.glyph.screen.ui.section
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.rmldev.georgianalphabet.core.designsystem.font.FontCatalog
 import com.rmldev.georgianalphabet.core.designsystem.theme.GeAlphTheme
