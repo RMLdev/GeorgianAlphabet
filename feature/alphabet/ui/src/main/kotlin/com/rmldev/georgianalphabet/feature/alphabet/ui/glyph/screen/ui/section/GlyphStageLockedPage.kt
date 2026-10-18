@@ -77,7 +77,6 @@ internal fun LockedFontsPage(lockedCount: Int, onHowToUnlock: () -> Unit) {
     }
 }
 
-
 @Preview(name = "locked page light", widthDp = 270, heightDp = 300)
 @Composable
 private fun LockedFontsPageLightPreview() {
