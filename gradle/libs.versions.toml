@@ -26,7 +26,7 @@ androidxLifecycleViewModelNavigation3 = "2.11.0"
 androidxLifecycle = "2.11.0"
 androidxHiltLifecycleViewModelCompose = "1.4.0"
 # datastore-tink exists only in 1.3.x; switch to 1.3.0 once it's stable
-androidxDataStore = "1.3.0-rc01"
+androidxDataStore = "1.3.0"
 paging = "3.5.3"
 detekt = "2.0.0-alpha.6"
 spotless = "8.10.4"
